@@ -1,9 +1,8 @@
-import styles from './styles/activity-bar.module.css'
 import { Bolt, Brain, Calendar, CircleCheckBig, Home, LineSquiggle } from 'lucide-react'
 import useAppStore from '../../store/appStore'
 import { motion } from 'motion/react'
 
-const ACTIVITY_BAR_OPEN_WIDTH = "30px"
+const ACTIVITY_BAR_OPEN_WIDTH = "50px"
 const ACTIVITY_BAR_CLOSED_WIDTH = "0px"
 
 const ACTIVITY_BAR_CONTENT_ANIMATION = {
@@ -44,35 +43,47 @@ function ActivityBarComponent() {
   const { activityBarOpen, activeTab, setActiveTab } = useAppStore()
   return (
     <motion.div
-      className={styles.sidebarWrapper}
+      className="grow flex-wrap h-screen w-[30px] bg-black/10 flex flex-col items-start justify-between"
       variants={ACTIVITY_BAR_CONTENT_ANIMATION.activityBarWrapper}
       initial="closed"
       animate={activityBarOpen ? "open" : "closed"}>
-      <motion.div className={styles.sidebarContent}
+      <motion.div className="flex flex-col items-start justify-center gap-3 mt-10 mb-4"
         variants={ACTIVITY_BAR_CONTENT_ANIMATION.activityBarContent}
         initial="closed"
         animate={activityBarOpen ? "open" : "closed"}>
-        <button className={`${styles.sidebarButton} ${activeTab === "home" ? styles.active : ""}`} onClick={() => setActiveTab("home")}>
+        <button
+          className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "home" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
+          onClick={() => setActiveTab("home")}>
           <Home />
         </button>
-        <button className={`${styles.sidebarButton} ${activeTab === "tasks" ? styles.active : ""}`} onClick={() => setActiveTab("tasks")}>
+        <button
+          className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "tasks" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
+          onClick={() => setActiveTab("tasks")}>
           <CircleCheckBig />
         </button>
-        <button className={`${styles.sidebarButton} ${activeTab === "calendar" ? styles.active : ""}`} onClick={() => setActiveTab("calendar")}>
+        <button
+          className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "calendar" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
+          onClick={() => setActiveTab("calendar")}>
           <Calendar />
         </button>
-        <button className={`${styles.sidebarButton} ${activeTab === "journal" ? styles.active : ""}`} onClick={() => setActiveTab("journal")}>
+        <button
+          className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "journal" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
+          onClick={() => setActiveTab("journal")}>
           <Brain />
         </button>
-        <button className={`${styles.sidebarButton} ${activeTab === "whiteboard" ? styles.active : ""}`} onClick={() => setActiveTab("whiteboard")}>
+        <button
+          className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "whiteboard" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
+          onClick={() => setActiveTab("whiteboard")}>
           <LineSquiggle />
         </button>
       </motion.div>
-      <motion.div className={styles.sidebarContent}
+      <motion.div className="flex flex-col items-start justify-center gap-3 mt-10 mb-4"
         variants={ACTIVITY_BAR_CONTENT_ANIMATION.activityBarContent}
         initial="closed"
         animate={activityBarOpen ? "open" : "closed"}>
-        <button className={`${styles.sidebarButton} ${activeTab === "settings" ? styles.active : ""}`} onClick={() => setActiveTab("settings")}>
+        <button
+          className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "settings" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
+          onClick={() => setActiveTab("settings")}>
           <Bolt />
         </button>
       </motion.div>

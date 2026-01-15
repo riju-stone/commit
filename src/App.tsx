@@ -11,7 +11,7 @@ function App() {
   const { activeTab } = useAppStore()
   const CurrentView = APP_VIEW_CONFIG[activeTab].view
   return (
-    <main className="appWrapper">
+    <main className="h-screen w-screen flex flex-col justify-center items-center">
       <StatusBarComponent />
       <div className="editorWrapper">
         <ActivityBarComponent />

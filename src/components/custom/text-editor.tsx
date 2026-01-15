@@ -1,10 +1,9 @@
-import styles from './styles/text-editor.module.css'
 import { motion } from 'motion/react'
 
 function TextEditorComponent() {
   return (
-    <motion.div className={styles.textEditorWrapper}>
-      <div className={styles.textEditorContent}>TextEditorComponent</div>
+    <motion.div className="flex-wrap w-full h-screen bg-black/80 flex items-center justify-center overflow-hidden text-white">
+      <div>TextEditorComponent</div>
     </motion.div>
   )
 }

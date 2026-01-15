@@ -22,7 +22,7 @@ export const APP_VIEW_CONFIG = {
   "tasks": {
     'view': TaskView,
     'path': 'tasks',
-    'fileExplorer': true,
+    'fileExplorer': false,
     'sidebar': true,
   },
   "calendar": {
@@ -35,13 +35,13 @@ export const APP_VIEW_CONFIG = {
     'view': JournalView,
     'path': 'journal',
     'fileExplorer': true,
-    'sidebar': true,
+    'sidebar': false,
   },
   "whiteboard": {
     'view': WhiteboardView,
     'path': 'whiteboard',
     'fileExplorer': true,
-    'sidebar': false,
+    'sidebar': true,
   },
   "settings": {
     'view': SettingsView,

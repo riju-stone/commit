@@ -1,5 +1,3 @@
-import React from 'react'
-import styles from "./styles/calendar.module.css"
 import { motion } from "motion/react"
 
 const CALENDAR_VIEW_ANIMATION = {
@@ -17,8 +15,8 @@ const CALENDAR_VIEW_ANIMATION = {
 
 function CalendarView() {
   return (
-    <div className={styles.calendarViewWrapper}>
-      <motion.div layout className={styles.calendarContent} variants={CALENDAR_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">Calendar</motion.div>
+    <div className="grow w-full h-screen bg-black/80 flex items-center justify-center overflow-hidden text-white">
+      <motion.div layout variants={CALENDAR_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">Calendar</motion.div>
     </div>
   )
 }

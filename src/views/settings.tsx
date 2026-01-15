@@ -1,5 +1,3 @@
-import React from 'react'
-import styles from "./styles/settings.module.css"
 import { motion } from "motion/react"
 
 const SETTINGS_VIEW_ANIMATION = {
@@ -17,8 +15,8 @@ const SETTINGS_VIEW_ANIMATION = {
 
 function SettingsView() {
   return (
-    <div className={styles.settingsViewWrapper}>
-      <motion.div layout className={styles.settingsContent} variants={SETTINGS_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">SettingsView</motion.div>
+    <div className="grow w-full h-screen bg-black/80 flex items-center justify-center overflow-hidden text-white">
+      <motion.div layout variants={SETTINGS_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">SettingsView</motion.div>
     </div>
   )
 }
