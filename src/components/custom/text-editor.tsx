@@ -1,4 +1,4 @@
-import styles from './text-editor.module.css'
+import styles from './styles/text-editor.module.css'
 import { motion } from 'motion/react'
 
 function TextEditorComponent() {

@@ -1,8 +1,9 @@
 import "./App.css";
-import ActivityBarComponent from "./components/activity-bar/activity-bar";
-import TextEditorComponent from "./components/text-editor/text-editor";
-import StatusBarComponent from "./components/status-bar/status-bar";
-import FileExplorerComponent from "./components/file-explorer/file-explorer";
+import ActivityBarComponent from "./components/custom/activity-bar";
+import TextEditorComponent from "./components/custom/text-editor";
+import StatusBarComponent from "./components/custom/status-bar";
+import FileExplorerComponent from "./components/custom/file-explorer";
+import SidebarComponent from "./components/custom/sidebar";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <ActivityBarComponent />
         <FileExplorerComponent />
         <TextEditorComponent />
+        <SidebarComponent />
       </div>
     </main>
   );

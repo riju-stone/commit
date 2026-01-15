@@ -1,7 +1,6 @@
-import React from 'react'
 import useAppStore from '../../store/appStore'
 import { motion } from 'motion/react'
-import styles from './file-explorer.module.css'
+import styles from './styles/file-explorer.module.css'
 
 const FILE_EXPLORER_CLOSED_WIDTH = "0px"
 const FILE_EXPLORER_OPEN_WIDTH = "300px"
@@ -36,11 +35,10 @@ const FILE_EXPLORER_CONTENT_ANIMATION = {
 }
 
 function FileExplorerComponent() {
-  const { fileExplorerOpen, fileExplorerPath } = useAppStore()
+  const { fileExplorerOpen } = useAppStore()
   return (
     <motion.div className={styles.fileExplorerWrapper} variants={FILE_EXPLORER_CONTENT_ANIMATION.fileExplorerWrapper} initial="closed" animate={fileExplorerOpen ? "open" : "closed"}>
       <div className={styles.fileExplorerContent}>
-        <div className={styles.fileExplorerPath}>{fileExplorerPath}</div>
       </div>
     </motion.div>
   )

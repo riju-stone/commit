@@ -1,11 +1,12 @@
-.fileExplorerWrapper {
+.sidebarWrapper {
   flex-grow: 1;
   flex-wrap: wrap;
   height: 100vh;
-  width: 300px;
-  background-color: rgba(44, 44, 44, 0.4);
+  width: 30px;
+  background-color: rgba(0, 0, 0, 0.3);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-between;
+  transform-origin: translate(-100%, 0);
 }

@@ -4,9 +4,9 @@
   left: 0;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: flex-end;
   align-items: center;
-  width: 100vh;
+  width: 100vw;
   height: 32px;
   background-color: transparent;
   z-index: 9999;
@@ -22,15 +22,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #fff;
+  color: #8c8c8c;
   border-radius: 5px;
   transition: all 0.2s ease-in-out;
+  padding: 6px;
 }
 
-.sidebarToggleButton:first-child {
-  margin-left: 90px;
+.sidebarToggleButton:last-child {
+  margin-right: 10px;
 }
 
 .sidebarToggleButton:hover {
-  background-color: rgba(151, 151, 151, 0.4);
+  color: #fff;
 }

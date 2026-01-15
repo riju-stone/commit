@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   height: 100vh;
   width: 30px;
-  background-color: rgba(44, 44, 44, 0.1);
+  background-color: rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
