@@ -23,7 +23,7 @@ const SIDEBAR_CONTENT_ANIMATION = {
 function SidebarComponent() {
   const { sidebarOpen } = useAppStore()
   return (
-    <motion.div className={styles.sidebarWrapper}
+    <motion.div layout className={styles.sidebarWrapper}
       variants={SIDEBAR_CONTENT_ANIMATION.sidebarWrapper}
       initial="closed"
       animate={sidebarOpen ? "open" : "closed"}></motion.div>

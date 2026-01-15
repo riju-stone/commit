@@ -41,7 +41,7 @@ const ACTIVITY_BAR_CONTENT_ANIMATION = {
 }
 
 function ActivityBarComponent() {
-  const { activityBarOpen } = useAppStore()
+  const { activityBarOpen, activeTab, setActiveTab } = useAppStore()
   return (
     <motion.div
       className={styles.sidebarWrapper}
@@ -52,19 +52,19 @@ function ActivityBarComponent() {
         variants={ACTIVITY_BAR_CONTENT_ANIMATION.activityBarContent}
         initial="closed"
         animate={activityBarOpen ? "open" : "closed"}>
-        <button className={styles.sidebarButton}>
+        <button className={`${styles.sidebarButton} ${activeTab === "home" ? styles.active : ""}`} onClick={() => setActiveTab("home")}>
           <Home />
         </button>
-        <button className={styles.sidebarButton}>
+        <button className={`${styles.sidebarButton} ${activeTab === "tasks" ? styles.active : ""}`} onClick={() => setActiveTab("tasks")}>
           <CircleCheckBig />
         </button>
-        <button className={styles.sidebarButton}>
+        <button className={`${styles.sidebarButton} ${activeTab === "calendar" ? styles.active : ""}`} onClick={() => setActiveTab("calendar")}>
           <Calendar />
         </button>
-        <button className={styles.sidebarButton}>
+        <button className={`${styles.sidebarButton} ${activeTab === "journal" ? styles.active : ""}`} onClick={() => setActiveTab("journal")}>
           <Brain />
         </button>
-        <button className={styles.sidebarButton}>
+        <button className={`${styles.sidebarButton} ${activeTab === "whiteboard" ? styles.active : ""}`} onClick={() => setActiveTab("whiteboard")}>
           <LineSquiggle />
         </button>
       </motion.div>
@@ -72,7 +72,7 @@ function ActivityBarComponent() {
         variants={ACTIVITY_BAR_CONTENT_ANIMATION.activityBarContent}
         initial="closed"
         animate={activityBarOpen ? "open" : "closed"}>
-        <button className={styles.sidebarButton}>
+        <button className={`${styles.sidebarButton} ${activeTab === "settings" ? styles.active : ""}`} onClick={() => setActiveTab("settings")}>
           <Bolt />
         </button>
       </motion.div>

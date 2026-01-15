@@ -37,7 +37,7 @@ const FILE_EXPLORER_CONTENT_ANIMATION = {
 function FileExplorerComponent() {
   const { fileExplorerOpen } = useAppStore()
   return (
-    <motion.div className={styles.fileExplorerWrapper} variants={FILE_EXPLORER_CONTENT_ANIMATION.fileExplorerWrapper} initial="closed" animate={fileExplorerOpen ? "open" : "closed"}>
+    <motion.div layout className={styles.fileExplorerWrapper} variants={FILE_EXPLORER_CONTENT_ANIMATION.fileExplorerWrapper} initial="closed" animate={fileExplorerOpen ? "open" : "closed"}>
       <div className={styles.fileExplorerContent}>
       </div>
     </motion.div>

@@ -1,7 +1,10 @@
 import { create } from 'zustand'
+import { APP_VIEW_CONFIG } from '../utils/constants'
+
+type AppViewType = keyof typeof APP_VIEW_CONFIG
 
 interface AppStore {
-  activeTab: string
+  activeTab: AppViewType
   activityBarOpen: boolean
   fileExplorerOpen: boolean
   sidebarOpen: boolean
@@ -9,7 +12,7 @@ interface AppStore {
 }
 
 interface AppActions {
-  setActiveTab: (tab: string) => void
+  setActiveTab: (tab: AppViewType) => void
   toggleActivityBar: () => void
   toggleFileExplorer: () => void
   toggleSidebar: () => void
@@ -18,7 +21,7 @@ interface AppActions {
 
 const useAppStore = create<AppStore & AppActions>((set) => ({
   activeTab: "home",
-  activityBarOpen: false,
+  activityBarOpen: true,
   fileExplorerOpen: false,
   sidebarOpen: false,
   fileExplorerPath: "/",
@@ -26,7 +29,14 @@ const useAppStore = create<AppStore & AppActions>((set) => ({
   toggleFileExplorer: () => set((state) => ({ fileExplorerOpen: !state.fileExplorerOpen })),
   toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
   setFileExplorerPath: (path: string) => set(() => ({ fileExplorerPath: path })),
-  setActiveTab: (tab: string) => set(() => ({ activeTab: tab })),
+  setActiveTab: (tab: AppViewType) => set(() => {
+    const { fileExplorer, sidebar } = APP_VIEW_CONFIG[tab]
+    return {
+      activeTab: tab,
+      fileExplorerOpen: fileExplorer,
+      sidebarOpen: sidebar,
+    }
+  }),
 }))
 
 export default useAppStore
