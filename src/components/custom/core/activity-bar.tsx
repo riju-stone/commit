@@ -1,5 +1,5 @@
 import { Bolt, Brain, Calendar, CircleCheckBig, Home, LineSquiggle } from 'lucide-react'
-import useAppStore from '../../store/appStore'
+import useAppStore from '@/store/appStore'
 import { motion } from 'motion/react'
 
 const ACTIVITY_BAR_OPEN_WIDTH = "50px"

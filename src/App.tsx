@@ -1,15 +1,18 @@
 import "./App.css";
-import { AnimatePresence } from "motion/react";
-import ActivityBarComponent from "./components/custom/activity-bar";
-import StatusBarComponent from "./components/custom/status-bar";
-import FileExplorerComponent from "./components/custom/file-explorer";
-import SidebarComponent from "./components/custom/sidebar";
+import ActivityBarComponent from "./components/custom/core/activity-bar";
+import StatusBarComponent from "./components/custom/core/status-bar";
+import FileExplorerComponent from "./components/custom/core/file-explorer";
+import SidebarComponent from "./components/custom/core/sidebar";
+import PropertySidebar from "./components/custom/whiteboard/property-sidebar";
 import { APP_VIEW_CONFIG } from "./utils/constants";
 import useAppStore from "./store/appStore";
 
 function App() {
-  const { activeTab } = useAppStore()
+  const { activeTab, sidebarOpen } = useAppStore()
   const CurrentView = APP_VIEW_CONFIG[activeTab].view
+
+  const isWhiteboardView = activeTab === 'whiteboard'
+
   return (
     <main className="h-screen w-screen flex flex-col justify-center items-center">
       <StatusBarComponent />
@@ -17,7 +20,9 @@ function App() {
         <ActivityBarComponent />
         <FileExplorerComponent />
         <CurrentView key={activeTab} />
-        <SidebarComponent />
+        <SidebarComponent isOpen={sidebarOpen}>
+          {isWhiteboardView && <PropertySidebar />}
+        </SidebarComponent>
       </div>
     </main>
   );

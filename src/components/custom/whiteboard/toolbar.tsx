@@ -1,18 +1,9 @@
 import React from 'react'
-import { Editor } from '@dgmjs/core';
-import { AirplayIcon, CircleIcon, EraserIcon, FrameIcon, HandIcon, HighlighterIcon, MousePointer2Icon, PencilIcon, ScanIcon, SmileIcon, SquareIcon, TypeIcon } from 'lucide-react';
-import { ImageIcon } from 'lucide-react';
-import { SlashIcon } from 'lucide-react';
-import { SplineIcon } from 'lucide-react';
+import { CircleIcon, EraserIcon, HandIcon, HighlighterIcon, MousePointer2Icon, PencilIcon, SquareIcon, TypeIcon, ImageIcon, SlashIcon, SplineIcon } from 'lucide-react';
+import { useWhiteboardStore } from '@/store/whiteboardStore';
 
 interface ToolbarItemProps extends React.HTMLAttributes<HTMLButtonElement> {
   active?: boolean
-}
-
-interface WhiteboardToolbarProps {
-  activeHandler?: string;
-  onActiveHandlerChange?: (handler: string) => void;
-  editor: Editor | null;
 }
 
 function ToolbarItem({ active = false, children, ...props }: ToolbarItemProps) {
@@ -27,13 +18,11 @@ function ToolbarItem({ active = false, children, ...props }: ToolbarItemProps) {
 }
 
 function ToolbarSeparator() {
-  return <div className="w-px h-[30px] bg-white" />
+  return <div className="w-[2px] h-[30px] bg-white/40" />
 }
 
-function WhiteboardToolbarComponent({ activeHandler = "Select", onActiveHandlerChange }: WhiteboardToolbarProps) {
-  const setActiveHandler = (handler: string) => {
-    if (onActiveHandlerChange) onActiveHandlerChange(handler);
-  }
+function WhiteboardToolbarComponent() {
+  const { activeHandler, setActiveHandler } = useWhiteboardStore();
 
   return (
     <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2">
@@ -110,8 +99,6 @@ function WhiteboardToolbarComponent({ activeHandler = "Select", onActiveHandlerC
         >
           <HighlighterIcon />
         </ToolbarItem>
-       
-        <ToolbarSeparator />
         <ToolbarItem
           title="Eraser"
           active={activeHandler === 'Eraser'}

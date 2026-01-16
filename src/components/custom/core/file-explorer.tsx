@@ -1,4 +1,4 @@
-import useAppStore from '../../store/appStore'
+import useAppStore from '@/store/appStore'
 import { motion } from 'motion/react'
 
 const FILE_EXPLORER_CLOSED_WIDTH = "0px"
