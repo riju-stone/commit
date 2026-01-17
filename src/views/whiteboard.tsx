@@ -1,11 +1,11 @@
 import { motion } from "motion/react"
 import { useEffect, useRef } from "react";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
-import WhiteboardEditorComponent from "@/components/custom/whiteboard/editor";
-import DottedGridOverlay from "@/components/custom/whiteboard/overlay";
-import WhiteboardToolbarComponent from "@/components/custom/whiteboard/toolbar";
+import WhiteboardEditorComponent from "@/components/whiteboard/editor";
+import DottedGridOverlay from "@/components/whiteboard/overlay";
+import WhiteboardToolbarComponent from "@/components/whiteboard/toolbar";
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu";
-import WhiteboardContextMenuComponent from "@/components/custom/whiteboard/context-menu";
+import WhiteboardContextMenuComponent from "@/components/whiteboard/context-menu";
 
 const WHITEBOARD_VIEW_ANIMATION = {
   initial: {

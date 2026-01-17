@@ -38,7 +38,7 @@ const FILE_EXPLORER_CONTENT_ANIMATION = {
 function FileExplorerComponent() {
   const { fileExplorerOpen } = useAppStore()
   return (
-    <motion.div layout className={`grow flex-wrap h-screen bg-black/30 flex flex-col items-start justify-between`}
+    <motion.div layout className={`grow flex-wrap h-screen bg-black/40 flex flex-col items-start justify-between`}
       variants={FILE_EXPLORER_CONTENT_ANIMATION.fileExplorerWrapper}
       initial="closed"
       animate={fileExplorerOpen ? "open" : "closed"} >

@@ -1,5 +1,4 @@
 import { FillStyle, HorzAlignEnum, Shape, VertAlignEnum, Line, LineEndTypeEnum, Box } from "@dgmjs/core";
-import { ColorPalette, simplePalette } from "./color-pallete";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { Input } from "@/components/ui/input";
 import { Slider } from "@/components/ui/slider";
@@ -26,7 +25,6 @@ import {
 } from "lucide-react";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import { useState } from "react";
-import { Label } from "@/components/ui/label";
 
 const strokePatterns = {
   solid: [0, 0],
@@ -47,20 +45,6 @@ const fontFamilies = [
 
 // Shared slider styling classes
 const sliderClassName = "w-full **:data-[slot=slider-track]:bg-white/10 **:data-[slot=slider-range]:bg-white/60 **:data-[slot=slider-thumb]:border-white/60 **:data-[slot=slider-thumb]:bg-white/90";
-
-
-function adjustOpacity(color: string, newOpacity: number): string {
-  const rgbaMatch = color.match(
-    /rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*([\d.]+))?\)/
-  );
-  if (rgbaMatch) {
-    const r = rgbaMatch[1];
-    const g = rgbaMatch[2];
-    const b = rgbaMatch[3];
-    return `rgba(${r}, ${g}, ${b}, ${newOpacity})`;
-  }
-  return color;
-}
 
 // Shape type detection helpers
 function isBoxShape(shapes: Shape[]): boolean {
@@ -157,40 +141,40 @@ function PageProperties() {
 
   return (
     <div className="flex flex-col gap-4 p-3 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-white/20 scrollbar-track-transparent  mt-[40px]">
-      <Label className="text-white/40 text-[18px]">Page Name</Label>
-      <Input
-        type="text"
-        value={pageName}
-        onChange={(e) => {
-          if (currentPage && editor) {
-            editor.actions.update({ name: e.target.value }, [currentPage]);
-          }
-        }}
-        placeholder="Page name"
-        className="w-full h-9 px-3 text-sm bg-white/5 border-white/10 text-white/80 rounded-md focus:outline-none focus:ring-1 focus:ring-white/30"
-      />
-
-      {/* Page Size */}
-      <div className="flex flex-col gap-1">
-        <span className="text-white/40 text-[10px]">Size</span>
-        <div className="relative">
-          <select
-            value={pageSize}
-            onChange={(e) => setPageSize(e.target.value)}
-            className="w-full h-9 px-3 pr-8 text-sm bg-white/5 border border-white/10 rounded-md text-white/80 focus:outline-none focus:ring-1 focus:ring-white/30 appearance-none cursor-pointer"
-          >
-            {pageSizeOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-          <ChevronDown
-            size={14}
-            className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none"
-          />
+      <CollapsibleSection title="Page Name">
+        <Input
+          type="text"
+          value={pageName}
+          onChange={(e) => {
+            if (currentPage && editor) {
+              editor.actions.update({ name: e.target.value }, [currentPage]);
+            }
+          }}
+          placeholder="Page name"
+          className="w-full h-9 px-3 text-sm bg-white/5 border-white/10 text-white/80 rounded-md focus:outline-none focus:ring-1 focus:ring-white/30"
+        />
+        {/* Page Size */}
+        <div className="flex flex-col gap-1">
+          <span className="text-white/40 text-[10px]">Size</span>
+          <div className="relative">
+            <select
+              value={pageSize}
+              onChange={(e) => setPageSize(e.target.value)}
+              className="w-full h-9 px-3 pr-8 text-sm bg-white/5 border border-white/10 rounded-md text-white/80 focus:outline-none focus:ring-1 focus:ring-white/30 appearance-none cursor-pointer"
+            >
+              {pageSizeOptions.map((option) => (
+                <option key={option.value} value={option.value}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+            <ChevronDown
+              size={14}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 pointer-events-none"
+            />
+          </div>
         </div>
-      </div>
+      </CollapsibleSection>
     </div>
   );
 }
@@ -227,28 +211,11 @@ function PropertySidebar() {
         )}
       </div>
 
-      {/* Color Section */}
-      <PropertySection title="Color" icon={<Palette size={12} />}>
-        <ColorPalette
-          palette={simplePalette}
-          className="w-full"
-          itemClassName="h-[16px] w-[16px]"
-          onClick={(value: string) => {
-            currentSelection.forEach((shape: Shape) => {
-              const strokeColor = adjustOpacity(value, 1.0);
-              const fillColor = adjustOpacity(value, 0.2);
-              editor?.actions.update({ fillColor, strokeColor }, [shape]);
-            });
-            setCurrentSelection(editor?.selection.shapes as Shape[]);
-          }}
-        />
-      </PropertySection>
-
       {/* Stroke Section */}
       <PropertySection title="Stroke" icon={<PenLine size={12} />}>
         {/* Stroke Pattern */}
         <div className="flex flex-col gap-1">
-          <span className="text-white/40 text-[10px]">Pattern</span>
+          {/* <span className="text-white/40 text-[12px]">Shape Fill Style</span> */}
           <ToggleGroup
             value={
               currentSelection.length === 1
@@ -258,7 +225,7 @@ function PropertySidebar() {
                 : "solid"
             }
             type="single"
-            className="bg-white/5 border border-white/10 rounded-md w-full justify-start"
+            className="h-[25px] bg-white/5 border border-white/10 rounded-sm w-[50%] justify-start"
             onValueChange={(value: string) => {
               if (!value) return;
               currentSelection.forEach((shape: Shape) => {
@@ -270,12 +237,12 @@ function PropertySidebar() {
               setCurrentSelection(editor?.selection.shapes as Shape[]);
             }}
           >
-            <ToggleGroupItem value="solid" className="flex-1">
+            <ToggleGroupItem value="solid" className="h-full flex-1 hover:bg-black/60 rounded-sm">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
                 <path d="M4 12h16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
               </svg>
             </ToggleGroupItem>
-            <ToggleGroupItem value="dashed" className="flex-1">
+            <ToggleGroupItem value="dashed" className="h-full flex-1 hover:bg-black/60 rounded-sm">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
                 <path
                   d="M4 12h16"
@@ -286,7 +253,7 @@ function PropertySidebar() {
                 />
               </svg>
             </ToggleGroupItem>
-            <ToggleGroupItem value="dotted" className="flex-1">
+            <ToggleGroupItem value="dotted" className="h-full flex-1 hover:bg-black/60 rounded-sm">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="none">
                 <path
                   d="M4 12h16"
@@ -403,7 +370,7 @@ function PropertySidebar() {
                 setCurrentSelection(editor?.selection.shapes as Shape[]);
               }}
             >
-              <ToggleGroupItem value="CROSS_HATCH" className="flex-1" title="Cross Hatch">
+              <ToggleGroupItem value="CROSS_HATCH" className="flex-1 hover:bg-black/60" title="Cross Hatch">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none">
                   <rect x="5" y="5" width="14" height="14" rx="1" stroke="currentColor" strokeWidth="1.5" />
                   <path d="M13 5L5 13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
@@ -414,7 +381,7 @@ function PropertySidebar() {
                   <path d="M6 6L18 18" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                 </svg>
               </ToggleGroupItem>
-              <ToggleGroupItem value="HACHURE" className="flex-1" title="Hachure">
+              <ToggleGroupItem value="HACHURE" className="flex-1 hover:bg-black/60" title="Hachure">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none">
                   <rect x="5" y="5" width="14" height="14" rx="1" stroke="currentColor" strokeWidth="1.5" />
                   <path d="M13 5L5 13" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
@@ -422,12 +389,12 @@ function PropertySidebar() {
                   <path d="M18 6L6 18" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
                 </svg>
               </ToggleGroupItem>
-              <ToggleGroupItem value="SOLID" className="flex-1" title="Solid">
+              <ToggleGroupItem value="SOLID" className="flex-1 hover:bg-black/60" title="Solid">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none">
                   <rect x="5" y="5" width="14" height="14" rx="1" fill="currentColor" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
               </ToggleGroupItem>
-              <ToggleGroupItem value="NONE" className="flex-1" title="None">
+              <ToggleGroupItem value="NONE" className="flex-1 hover:bg-black/60" title="None">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none">
                   <rect x="5" y="5" width="14" height="14" rx="1" stroke="currentColor" strokeWidth="1.5" />
                 </svg>
@@ -594,10 +561,10 @@ function PropertySidebar() {
                   setCurrentSelection(editor?.selection.shapes as Shape[]);
                 }}
               >
-                <ToggleGroupItem value="normal" className="px-3" title="Normal">
+                <ToggleGroupItem value="normal" className="px-3 hover:bg-black/60" title="Normal">
                   <span className="text-xs">Aa</span>
                 </ToggleGroupItem>
-                <ToggleGroupItem value="italic" className="px-3" title="Italic">
+                <ToggleGroupItem value="italic" className="px-3 hover:bg-black/60" title="Italic">
                   <Italic size={14} />
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -615,10 +582,10 @@ function PropertySidebar() {
                   setCurrentSelection(editor?.selection.shapes as Shape[]);
                 }}
               >
-                <ToggleGroupItem value="400" className="px-3" title="Normal">
+                <ToggleGroupItem value="400" className="px-3 hover:bg-black/60" title="Normal">
                   <span className="text-xs font-normal">N</span>
                 </ToggleGroupItem>
-                <ToggleGroupItem value="700" className="px-3" title="Bold">
+                <ToggleGroupItem value="700" className="px-3 hover:bg-black/60" title="Bold">
                   <Bold size={14} />
                 </ToggleGroupItem>
               </ToggleGroup>
@@ -649,13 +616,13 @@ function PropertySidebar() {
                 setCurrentSelection(editor?.selection.shapes as Shape[]);
               }}
             >
-              <ToggleGroupItem value="top" className="flex-1">
+              <ToggleGroupItem value="top" className="flex-1 hover:bg-black/60">
                 <AlignStartVertical size={14} />
               </ToggleGroupItem>
-              <ToggleGroupItem value="middle" className="flex-1">
+              <ToggleGroupItem value="middle" className="flex-1 hover:bg-black/60">
                 <AlignCenterVertical size={14} />
               </ToggleGroupItem>
-              <ToggleGroupItem value="bottom" className="flex-1">
+              <ToggleGroupItem value="bottom" className="flex-1 hover:bg-black/60">
                 <AlignEndVertical size={14} />
               </ToggleGroupItem>
             </ToggleGroup>
@@ -680,13 +647,13 @@ function PropertySidebar() {
                 setCurrentSelection(editor?.selection.shapes as Shape[]);
               }}
             >
-              <ToggleGroupItem value="left" className="flex-1">
+              <ToggleGroupItem value="left" className="flex-1 hover:bg-black/60">
                 <TextAlignStart size={14} />
               </ToggleGroupItem>
-              <ToggleGroupItem value="center" className="flex-1">
+              <ToggleGroupItem value="center" className="flex-1 hover:bg-black/60">
                 <TextAlignCenter size={14} />
               </ToggleGroupItem>
-              <ToggleGroupItem value="right" className="flex-1">
+              <ToggleGroupItem value="right" className="flex-1 hover:bg-black/60">
                 <TextAlignEnd size={14} />
               </ToggleGroupItem>
             </ToggleGroup>
@@ -721,13 +688,13 @@ function PropertySidebar() {
                 setCurrentSelection(editor?.selection.shapes as Shape[]);
               }}
             >
-              <ToggleGroupItem value="flat" title="Flat" className="flex-1">
+              <ToggleGroupItem value="flat" title="Flat" className="flex-1 hover:bg-black/60">
                 <Minus size={14} />
               </ToggleGroupItem>
-              <ToggleGroupItem value="arrow" title="Arrow" className="flex-1">
+              <ToggleGroupItem value="arrow" title="Arrow" className="flex-1 hover:bg-black/60">
                 <MoveRight size={14} className="rotate-180" />
               </ToggleGroupItem>
-              <ToggleGroupItem value="triangle" title="Triangle" className="flex-1">
+              <ToggleGroupItem value="triangle" title="Triangle" className="flex-1 hover:bg-black/60">
                 <Triangle size={14} className="-rotate-90" />
               </ToggleGroupItem>
             </ToggleGroup>
@@ -757,10 +724,10 @@ function PropertySidebar() {
                 setCurrentSelection(editor?.selection.shapes as Shape[]);
               }}
             >
-              <ToggleGroupItem value="flat" title="Flat" className="flex-1">
+              <ToggleGroupItem value="flat" title="Flat" className="flex-1 hover:bg-black/60">
                 <Minus size={14} />
               </ToggleGroupItem>
-              <ToggleGroupItem value="arrow" title="Arrow" className="flex-1">
+              <ToggleGroupItem value="arrow" title="Arrow" className="flex-1 hover:bg-black/60">
                 <MoveRight size={14} />
               </ToggleGroupItem>
               <ToggleGroupItem value="triangle" title="Triangle" className="flex-1">

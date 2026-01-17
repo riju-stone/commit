@@ -11,6 +11,7 @@ function WhiteBoardEditorComponent() {
     setActiveHandler,
     setGridOrigin,
     setGridScale,
+    darkMode,
   } = useWhiteboardStore();
 
   const tiptapEditorRef = useRef<TiptapEditor | null>(null);
@@ -84,8 +85,8 @@ function WhiteBoardEditorComponent() {
   return (
 
     <DGMEditor
-      darkMode={true}
-      className="w-full h-screen [&_canvas]:w-screen [&_canvas]:h-full"
+      darkMode={darkMode}
+      className="w-full h-screen [&_canvas]:w-screen [&_canvas]:h-full [&_canvas]:bg-background"
       options={{
         canvasColor: "rgba(34, 40, 49, 1)",
         showDOM: true,

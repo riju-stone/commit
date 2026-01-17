@@ -1,9 +1,9 @@
 import "./App.css";
-import ActivityBarComponent from "./components/custom/core/activity-bar";
-import StatusBarComponent from "./components/custom/core/status-bar";
-import FileExplorerComponent from "./components/custom/core/file-explorer";
-import SidebarComponent from "./components/custom/core/sidebar";
-import PropertySidebar from "./components/custom/whiteboard/property-sidebar";
+import ActivityBarComponent from "./components/core/activity-bar";
+import StatusBarComponent from "./components/core/status-bar";
+import FileExplorerComponent from "./components/core/file-explorer";
+import SidebarComponent from "./components/core/sidebar";
+  import { PropertySidebar } from "./components/whiteboard/properties";
 import { APP_VIEW_CONFIG } from "./utils/constants";
 import useAppStore from "./store/appStore";
 

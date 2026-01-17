@@ -1,5 +1,5 @@
 import React from 'react'
-import { CircleIcon, EraserIcon, HandIcon, HighlighterIcon, MousePointer2Icon, PencilIcon, SquareIcon, TypeIcon, ImageIcon, SlashIcon, SplineIcon } from 'lucide-react';
+import { CircleIcon, EraserIcon, HandIcon, HighlighterIcon, MousePointer2Icon, PencilIcon, SquareIcon, TypeIcon, ImageIcon, SlashIcon, SplineIcon, Frame } from 'lucide-react';
 import { useWhiteboardStore } from '@/store/whiteboardStore';
 
 interface ToolbarItemProps extends React.HTMLAttributes<HTMLButtonElement> {
@@ -40,6 +40,13 @@ function WhiteboardToolbarComponent() {
           onClick={() => setActiveHandler('Hand')}
         >
           <HandIcon />
+        </ToolbarItem>
+        <ToolbarItem
+          title="Eraser"
+          active={activeHandler === 'Eraser'}
+          onClick={() => setActiveHandler('Eraser')}
+        >
+          <EraserIcon />
         </ToolbarItem>
         <ToolbarSeparator />
         <ToolbarItem
@@ -99,12 +106,13 @@ function WhiteboardToolbarComponent() {
         >
           <HighlighterIcon />
         </ToolbarItem>
+        <ToolbarSeparator />
         <ToolbarItem
-          title="Eraser"
-          active={activeHandler === 'Eraser'}
-          onClick={() => setActiveHandler('Eraser')}
+          title="Frame"
+          active={activeHandler === 'Frame'}
+          onClick={() => setActiveHandler('Frame')}
         >
-          <EraserIcon />
+          <Frame />
         </ToolbarItem>
       </div>
     </div>

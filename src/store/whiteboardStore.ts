@@ -44,7 +44,7 @@ const initialState: WhiteboardState = {
   editor: null,
   gridScale: 1,
   gridOrigin: [0, 0],
-  darkMode: false,
+  darkMode: true,
   showGrid: false,
   snapToGrid: false,
   snapToObjects: false,
