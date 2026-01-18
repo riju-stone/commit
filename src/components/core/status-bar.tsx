@@ -1,6 +1,6 @@
 import { FolderTree, PanelLeftDashed, PanelRight } from 'lucide-react'
 import useAppStore from '@/store/appStore'
-import { APP_VIEW_CONFIG } from '@/utils/constants'
+import { APP_VIEW_CONFIG } from '@/constants/views'
 
 function StatusBarComponent() {
   const { activeTab, toggleActivityBar, toggleFileExplorer, toggleSidebar } = useAppStore()

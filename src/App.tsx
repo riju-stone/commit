@@ -3,13 +3,13 @@ import ActivityBarComponent from "./components/core/activity-bar";
 import StatusBarComponent from "./components/core/status-bar";
 import FileExplorerComponent from "./components/core/file-explorer";
 import SidebarComponent from "./components/core/sidebar";
-  import { PropertySidebar } from "./components/whiteboard/properties";
-import { APP_VIEW_CONFIG } from "./utils/constants";
+import { PropertySidebar } from "./components/whiteboard/properties";
+import { APP_VIEW_CONFIG } from "@/constants/views";
 import useAppStore from "./store/appStore";
 
 function App() {
   const { activeTab, sidebarOpen } = useAppStore()
-  const CurrentView = APP_VIEW_CONFIG[activeTab].view
+  const CurrentView = APP_VIEW_CONFIG[activeTab as keyof typeof APP_VIEW_CONFIG].view
 
   const isWhiteboardView = activeTab === 'whiteboard'
 
@@ -19,7 +19,7 @@ function App() {
       <div className="editorWrapper">
         <ActivityBarComponent />
         <FileExplorerComponent />
-        <CurrentView key={activeTab} />
+        <CurrentView key={activeTab as keyof typeof APP_VIEW_CONFIG} />
         <SidebarComponent isOpen={sidebarOpen}>
           {isWhiteboardView && <PropertySidebar />}
         </SidebarComponent>

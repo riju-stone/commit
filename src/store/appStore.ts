@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import { APP_VIEW_CONFIG } from '../utils/constants'
+import { APP_VIEW_CONFIG } from '@/constants/views'
 
 type AppViewType = keyof typeof APP_VIEW_CONFIG
 

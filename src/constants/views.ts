@@ -1,10 +1,11 @@
-import HomeView from "../views/home";
-import TaskView from "../views/tasks";
-import CalendarView from "../views/calendar";
-import JournalView from "../views/journal";
-import WhiteboardView from "../views/whiteboard";
-import SettingsView from "../views/settings";
-import OnboardingView from "../views/onboarding";
+import HomeView from "@/views/home";
+import TaskView from "@/views/tasks";
+import CalendarView from "@/views/calendar";
+import JournalView from "@/views/journal";
+import WhiteboardView from "@/views/whiteboard";
+import SettingsView from "@/views/settings";
+import OnboardingView from "@/views/onboarding";
+import NotesView from "@/views/notes";
 
 export const APP_VIEW_CONFIG = {
   'onboarding': {
@@ -30,6 +31,12 @@ export const APP_VIEW_CONFIG = {
     'path': 'calendar',
     'fileExplorer': false,
     'sidebar': true,
+  },
+  "notes": {
+    'view': NotesView,
+    'path': 'notes',
+    'fileExplorer': true,
+    'sidebar': false,
   },
   "journal": {
     'view': JournalView,

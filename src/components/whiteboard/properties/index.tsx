@@ -18,6 +18,8 @@ import {
   SquareRoundCorner,
 } from "lucide-react";
 import CornerRadiusBlock from "./blocks/radius-block";
+import { ShapeBlock } from "./blocks/shape-block";
+import { ControlBlock } from "./blocks/control-block";
 
 // Shape type detection helpers
 function isLineShape(shapes: Shape[]): boolean {
@@ -97,6 +99,10 @@ function ShapeProperties() {
           <span className="text-foreground/50 text-xs">{shapeTypes.join(", ")}</span>
         )}
       </div>
+
+      <ControlBlock />
+
+      <ShapeBlock />
 
       {/* Fill Color Section - only for non-line shapes */}
       {showFillControls && (
