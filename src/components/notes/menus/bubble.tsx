@@ -6,7 +6,7 @@ function BubbleMenuComponent() {
   const { editor } = useCurrentEditor();
 
   return (
-    <div className='flex justify-center items-center bg-transparent backdrop-blur-sm border-2 border-white/20 rounded-xl p-2 gap-1'>
+    <div className='flex justify-center items-center h-[45px] bg-transparent backdrop-blur-sm border-2 border-white/20 rounded-xl p-1 gap-1'>
       <Button
         variant="ghost"
         size="sm"

@@ -19,6 +19,7 @@ pub fn run() {
             let window = WebviewWindowBuilder::new(app, "main", tauri::WebviewUrl::default())
                 .title("")
                 .inner_size(1024.0, 768.0)
+                .min_inner_size(1024.0, 768.0)
                 .resizable(true)
                 .transparent(true)
                 .decorations(true)

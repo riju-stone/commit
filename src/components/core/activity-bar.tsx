@@ -43,7 +43,7 @@ function ActivityBarComponent() {
   const { activityBarOpen, activeTab, setActiveTab } = useAppStore()
   return (
     <motion.div
-      className="grow flex-wrap h-screen w-[30px] bg-black/10 flex flex-col items-start justify-between"
+      className="grow flex-wrap h-screen w-[30px] bg-black/40 flex flex-col items-start justify-between"
       variants={ACTIVITY_BAR_CONTENT_ANIMATION.activityBarWrapper}
       initial="closed"
       animate={activityBarOpen ? "open" : "closed"}>

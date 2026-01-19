@@ -30,14 +30,14 @@ function SidebarComponent({ isOpen, children }: SidebarComponentProps) {
   return (
     <motion.div
       layout
-      className="h-screen bg-black/40 backdrop-blur-sm flex flex-col items-start justify-start overflow-hidden border-l border-white/5"
+      className="h-screen bg-black/60 backdrop-blur-sm flex flex-col items-start justify-start"
       variants={SIDEBAR_CONTENT_ANIMATION.sidebarWrapper}
       initial="closed"
       animate={isOpen ? "open" : "closed"}
       transition={SIDEBAR_CONTENT_ANIMATION.transition}
     >
       {children && (
-        <div className="w-full h-full">
+        <div className="w-full h-full overflow-x-hidden">
           {children}
         </div>
       )}
