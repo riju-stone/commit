@@ -29,12 +29,13 @@ const useAppStore = create<AppStore & AppActions>((set) => ({
   toggleFileExplorer: () => set((state) => ({ fileExplorerOpen: !state.fileExplorerOpen })),
   toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
   setFileExplorerPath: (path: string) => set(() => ({ fileExplorerPath: path })),
-  setActiveTab: (tab: AppViewType) => set(() => {
-    const { fileExplorer, sidebar } = APP_VIEW_CONFIG[tab]
+  setActiveTab: (tab: AppViewType) => set((state) => {
+    const viewConfig = APP_VIEW_CONFIG[tab]
+    // Close sidebars if they're not allowed in the new view, but don't auto-open them
     return {
       activeTab: tab,
-      fileExplorerOpen: fileExplorer,
-      sidebarOpen: sidebar,
+      fileExplorerOpen: viewConfig.fileExplorer ? state.fileExplorerOpen : false,
+      sidebarOpen: viewConfig.sidebar ? state.sidebarOpen : false,
     }
   }),
 }))

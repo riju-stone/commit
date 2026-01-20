@@ -6,6 +6,7 @@ import WhiteboardView from "@/views/whiteboard";
 import SettingsView from "@/views/settings";
 import OnboardingView from "@/views/onboarding";
 import NotesView from "@/views/notes";
+import EmailView from "@/views/email";
 
 export const APP_VIEW_CONFIG = {
   'onboarding': {
@@ -19,6 +20,12 @@ export const APP_VIEW_CONFIG = {
     'path': 'home',
     'fileExplorer': false,
     'sidebar': false,
+  },
+  "email": {
+    'view': EmailView,
+    'path': 'email',
+    'fileExplorer': true,
+    'sidebar': true,
   },
   "tasks": {
     'view': TaskView,

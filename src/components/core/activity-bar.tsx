@@ -1,4 +1,4 @@
-import { Bolt, Brain, Calendar, CircleCheckBig, Home, LineSquiggle, NotepadText } from 'lucide-react'
+import { Bolt, Brain, Calendar, CircleCheckBig, Home, LineSquiggle, Mail, NotepadText } from 'lucide-react'
 import useAppStore from '@/store/appStore'
 import { motion } from 'motion/react'
 
@@ -55,6 +55,11 @@ function ActivityBarComponent() {
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "home" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
           onClick={() => setActiveTab("home")}>
           <Home />
+        </button>
+        <button
+          className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "email" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
+          onClick={() => setActiveTab("email")}>
+          <Mail />
         </button>
         <button
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "tasks" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
