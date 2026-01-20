@@ -8,8 +8,6 @@ import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
 function ToolbarComponent() {
   const { editor } = useCurrentEditor();
 
-  const handleAddImage = () => { }
-
   return (
     <div className='absolute flex items-center justify-center bottom-7 left-1/2 -translate-x-1/2 h-[45px] backdrop-blur-sm border-2 border-white/20 rounded-xl z-99'>
       <div className='flex gap-[5px] bg-transparent rounded-[5px] p-1'>
@@ -167,7 +165,9 @@ function ToolbarComponent() {
             <Button
               variant='ghost' size='sm'
               className='text-white'
-              onClick={() => handleAddImage}>
+              onClick={() => {
+                editor?.chain().focus().setImageUploadNode().run()
+              }}>
               <Image />
             </Button>
           </TooltipTrigger>

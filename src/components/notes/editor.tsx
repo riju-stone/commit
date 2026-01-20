@@ -2,6 +2,7 @@ import { Editor, EditorContent, EditorContext, useEditor } from "@tiptap/react"
 import { StarterKit } from "@tiptap/starter-kit";
 import { TableKit } from "@tiptap/extension-table"
 import { Image } from "@tiptap/extension-image"
+import { ImageUploadNode } from '@/lib/image-upload-node'
 import Math from "@tiptap/extension-mathematics"
 import Typography from "@tiptap/extension-typography"
 import TextAlign from "@tiptap/extension-text-align"
@@ -11,6 +12,7 @@ import { BubbleMenu } from "@tiptap/react/menus"
 import BubbleMenuComponent from "./menus/bubble"
 import { useMemo } from "react"
 import ToolbarComponent from "./menus/toolbar"
+import { handleImageUpload } from "@/lib/tiptap-utils";
 
 function NotesEditorComponent() {
 
@@ -26,7 +28,24 @@ function NotesEditorComponent() {
       TableKit.configure({
         table: { resizable: true }
       }),
-      Image,
+      Image.configure({
+        inline: false,
+        allowBase64: true,
+        resize: {
+          enabled: true,
+          directions: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
+          minWidth: 50,
+          minHeight: 50,
+          alwaysPreserveAspectRatio: true,
+        }
+      }),
+      ImageUploadNode.configure({
+        accept: 'image/*',
+        maxSize: 1024 * 1024 * 5, // 5MB
+        limit: 1,
+        upload: handleImageUpload,
+        onError: (error) => console.error('Upload failed:', error),
+      }),
       Math,
       Typography,
       TextAlign,

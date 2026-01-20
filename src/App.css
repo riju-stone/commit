@@ -332,3 +332,103 @@ body {
   @apply w-full h-[90vh] border-0 outline-none overflow-x-hidden overflow-y-auto mt-[50px] p-5 no-scrollbar;
   mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
 }
+
+/* TipTap Image Resize Styles (uses data attributes in TipTap 3.x) */
+img {
+  user-select: none;
+}
+
+[data-resize-container] {
+  display: inline-block;
+  position: relative;
+  line-height: 0;
+}
+
+[data-resize-wrapper] {
+  position: relative;
+  display: inline-block;
+}
+
+[data-resize-wrapper] img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+/* Base Handle Style */
+[data-resize-handle] {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  background-color: #3b82f6;
+  border: 2px solid white;
+  border-radius: 2px;
+  z-index: 50;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+/* Show handles on hover or when selected/resizing */
+[data-resize-container]:hover [data-resize-handle],
+[data-resize-container].ProseMirror-selectednode [data-resize-handle],
+[data-resize-state="true"] [data-resize-handle] {
+  opacity: 1;
+  cursor: grab;
+}
+
+/* Corner Handles */
+[data-resize-handle="top-left"] {
+  top: -6px;
+  left: -6px;
+}
+
+[data-resize-handle="top-right"] {
+  top: -6px;
+  right: -6px;
+}
+
+[data-resize-handle="bottom-left"] {
+  bottom: -6px;
+  left: -6px;
+}
+
+[data-resize-handle="bottom-right"] {
+  bottom: -6px;
+  right: -6px;
+}
+
+/* Edge Handles */
+[data-resize-handle="top"] {
+  top: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: ns-resize;
+}
+
+[data-resize-handle="bottom"] {
+  bottom: -6px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: ns-resize;
+}
+
+[data-resize-handle="left"] {
+  left: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: ew-resize;
+}
+
+[data-resize-handle="right"] {
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: ew-resize;
+}
+
+/* Selection outline for images */
+[data-resize-container].ProseMirror-selectednode [data-resize-wrapper] {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
