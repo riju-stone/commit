@@ -95,6 +95,7 @@ function ToolbarComponent() {
           <PopoverContent side='top' align='center' className='h-[45px] w-fit mb-2 flex items-center justify-center gap-1 bg-transparent backdrop-blur-sm border-2 border-white/20 rounded-xl p-1'>
 
             <ToggleGroup type='single' value='left'
+              className='dark'
               onValueChange={(value: string) => editor?.chain().focus().setTextAlign(value).run()}>
 
               <ToggleGroupItem value='left' className='text-white'>

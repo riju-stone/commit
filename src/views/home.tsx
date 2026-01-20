@@ -15,7 +15,7 @@ const HOME_VIEW_ANIMATION = {
 
 function HomeView() {
   return (
-    <div className="grow w-full h-screen bg-black/80 flex items-center justify-center text-white">
+    <div className="grow w-full h-screen bg-black/70 flex items-center justify-center text-white">
       <motion.div variants={HOME_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">Home</motion.div>
     </div>
   )
