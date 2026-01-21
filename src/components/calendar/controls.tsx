@@ -30,13 +30,12 @@ function CalendarControls() {
   }
 
   return (
-    <div className='w-full flex items-center justify-between gap-2' >
+    <div className='w-full flex items-center justify-between gap-2 p-2' >
       <div className='flex items-center justify-center gap-2'>
         <Button variant='outline' className='dark'
           onClick={handlePreviousMonth}
         >
           <ChevronLeft />
-          Before
         </Button>
         <Button variant='outline' className='dark'
           onClick={handleToday}
@@ -46,7 +45,6 @@ function CalendarControls() {
         <Button variant='outline' className='dark'
           onClick={handleNextMonth}
         >
-          Next
           <ChevronRight />
         </Button>
       </div>
