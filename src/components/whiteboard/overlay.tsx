@@ -6,7 +6,9 @@ const DOT_COLOR = "rgba(255, 255, 255, 0.175)"; // Subtle white dots
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 
 function DottedGridOverlay() {
-  const { gridOrigin, gridScale } = useWhiteboardStore();
+  // Use selective subscriptions to prevent unnecessary re-renders
+  const gridOrigin = useWhiteboardStore((state) => state.gridOrigin);
+  const gridScale = useWhiteboardStore((state) => state.gridScale);
   const scaledGridSize = GRID_SIZE * gridScale;
   const offsetX = (gridOrigin[0] * gridScale) % scaledGridSize;
   const offsetY = (gridOrigin[1] * gridScale) % scaledGridSize;

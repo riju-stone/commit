@@ -23,7 +23,8 @@ import {
 } from "@/components/ui/tooltip";
 
 export const AlignmentBlock: React.FC = () => {
-  const { editor, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
 
   // Use editor's current selection directly for actions
   const getSelectedShapes = () => editor?.selection.getShapes() ?? [];

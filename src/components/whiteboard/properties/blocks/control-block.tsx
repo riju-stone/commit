@@ -1,47 +1,22 @@
 import { Checkbox } from "@/components/ui/checkbox";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  Movable,
-  Sizable,
   Box,
-  MovableEnum,
-  SizableEnum,
-  Path,
   Shape,
 } from "@dgmjs/core";
 import React from "react";
 import { Label } from "@/components/ui/label";
-import TextFieldComponent from "../fields/text-field";
-import { merge } from "@/utils/whiteboard";
-import { cn } from "@/lib/utils";
+import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 
 export const ControlBlock: React.FC = () => {
-  const { currentSelection, editor, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
   const isBox = currentSelection.every((s: Shape) => s instanceof Box);
-  const isPath = currentSelection.every((s: Shape) => s instanceof Path);
 
-  const enabled = merge(currentSelection.map((s: Shape) => s.enable));
   const visible = merge(currentSelection.map((s: Shape) => s.visible));
-  const containable = merge(currentSelection.map((s: Shape) => s.containable));
-  const containableFilter = merge(currentSelection.map((s: Shape) => s.containableFilter));
-  const movableParentFilter = merge(currentSelection.map((s: Shape) => s.movableParentFilter));
   const connectable = merge(currentSelection.map((s: Shape) => s.connectable));
   const rotatable = merge(currentSelection.map((s: Shape) => s.rotatable));
-  const sizable = merge(currentSelection.map((s: Shape) => s.sizable));
-  const movable = merge(currentSelection.map((s: Shape) => s.movable));
-  const textEditable = merge(
-    currentSelection.map((s: Shape) => (s instanceof Box ? s.textEditable : false))
-  );
-  const pathEditable = merge(
-    currentSelection.map((s: Shape) => (s instanceof Path ? s.pathEditable : false))
-  );
   const anchored = merge(
     currentSelection.map((s: Shape) => (s instanceof Box ? s.anchored : false))
   );
@@ -55,10 +30,8 @@ export const ControlBlock: React.FC = () => {
             checked={visible}
             onCheckedChange={(checked) => {
               if (typeof checked === "boolean") {
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ visible: checked }, [shape]);
-                });
-                setCurrentSelection(editor?.selection.shapes as Shape[]);
+                const updated = batchUpdateShapes(editor, currentSelection, { visible: checked });
+                setCurrentSelection(updated);
               }
             }}
           />
@@ -74,11 +47,10 @@ export const ControlBlock: React.FC = () => {
             id="shape-connectable-checkbox"
             checked={connectable}
             onCheckedChange={(checked) => {
-              if (typeof checked === "boolean")
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ connectable: checked }, [shape]);
-                });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              if (typeof checked === "boolean") {
+                const updated = batchUpdateShapes(editor, currentSelection, { connectable: checked });
+                setCurrentSelection(updated);
+              }
             }}
           />
           <Label
@@ -95,11 +67,10 @@ export const ControlBlock: React.FC = () => {
             id="shape-rotatable-checkbox"
             checked={rotatable}
             onCheckedChange={(checked) => {
-              if (typeof checked === "boolean")
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ rotatable: checked }, [shape]);
-                });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              if (typeof checked === "boolean") {
+                const updated = batchUpdateShapes(editor, currentSelection, { rotatable: checked });
+                setCurrentSelection(updated);
+              }
             }}
           />
           <Label
@@ -116,10 +87,8 @@ export const ControlBlock: React.FC = () => {
             disabled={!isBox}
             onCheckedChange={(checked) => {
               if (typeof checked === "boolean") {
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ anchored: checked }, [shape]);
-                });
-                setCurrentSelection(editor?.selection.shapes as Shape[]);
+                const updated = batchUpdateShapes(editor, currentSelection, { anchored: checked });
+                setCurrentSelection(updated);
               }
             }}
           />

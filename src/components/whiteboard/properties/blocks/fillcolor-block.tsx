@@ -7,7 +7,7 @@ import {
   FillNoneIcon,
   FillSolidIcon,
 } from "@/assets/icons";
-import { merge } from "@/utils/whiteboard";
+import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import ColorFieldComponent from "../fields/color-field";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import {
@@ -17,8 +17,9 @@ import {
 } from "@/components/ui/tooltip";
 
 export const FillColorBlock: React.FC = () => {
-  const { editor, setCurrentSelection } = useWhiteboardStore();
-  const { currentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
   const fillColor = merge(currentSelection.map((s: Shape) => s.fillColor));
   const fillStyle = merge(currentSelection.map((s: Shape) => s.fillStyle));
 
@@ -27,10 +28,8 @@ export const FillColorBlock: React.FC = () => {
       <ColorFieldComponent
         value={fillColor ?? "#000000"}
         onValueChange={(value) => {
-          currentSelection.forEach((shape: Shape) => {
-            editor?.actions.update({ fillColor: value }, [shape]);
-          });
-          setCurrentSelection(editor?.selection.shapes as Shape[]);
+          const updated = batchUpdateShapes(editor, currentSelection, { fillColor: value });
+          setCurrentSelection(updated);
         }}
       />
       <div className="flex items-center justify-center">
@@ -38,10 +37,8 @@ export const FillColorBlock: React.FC = () => {
           type="single"
           value={fillStyle}
           onValueChange={(value) => {
-            currentSelection.forEach((shape: Shape) => {
-              editor?.actions.update({ fillStyle: value as FillStyleEnum }, [shape]);
-            });
-            setCurrentSelection(editor?.selection.shapes as Shape[]);
+            const updated = batchUpdateShapes(editor, currentSelection, { fillStyle: value as FillStyleEnum });
+            setCurrentSelection(updated);
           }}
         >
           <Tooltip>

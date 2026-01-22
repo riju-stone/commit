@@ -221,24 +221,37 @@ body {
     list-style: none;
     margin-left: 0;
     padding: 0;
+    padding-left: 1.5rem;
 
-    li {
-      align-items: center;
+    li[data-type='taskItem'] {
+      align-items: flex-start;
       display: flex;
+      margin: 0.5rem 0;
 
       >label {
         flex: 0 0 auto;
         margin-right: 0.5rem;
+        margin-top: 0.125rem;
         user-select: none;
+        cursor: pointer;
       }
 
       >div {
         flex: 1 1 auto;
       }
+
+      p {
+        margin: 0;
+        color: #fff;
+      }
     }
 
     input[type='checkbox'] {
       cursor: pointer;
+      width: 1rem;
+      height: 1rem;
+      margin: 0;
+      accent-color: rgba(255, 255, 255, 0.8);
     }
   }
 

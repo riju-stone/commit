@@ -1,6 +1,6 @@
 import React from 'react'
 import { CircleIcon, EraserIcon, HandIcon, HighlighterIcon, MousePointer2Icon, PencilIcon, SquareIcon, TypeIcon, ImageIcon, SlashIcon, SplineIcon, Frame } from 'lucide-react';
-import { useWhiteboardStore } from '@/store/whiteboardStore';
+import { useWhiteboardStore, whiteboardActions } from '@/store/whiteboardStore';
 
 interface ToolbarItemProps extends React.HTMLAttributes<HTMLButtonElement> {
   active?: boolean
@@ -22,7 +22,8 @@ function ToolbarSeparator() {
 }
 
 function WhiteboardToolbarComponent() {
-  const { activeHandler, setActiveHandler } = useWhiteboardStore();
+  // Use selective subscriptions to prevent unnecessary re-renders
+  const activeHandler = useWhiteboardStore((state) => state.activeHandler);
 
   return (
     <div className="absolute bottom-[10px] left-1/2 -translate-x-1/2">
@@ -30,21 +31,21 @@ function WhiteboardToolbarComponent() {
         <ToolbarItem
           title="Select"
           active={activeHandler === 'Select'}
-          onClick={() => setActiveHandler('Select')}
+          onClick={() => whiteboardActions.activateHandler('Select')}
         >
           <MousePointer2Icon />
         </ToolbarItem>
         <ToolbarItem
           title="Hand"
           active={activeHandler === 'Hand'}
-          onClick={() => setActiveHandler('Hand')}
+          onClick={() => whiteboardActions.activateHandler('Hand')}
         >
           <HandIcon />
         </ToolbarItem>
         <ToolbarItem
           title="Eraser"
           active={activeHandler === 'Eraser'}
-          onClick={() => setActiveHandler('Eraser')}
+          onClick={() => whiteboardActions.activateHandler('Eraser')}
         >
           <EraserIcon />
         </ToolbarItem>
@@ -52,28 +53,28 @@ function WhiteboardToolbarComponent() {
         <ToolbarItem
           title="Rectangle"
           active={activeHandler === 'Rectangle'}
-          onClick={() => setActiveHandler('Rectangle')}
+          onClick={() => whiteboardActions.activateHandler('Rectangle')}
         >
           <SquareIcon />
         </ToolbarItem>
         <ToolbarItem
           title="Ellipse"
           active={activeHandler === 'Ellipse'}
-          onClick={() => setActiveHandler('Ellipse')}
+          onClick={() => whiteboardActions.activateHandler('Ellipse')}
         >
           <CircleIcon />
         </ToolbarItem>
         <ToolbarItem
           title="Text"
           active={activeHandler === 'Text'}
-          onClick={() => setActiveHandler('Text')}
+          onClick={() => whiteboardActions.activateHandler('Text')}
         >
           <TypeIcon />
         </ToolbarItem>
         <ToolbarItem
           title="Image"
           active={activeHandler === 'Image'}
-          onClick={() => setActiveHandler('Image')}
+          onClick={() => whiteboardActions.activateHandler('Image')}
         >
           <ImageIcon />
         </ToolbarItem>
@@ -81,28 +82,28 @@ function WhiteboardToolbarComponent() {
         <ToolbarItem
           title="Line"
           active={activeHandler === 'Line'}
-          onClick={() => setActiveHandler('Line')}
+          onClick={() => whiteboardActions.activateHandler('Line')}
         >
           <SlashIcon />
         </ToolbarItem>
         <ToolbarItem
           title="Connector"
           active={activeHandler === 'Connector'}
-          onClick={() => setActiveHandler('Connector')}
+          onClick={() => whiteboardActions.activateHandler('Connector')}
         >
           <SplineIcon />
         </ToolbarItem>
         <ToolbarItem
           title="Freehand"
           active={activeHandler === 'Freehand'}
-          onClick={() => setActiveHandler('Freehand')}
+          onClick={() => whiteboardActions.activateHandler('Freehand')}
         >
           <PencilIcon />
         </ToolbarItem>
         <ToolbarItem
           title="Highlighter"
           active={activeHandler === 'Highlighter'}
-          onClick={() => setActiveHandler('Highlighter')}
+          onClick={() => whiteboardActions.activateHandler('Highlighter')}
         >
           <HighlighterIcon />
         </ToolbarItem>
@@ -110,7 +111,7 @@ function WhiteboardToolbarComponent() {
         <ToolbarItem
           title="Frame"
           active={activeHandler === 'Frame'}
-          onClick={() => setActiveHandler('Frame')}
+          onClick={() => whiteboardActions.activateHandler('Frame')}
         >
           <Frame />
         </ToolbarItem>

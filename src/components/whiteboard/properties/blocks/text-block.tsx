@@ -40,7 +40,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { merge } from "@/utils/whiteboard";
+import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import NumberFieldComponent from "../fields/number-field";
 import {
@@ -66,7 +66,9 @@ const FONT_SIZES = [
 ];
 
 export const TextBlock: React.FC = () => {
-  const { currentSelection, editor, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
 
   const isBox = currentSelection.every((s: Shape) => s instanceof Box);
   const fontColor = merge(currentSelection.map((s: Shape) => (s as TextShape).fontColor));
@@ -86,20 +88,16 @@ export const TextBlock: React.FC = () => {
       <ColorFieldComponent
         value={fontColor ?? "#000000"}
         onValueChange={(value) => {
-          currentSelection.forEach((shape: Shape) => {
-            editor?.actions.update({ fontColor: value }, [shape]);
-          });
-          setCurrentSelection(editor?.selection.shapes as Shape[]);
+          const updated = batchUpdateShapes(editor, currentSelection, { fontColor: value });
+          setCurrentSelection(updated);
         }}
       />
       <div className="flex items-center">
         <Select
           value={fontFamily}
           onValueChange={(value) => {
-            currentSelection.forEach((shape: Shape) => {
-              editor?.actions.update({ fontFamily: value }, [shape]);
-            });
-            setCurrentSelection(editor?.selection.shapes as Shape[]);
+            const updated = batchUpdateShapes(editor, currentSelection, { fontFamily: value });
+            setCurrentSelection(updated);
           }}
         >
           <SelectTrigger className="h-7 text-xs" title="Font Family">
@@ -120,10 +118,8 @@ export const TextBlock: React.FC = () => {
             value={fontWeight?.toString()}
             onValueChange={(value) => {
               const numberValue = parseInt(value);
-              currentSelection.forEach((shape: Shape) => {
-                editor?.actions.update({ fontWeight: numberValue }, [shape]);
-              });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { fontWeight: numberValue });
+              setCurrentSelection(updated);
             }}
           >
             <SelectTrigger className="h-7 text-xs w-full" title="Font Weight">
@@ -164,10 +160,8 @@ export const TextBlock: React.FC = () => {
           <NumberFieldComponent
             value={fontSize}
             onChange={(value: number) => {
-              currentSelection.forEach((shape: Shape) => {
-                editor?.actions.update({ fontSize: value }, [shape]);
-              });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { fontSize: value });
+              setCurrentSelection(updated);
             }}
             className="w-20 h-7 text-xs items-center"
             title="Font Size"
@@ -189,10 +183,8 @@ export const TextBlock: React.FC = () => {
                   className="text-xs"
                   key={size}
                   onSelect={() => {
-                    currentSelection.forEach((shape: Shape) => {
-                      editor?.actions.update({ fontSize: size }, [shape]);
-                    });
-                    setCurrentSelection(editor?.selection.shapes as Shape[]);
+                    const updated = batchUpdateShapes(editor, currentSelection, { fontSize: size });
+                    setCurrentSelection(updated);
                   }}
                 >
                   {size}
@@ -209,10 +201,8 @@ export const TextBlock: React.FC = () => {
             size="sm"
             value={horzAlign}
             onValueChange={(value) => {
-              currentSelection.forEach((shape: Shape) => {
-                editor?.actions.update({ horzAlign: value as HorzAlignEnum }, [shape]);
-              });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { horzAlign: value as HorzAlignEnum });
+              setCurrentSelection(updated);
             }}
           >
             <Tooltip>
@@ -260,10 +250,8 @@ export const TextBlock: React.FC = () => {
             size="sm"
             value={vertAlign}
             onValueChange={(value) => {
-              currentSelection.forEach((shape: Shape) => {
-                editor?.actions.update({ vertAlign: value as VertAlignEnum }, [shape]);
-              });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { vertAlign: value as VertAlignEnum });
+              setCurrentSelection(updated);
             }}
           >
             <Tooltip>
@@ -326,10 +314,8 @@ export const TextBlock: React.FC = () => {
               className="grow text-xs h-7"
               value={lineHeight}
               onChange={(value: number) => {
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ lineHeight: value }, [shape]);
-                });
-                setCurrentSelection(editor?.selection.shapes as Shape[]);
+                const updated = batchUpdateShapes(editor, currentSelection, { lineHeight: value });
+                setCurrentSelection(updated);
               }}
             />
           </div>
@@ -349,10 +335,8 @@ export const TextBlock: React.FC = () => {
               className="grow text-xs h-7"
               value={paragraphSpacing}
               onChange={(value: number) => {
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ paragraphSpacing: value }, [shape]);
-                });
-                setCurrentSelection(editor?.selection.shapes as Shape[]);
+                const updated = batchUpdateShapes(editor, currentSelection, { paragraphSpacing: value });
+                setCurrentSelection(updated);
               }}
             />
           </div>
@@ -364,10 +348,8 @@ export const TextBlock: React.FC = () => {
                 className="w-7 h-7 p-1"
                 pressed={wordWrap}
                 onPressedChange={(pressed) => {
-                  currentSelection.forEach((shape: Shape) => {
-                    editor?.actions.update({ wordWrap: pressed }, [shape]);
-                  });
-                  setCurrentSelection(editor?.selection.shapes as Shape[]);
+                  const updated = batchUpdateShapes(editor, currentSelection, { wordWrap: pressed });
+                  setCurrentSelection(updated);
                 }}
               >
                 <WrapTextIcon size={16} />

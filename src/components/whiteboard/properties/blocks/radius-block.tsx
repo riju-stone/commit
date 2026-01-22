@@ -1,11 +1,14 @@
 
 import { Input } from '@/components/ui/input'
-import { Box, Shape } from '@dgmjs/core'
+import { Box } from '@dgmjs/core'
 import { useWhiteboardStore } from '@/store/whiteboardStore'
 import { Slider } from '@/components/ui/slider';
+import { batchUpdateShapes } from '@/utils/whiteboard';
 
 function CornerRadiusBlock() {
-  const { currentSelection, editor, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
   return (
     <div className="flex flex-col gap-2">
       <div className="flex items-center justify-between">
@@ -23,15 +26,10 @@ function CornerRadiusBlock() {
           onChange={(e) => {
             const value = parseInt(e.target.value);
             if (isNaN(value)) return;
-            currentSelection.forEach((shape: Shape) => {
-              if (shape instanceof Box) {
-                editor?.actions.update(
-                  { corners: [value, value, value, value] },
-                  [shape]
-                );
-              }
-            });
-            setCurrentSelection(editor?.selection.shapes as Shape[]);
+            // Filter to only Box shapes for corner radius
+            const boxShapes = currentSelection.filter((shape) => shape instanceof Box);
+            const updated = batchUpdateShapes(editor, boxShapes, { corners: [value, value, value, value] });
+            setCurrentSelection(updated);
           }}
           className="w-16 h-6 text-xs bg-white/5 border-white/10 text-white/80"
         />
@@ -46,15 +44,10 @@ function CornerRadiusBlock() {
             : 0
         ]}
         onValueChange={(value) => {
-          currentSelection.forEach((shape: Shape) => {
-            if (shape instanceof Box) {
-              editor?.actions.update(
-                { corners: [value[0], value[0], value[0], value[0]] },
-                [shape]
-              );
-            }
-          });
-          setCurrentSelection(editor?.selection.shapes as Shape[]);
+          // Filter to only Box shapes for corner radius
+          const boxShapes = currentSelection.filter((shape) => shape instanceof Box);
+          const updated = batchUpdateShapes(editor, boxShapes, { corners: [value[0], value[0], value[0], value[0]] });
+          setCurrentSelection(updated);
         }}
       />
     </div>

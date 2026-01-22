@@ -9,7 +9,7 @@ import {
   Shape,
 } from "@dgmjs/core";
 import { LineCurveIcon, LineStraightIcon } from "@/assets/icons";
-import { merge } from "@/utils/whiteboard";
+import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
@@ -21,7 +21,9 @@ import {
 } from "@/components/ui/tooltip";
 
 export const LineBlock: React.FC = () => {
-  const { currentSelection, editor, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
 
 
   const lineType = merge(currentSelection.map((s) => (s as Line).lineType));
@@ -46,10 +48,8 @@ export const LineBlock: React.FC = () => {
                   value={tailEndType}
                   title="Tail arrowhead"
                   onValueChange={(value) => {
-                    currentSelection.forEach((shape: Shape) => {
-                      editor?.actions.update({ tailEndType: value as LineEndTypeEnum }, [shape]);
-                    });
-                    setCurrentSelection(editor?.selection.shapes as Shape[]);
+                    const updated = batchUpdateShapes(editor, currentSelection, { tailEndType: value as LineEndTypeEnum });
+                    setCurrentSelection(updated);
                   }}
                 />
               </div>
@@ -67,10 +67,8 @@ export const LineBlock: React.FC = () => {
                   value={headEndType}
                   title="Head arrowhead"
                   onValueChange={(value) => {
-                    currentSelection.forEach((shape: Shape) => {
-                      editor?.actions.update({ headEndType: value as LineEndTypeEnum }, [shape]);
-                    });
-                    setCurrentSelection(editor?.selection.shapes as Shape[]);
+                    const updated = batchUpdateShapes(editor, currentSelection, { headEndType: value as LineEndTypeEnum });
+                    setCurrentSelection(updated);
                   }}
                 />
               </div>
@@ -85,10 +83,8 @@ export const LineBlock: React.FC = () => {
             type="single"
             value={lineType}
             onValueChange={(value) => {
-              currentSelection.forEach((shape: Shape) => {
-                editor?.actions.update({ lineType: value as LineTypeEnum }, [shape]);
-              });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { lineType: value as LineTypeEnum });
+              setCurrentSelection(updated);
             }}
           >
             <Tooltip>
@@ -132,10 +128,8 @@ export const LineBlock: React.FC = () => {
               min={0}
               value={[margin]}
               onValueChange={(value) => {
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ headMargin: value[0], tailMargin: value[0] }, [shape]);
-                });
-                setCurrentSelection(editor?.selection.shapes as Shape[]);
+                const updated = batchUpdateShapes(editor, currentSelection, { headMargin: value[0], tailMargin: value[0] });
+                setCurrentSelection(updated);
               }}
             />
           </div>

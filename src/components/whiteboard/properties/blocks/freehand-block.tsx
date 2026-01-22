@@ -1,13 +1,14 @@
 import React from "react";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import { merge } from "@/utils/whiteboard";
-import { Freehand } from "@dgmjs/core";
-import { Shape } from "@dgmjs/core";
+import { merge, batchUpdateShapes } from "@/utils/whiteboard";
+import { Freehand, Shape } from "@dgmjs/core";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 
 export const FreehandBlock: React.FC = () => {
-  const { currentSelection, editor, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
   const thinning = merge(currentSelection.map((s: Shape) => (s as Freehand).thinning));
   const tailTaper = merge(currentSelection.map((s: Shape) => (s as Freehand).tailTaper));
   const headTaper = merge(currentSelection.map((s: Shape) => (s as Freehand).headTaper));
@@ -22,8 +23,8 @@ export const FreehandBlock: React.FC = () => {
           min={0}
           value={[thinning || 0]}
           onValueChange={(value) => {
-            currentSelection.forEach((shape: Shape) => editor?.actions.update({ thinning: value[0] }, [shape]));
-            setCurrentSelection(editor?.selection.shapes as Shape[]);
+            const updated = batchUpdateShapes(editor, currentSelection, { thinning: value[0] });
+            setCurrentSelection(updated);
           }}
         />
       </div>
@@ -37,8 +38,8 @@ export const FreehandBlock: React.FC = () => {
           min={0}
           value={[tailTaper || 0]}
           onValueChange={(value) => {
-            currentSelection.forEach((shape: Shape) => editor?.actions.update({ tailTaper: value[0] }, [shape]));
-            setCurrentSelection(editor?.selection.shapes as Shape[]);
+            const updated = batchUpdateShapes(editor, currentSelection, { tailTaper: value[0] });
+            setCurrentSelection(updated);
           }}
         />
       </div>
@@ -52,8 +53,8 @@ export const FreehandBlock: React.FC = () => {
           min={0}
           value={[headTaper || 0]}
           onValueChange={(value) => {
-            currentSelection.forEach((shape: Shape) => editor?.actions.update({ headTaper: value[0] }, [shape]));
-            setCurrentSelection(editor?.selection.shapes as Shape[]);
+            const updated = batchUpdateShapes(editor, currentSelection, { headTaper: value[0] });
+            setCurrentSelection(updated);
           }}
         />
       </div>

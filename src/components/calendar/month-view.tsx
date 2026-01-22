@@ -1,21 +1,11 @@
-import { generateMonthViewWithPadding } from '@/utils/calendar';
-import { useCalendarStore } from '@/store/calendar';
-import { useEffect, useMemo } from 'react';
 
-const WEEKDAYS_SUNDAY_START = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-const WEEKDAYS_MONDAY_START = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+import { useMonthViewData, useWeekdayNames } from '@/hooks/calendar'
+import { isToday } from '@/utils/calendar'
 
 function CalendarMonthView() {
-  const { weekStartDay, calendarMonthView, currentMonth, currentYear, setCalendarMonthView } = useCalendarStore()
 
-  const weekdays = useMemo(() =>
-    weekStartDay === 'sunday' ? WEEKDAYS_SUNDAY_START : WEEKDAYS_MONDAY_START,
-    [weekStartDay]
-  );
-
-  useEffect(() => {
-    setCalendarMonthView(generateMonthViewWithPadding(currentMonth, currentYear))
-  }, [currentMonth, currentYear])
+  const monthViewData = useMonthViewData()
+  const weekdays = useWeekdayNames('long')
 
   return (
     <div className='flex-1 h-0 w-full bg-transparent rounded-lg overflow-hidden flex flex-col border-2 border-white/20'>
@@ -33,22 +23,35 @@ function CalendarMonthView() {
 
       {/* Calendar month view */}
       <div className='flex-1 flex flex-col'>
-        {calendarMonthView.viewData && Object.keys(calendarMonthView.viewData).map((week: string) => {
-          return (
-            <div key={`week-${week}`} className='flex-1 flex border-b-2 border-white/20 last:border-b-0'>
-              {calendarMonthView.viewData[parseInt(week)].map((day: typeof calendarMonthView.viewData[0][0]) => (
+        {monthViewData.weeks.map((week, weekIndex) => (
+          <div
+            key={`week-${weekIndex}`}
+            className='flex-1 flex border-b-2 border-white/20 last:border-b-0'
+          >
+            {week.map((day) => {
+              const isDayToday = isToday(day.date)
+
+              return (
                 <div
-                  key={day.day}
-                  className={`flex-1 text-right py-2 px-3 hover:bg-white/30 border-r-2 border-white/20 last:border-r-0 flex-col items-center justify-center
-                      ${day.isCurrentMonth ? 'bg-transparent' : 'bg-white/10'}
-                      ${calendarMonthView.day === day.day && calendarMonthView.month === currentMonth && calendarMonthView.year === currentYear ? 'bg-white/30' : 'bg-transparent'}
-                `}>
-                  {day.day}
+                  key={day.date.toISOString()}
+                  className={`
+                    flex-1 text-right py-2 px-3 cursor-pointer
+                    border-r-2 border-white/20 last:border-r-0
+                    flex-col items-center justify-center
+                    transition-colors duration-150
+                    hover:bg-white/20
+                    ${day.isCurrentMonth ? 'bg-transparent' : 'bg-white/10 text-white/50'}
+                    ${isDayToday ? 'bg-white/60 text-black font-bold' : 'bg-transparent'}
+                  `}
+                >
+                  <span className={isDayToday ? 'text-black' : ''}>
+                    {day.day}
+                  </span>
                 </div>
-              ))}
-            </div>
-          )
-        })}
+              )
+            })}
+          </div>
+        ))}
       </div>
     </div>
   )

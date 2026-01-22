@@ -4,7 +4,7 @@ import { StrokeDottedIcon, StrokeSolidIcon } from "@/assets/icons";
 import NumberFieldComponent from "../fields/number-field";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
-import { merge } from "@/utils/whiteboard";
+import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import { Shape } from "@dgmjs/core";
 import ColorFieldComponent from "../fields/color-field";
@@ -15,7 +15,9 @@ import {
 } from "@/components/ui/tooltip";
 
 export const StrokeColorBlock: React.FC = () => {
-  const { editor, currentSelection, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
   const strokeColor = merge(currentSelection.map((s: Shape) => s.strokeColor));
   const strokeWidth = merge(currentSelection.map((s: Shape) => s.strokeWidth));
   const strokePattern = merge(currentSelection.map((s: Shape) => s.strokePattern));
@@ -27,8 +29,8 @@ export const StrokeColorBlock: React.FC = () => {
         value={strokeColor ?? "#000000"}
         className="w-full"
         onValueChange={(value) => {
-          currentSelection.forEach((shape: Shape) => editor?.actions.update({ strokeColor: value }, [shape]));
-          setCurrentSelection(editor?.selection.shapes as Shape[]);
+          const updated = batchUpdateShapes(editor, currentSelection, { strokeColor: value });
+          setCurrentSelection(updated);
         }}
       />
       <div className="flex items-center gap-2">
@@ -48,8 +50,8 @@ export const StrokeColorBlock: React.FC = () => {
             className="grow text-xs h-7"
             value={strokeWidth}
             onChange={(value: number) => {
-              currentSelection.forEach((shape: Shape) => editor?.actions.update({ strokeWidth: value }, [shape]));
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { strokeWidth: value });
+              setCurrentSelection(updated);
             }}
           />
         </div>
@@ -76,8 +78,8 @@ export const StrokeColorBlock: React.FC = () => {
             }
             onChange={(value: string) => {
               const pattern = JSON.parse(`[${value}]`);
-              currentSelection.forEach((shape: Shape) => editor?.actions.update({ strokePattern: pattern }, [shape]));
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { strokePattern: pattern });
+              setCurrentSelection(updated);
             }}
           />
         </div>
@@ -91,8 +93,8 @@ export const StrokeColorBlock: React.FC = () => {
             min={0}
             value={[roughness || 0]}
             onValueChange={(value) => {
-              currentSelection.forEach((shape: Shape) => editor?.actions.update({ roughness: value[0] }, [shape]));
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { roughness: value[0] });
+              setCurrentSelection(updated);
             }}
           />
         </div>

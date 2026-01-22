@@ -1,44 +1,10 @@
-import { Box, Doc, Editor, Page, Shape } from "@dgmjs/core"
-import { TiptapEditor } from "@dgmjs/react"
 import { create } from "zustand"
-
-export type WhiteboardState = {
-  editor: Editor | null
-  gridScale: number
-  gridOrigin: number[]
-  darkMode: boolean
-  showGrid: boolean
-  snapToGrid: boolean
-  snapToObjects: boolean
-  activeHandler: string
-  activeHandlerLock: boolean
-  selectedShape: Shape[] | null
-  doc: Doc | null
-  currentPage: Page | null
-  currentSelection: Shape[]
-  libraries: Doc[]
-  tiptapEditor: TiptapEditor | null
-  editingText: Box | null
-}
-
-export type WhiteboardActions = {
-  setEditor: (editor: Editor | null) => void
-  setGridScale: (scale: number) => void
-  setGridOrigin: (origin: number[]) => void
-  setDarkMode: (darkMode: boolean) => void
-  setShowGrid: (showGrid: boolean) => void
-  setSnapToGrid: (snapToGrid: boolean) => void
-  setSnapToObjects: (snapToObjects: boolean) => void
-  setActiveHandler: (activeHandler: string) => void
-  setActiveHandlerLock: (activeHandlerLock: boolean) => void
-  setSelectedShape: (selectedShape: Shape[]) => void
-  setDoc: (doc: Doc) => void
-  setCurrentPage: (page: Page) => void
-  setCurrentSelection: (selection: Shape[]) => void
-  setLibraries: (libraries: Doc[]) => void
-  setTiptapEditor: (tiptapEditor: TiptapEditor | null) => void
-  setEditingText: (editingText: Box | null) => void
-}
+import { subscribeWithSelector } from "zustand/middleware"
+import type {
+  WhiteboardState,
+  WhiteboardStore,
+} from "@/types/whiteboard"
+import type { Editor } from "@dgmjs/core"
 
 const initialState: WhiteboardState = {
   editor: null,
@@ -48,9 +14,8 @@ const initialState: WhiteboardState = {
   showGrid: false,
   snapToGrid: false,
   snapToObjects: false,
-  activeHandler: 'Select',
+  activeHandler: "Select",
   activeHandlerLock: false,
-  selectedShape: null,
   doc: null,
   currentPage: null,
   currentSelection: [],
@@ -59,25 +24,60 @@ const initialState: WhiteboardState = {
   editingText: null,
 }
 
-export const useWhiteboardStore = create<WhiteboardState & WhiteboardActions>((set) => ({
-  ...initialState,
-  setEditor: (editor: Editor | null) => set({ editor }),
-  setGridScale: (scale: number) => set({ gridScale: scale }),
-  setGridOrigin: (origin: number[]) => set({ gridOrigin: origin }),
-  setDarkMode: (darkMode: boolean) => set({ darkMode: darkMode }),
-  setShowGrid: (showGrid: boolean) => set({ showGrid: showGrid }),
-  setSnapToGrid: (snapToGrid: boolean) => set({ snapToGrid: snapToGrid }),
-  setSnapToObjects: (snapToObjects: boolean) => set({ snapToObjects: snapToObjects }),
-  setActiveHandler: (activeHandler: string) => set((state) => {
-    state.editor?.activateHandler(activeHandler)
-    return { activeHandler: activeHandler }
-  }),
-  setActiveHandlerLock: (activeHandlerLock: boolean) => set({ activeHandlerLock: activeHandlerLock }),
-  setSelectedShape: (selectedShape: Shape[]) => set({ selectedShape: selectedShape }),
-  setDoc: (doc: Doc) => set({ doc: doc }),
-  setCurrentPage: (page: Page) => set({ currentPage: page }),
-  setCurrentSelection: (selection: Shape[]) => set({ currentSelection: selection }),
-  setLibraries: (libraries: Doc[]) => set({ libraries: libraries }),
-  setTiptapEditor: (tiptapEditor: TiptapEditor | null) => set({ tiptapEditor }),
-  setEditingText: (editingText: Box | null) => set({ editingText }),
-}))
+export const whiteboardActions = {
+  /**
+   * Activate a handler tool on the editor and update store state.
+   */
+  activateHandler: (handler: string) => {
+    const state = useWhiteboardStore.getState()
+    state.editor?.activateHandler(handler)
+    state.setActiveHandler(handler)
+  },
+
+  /**
+   * Toggle grid visibility on the editor and update store state.
+   */
+  setShowGrid: (showGrid: boolean) => {
+    const state = useWhiteboardStore.getState()
+    state.setShowGrid(showGrid)
+  },
+
+  /**
+   * Toggle snap to grid on the editor and update store state.
+   */
+  setSnapToGrid: (snapToGrid: boolean) => {
+    const state = useWhiteboardStore.getState()
+    // Note: snapToGrid is managed through the store and passed to the DGMEditor component
+    state.setSnapToGrid(snapToGrid)
+  },
+
+  /**
+   * Toggle snap to objects on the editor and update store state.
+   */
+  setSnapToObjects: (snapToObjects: boolean) => {
+    const state = useWhiteboardStore.getState()
+    // Note: snapToObjects is managed through the store and passed to the DGMEditor component
+    state.setSnapToObjects(snapToObjects)
+  },
+}
+
+export const useWhiteboardStore = create<WhiteboardStore>()(
+  subscribeWithSelector((set) => ({
+    ...initialState,
+    setEditor: (editor: Editor | null) => set({ editor }),
+    setGridScale: (scale) => set({ gridScale: scale }),
+    setGridOrigin: (origin) => set({ gridOrigin: origin }),
+    setDarkMode: (darkMode) => set({ darkMode }),
+    setShowGrid: (showGrid) => set({ showGrid }),
+    setSnapToGrid: (snapToGrid) => set({ snapToGrid }),
+    setSnapToObjects: (snapToObjects) => set({ snapToObjects }),
+    setActiveHandler: (activeHandler) => set({ activeHandler }),
+    setActiveHandlerLock: (activeHandlerLock) => set({ activeHandlerLock }),
+    setDoc: (doc) => set({ doc }),
+    setCurrentPage: (page) => set({ currentPage: page }),
+    setCurrentSelection: (selection) => set({ currentSelection: selection }),
+    setLibraries: (libraries) => set({ libraries }),
+    setTiptapEditor: (tiptapEditor) => set({ tiptapEditor }),
+    setEditingText: (editingText) => set({ editingText }),
+  }))
+)

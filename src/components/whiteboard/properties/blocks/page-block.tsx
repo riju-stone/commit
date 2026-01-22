@@ -12,7 +12,7 @@ import TextFieldComponent from "../fields/text-field";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 
 export const PageBlock: React.FC = () => {
-  const { editor } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
   const page = editor?.getCurrentPage();
   const pageName = page?.name;
   const pageSize = JSON.stringify(page?.size);

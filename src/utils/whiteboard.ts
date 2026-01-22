@@ -1,6 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { geometry } from "@dgmjs/core";
+import { Editor, geometry, Shape } from "@dgmjs/core";
+
+/**
+ * Batch update multiple shapes with the same properties in a single transaction.
+ * This is more efficient than updating shapes one by one with forEach.
+ * 
+ * @param editor - The DGM editor instance
+ * @param shapes - Array of shapes to update
+ * @param updates - Properties to update on all shapes
+ * @returns The updated shapes array from the editor's selection
+ */
+export function batchUpdateShapes<T extends Record<string, unknown>>(
+  editor: Editor | null,
+  shapes: Shape[],
+  updates: T
+): Shape[] {
+  if (!editor || shapes.length === 0) return [];
+  
+  // Use the editor's built-in batch update - it handles all shapes in one transaction
+  editor.actions.update(updates, shapes);
+  
+  return editor.selection.shapes as Shape[];
+}
 
 const SCREEN_LEFT_MARGIN = 16;
 const SCREEN_TOP_MARGIN = 16;

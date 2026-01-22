@@ -5,12 +5,13 @@ import NumberFieldComponent from "../fields/number-field";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
 import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
-import { merge } from "@/utils/whiteboard";
+import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
-import { Shape } from "@dgmjs/core";
 
 export const ShapeBlock: React.FC = () => {
-  const { currentSelection, editor, setCurrentSelection } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
   const rotate = merge(currentSelection.map((s) => s.rotate));
   const rotatable = merge(currentSelection.map((s) => s.rotatable));
   const opacity = merge(currentSelection.map((s) => s.opacity));
@@ -32,10 +33,8 @@ export const ShapeBlock: React.FC = () => {
                 className="flex-grow text-xs h-7"
                 value={rotate}
                 onChange={(value: number) => {
-                  currentSelection.forEach((shape: Shape) => {
-                    editor?.actions.update({ rotate: value }, [shape]);
-                  });
-                  setCurrentSelection(editor?.selection.shapes as Shape[]);
+                  const updated = batchUpdateShapes(editor, currentSelection, { rotate: value });
+                  setCurrentSelection(updated);
                 }}
               />
             </div>
@@ -52,10 +51,8 @@ export const ShapeBlock: React.FC = () => {
               className="w-7 h-7 px-1 justify-center flex-none"
               pressed={!rotatable}
               onPressedChange={(pressed) => {
-                currentSelection.forEach((shape: Shape) => {
-                  editor?.actions.update({ rotatable: !pressed }, [shape]);
-                });
-                setCurrentSelection(editor?.selection.shapes as Shape[]);
+                const updated = batchUpdateShapes(editor, currentSelection, { rotatable: !pressed });
+                setCurrentSelection(updated);
               }}
             >
               <LockIcon size={16} />
@@ -75,10 +72,8 @@ export const ShapeBlock: React.FC = () => {
             min={0}
             value={[opacity || 0]}
             onValueChange={(value: number[]) => {
-              currentSelection.forEach((shape: Shape) => {
-                editor?.actions.update({ opacity: value[0] }, [shape]);
-              });
-              setCurrentSelection(editor?.selection.shapes as Shape[]);
+              const updated = batchUpdateShapes(editor, currentSelection, { opacity: value[0] });
+              setCurrentSelection(updated);
             }}
           />
         </div>

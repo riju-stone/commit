@@ -1,12 +1,12 @@
 import { Button } from '@/components/ui/button'
-import { Heading, Heading1, Heading2, Heading3, Heading4, Image, Table, TextAlignCenter, TextAlignEnd, TextAlignJustify, TextAlignStart, Type } from 'lucide-react'
-import { useCurrentEditor } from '@tiptap/react'
+import { Heading, Heading1, Heading2, Heading3, Heading4, Image, Table, TextAlignCenter, TextAlignEnd, TextAlignJustify, TextAlignStart, Type, ListChecks } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
+import { useNoteStore } from '@/store/noteStore';
 
 function ToolbarComponent() {
-  const { editor } = useCurrentEditor();
+  const editor = useNoteStore((state) => state.editor);
 
   return (
     <div className='absolute flex items-center justify-center bottom-7 left-1/2 -translate-x-1/2 h-[45px] backdrop-blur-sm border-2 border-white/20 rounded-xl z-99'>
@@ -174,6 +174,22 @@ function ToolbarComponent() {
           </TooltipTrigger>
           <TooltipContent>
             <p>Add Image</p>
+          </TooltipContent>
+        </Tooltip>
+
+        <Tooltip delayDuration={500}>
+          <TooltipTrigger asChild>
+            <Button
+              variant='ghost' size='sm'
+              className='text-white'
+              onClick={() => {
+                editor?.chain().focus().toggleTaskList().run()
+              }}>
+              <ListChecks />
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>
+            <p>Task List</p>
           </TooltipContent>
         </Tooltip>
       </div>

@@ -75,7 +75,7 @@ function PageProperties() {
 }
 
 function ShapeProperties() {
-  const { currentSelection } = useWhiteboardStore();
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
 
   // Determine which controls to show based on selected shape types
   const showLineControls = isLineShape(currentSelection);
@@ -83,6 +83,7 @@ function ShapeProperties() {
   const showFillControls = supportsFillProperties(currentSelection);
   const showTextControls = supportsTextProperties(currentSelection);
   const showCornerRadiusControls = supportsCornerRadius(currentSelection);
+
   // Get the shape type(s) for display
   const shapeTypes = [...new Set(currentSelection.map((s) => s.type))];
   const shapeTypeLabel =
@@ -101,7 +102,6 @@ function ShapeProperties() {
       </div>
 
       <ControlBlock />
-
       <ShapeBlock />
 
       {/* Fill Color Section - only for non-line shapes */}
@@ -153,7 +153,7 @@ function ShapeProperties() {
 }
 
 export const PropertySidebar: React.FC = () => {
-  const { editor } = useWhiteboardStore();
+  const editor = useWhiteboardStore((state) => state.editor);
 
   const currentPage = editor?.getCurrentPage();
   const shapes = editor?.selection.shapes as Shape[];

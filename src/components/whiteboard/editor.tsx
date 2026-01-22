@@ -4,15 +4,14 @@ import { DGMEditor, TiptapEditor } from '@dgmjs/react';
 import { useCallback, useRef } from 'react'
 
 function WhiteBoardEditorComponent() {
-  const {
-    editor,
-    setEditor,
-    setCurrentSelection,
-    setActiveHandler,
-    setGridOrigin,
-    setGridScale,
-    darkMode,
-  } = useWhiteboardStore();
+  // Use selective subscriptions to prevent unnecessary re-renders
+  const editor = useWhiteboardStore((state) => state.editor);
+  const darkMode = useWhiteboardStore((state) => state.darkMode);
+  const setEditor = useWhiteboardStore((state) => state.setEditor);
+  const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
+  const setActiveHandler = useWhiteboardStore((state) => state.setActiveHandler);
+  const setGridOrigin = useWhiteboardStore((state) => state.setGridOrigin);
+  const setGridScale = useWhiteboardStore((state) => state.setGridScale);
 
   const tiptapEditorRef = useRef<TiptapEditor | null>(null);
 

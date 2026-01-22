@@ -1,9 +1,9 @@
-import { useCurrentEditor } from '@tiptap/react';
 import { BoldIcon, ItalicIcon, Strikethrough, UnderlineIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { useNoteStore } from '@/store/noteStore';
 
 function BubbleMenuComponent() {
-  const { editor } = useCurrentEditor();
+  const editor = useNoteStore((state) => state.editor);
 
   return (
     <div className='flex justify-center items-center h-[45px] bg-transparent backdrop-blur-sm border-2 border-white/20 rounded-xl p-1 gap-1'>
