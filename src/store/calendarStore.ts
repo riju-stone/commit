@@ -1,13 +1,10 @@
 import { create } from 'zustand'
-import { useMemo } from 'react'
-import { getMonth, getYear } from 'date-fns'
-import { generateMonthView, navigateDate, getWeekdayNames } from '@/utils/calendar'
+import { navigateDate } from '@/utils/calendar'
 import type {
   CalendarViewType,
   WeekStartDay,
   CalendarEvent,
   CalendarSource,
-  CalendarMonthView,
   SyncStatus,
 } from '@/types/calendar'
 

@@ -1,8 +1,8 @@
 import { useCalendarStore } from "@/store/calendarStore"
 import { CalendarMonthView, CalendarEvent, CalendarWeekView } from "@/types/calendar"
 import { useMemo } from "react"
-import { getMonth, getWeek, getYear } from "date-fns"
-import { generateMonthView, generateWeekView, getWeekdayNames } from "@/utils/calendar"
+import { getMonth, getYear } from "date-fns"
+import { generateDailyTimeSlots, generateMonthView, generateWeekView, getWeekdayNames } from "@/utils/calendar"
 
 /**
  * Hook to get the current month view data
@@ -15,16 +15,6 @@ export function useMonthViewData(): CalendarMonthView {
     () => generateMonthView(getMonth(currentDate), getYear(currentDate), weekStartDay),
     [currentDate, weekStartDay]
   )
-} 
-
-export function useWeekViewData(): CalendarWeekView {
-  const currentDate = useCalendarStore((state) => state.currentDate)
-  const weekStartDay = useCalendarStore((state) => state.weekStartDay)
-
-  return useMemo(
-    () => generateWeekView(getWeek(currentDate), getYear(currentDate), weekStartDay),
-    [currentDate, weekStartDay]
-  )
 }
 
 /**
@@ -32,11 +22,22 @@ export function useWeekViewData(): CalendarWeekView {
  */
 export function useWeekdayNames(formatType: 'long' | 'short' | 'narrow' = 'long'): string[] {
   const weekStartDay = useCalendarStore((state) => state.weekStartDay)
+  return useMemo(() => getWeekdayNames(weekStartDay, formatType),
+    [weekStartDay, formatType])
+}
+
+export function useWeekViewData(): CalendarWeekView {
+  const currentDate = useCalendarStore((state) => state.currentDate)
 
   return useMemo(
-    () => getWeekdayNames(weekStartDay, formatType),
-    [weekStartDay, formatType]
+    () => generateWeekView(currentDate),
+    [currentDate]
   )
+}
+
+export function useDailyTimeSlots(intervalMinutes: number = 120): { start: Date, end: Date }[] {
+  const currentDate = useCalendarStore((state) => state.currentDate)
+  return useMemo(() => generateDailyTimeSlots(currentDate, intervalMinutes), [currentDate])
 }
 
 /**

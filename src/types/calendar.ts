@@ -67,6 +67,8 @@ export interface CalendarDay {
   day: number
   month: number
   year: number
+  week: number,
+  weekDay: string,
   isCurrentMonth: boolean
   isPrevMonth: boolean
   isNextMonth: boolean

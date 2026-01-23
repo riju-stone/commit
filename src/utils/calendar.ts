@@ -18,7 +18,12 @@ import {
   subDays,
   format,
   parseISO,
+  getWeek,
+  addMinutes,
+  endOfDay,
+  startOfDay,
 } from 'date-fns'
+
 import type {
   CalendarDay,
   CalendarWeek,
@@ -32,58 +37,52 @@ import type {
 // Number of weeks to display in month view (6 weeks = 42 days)
 const WEEKS_IN_MONTH_VIEW = 6
 
-/**
- * Get the day of the week the month starts on
- * @param date - The date to check
- * @returns 0-6 (0 = Sunday, 6 = Saturday)
- */
 export function getMonthStartDay(date: Date): number {
   return getDay(startOfMonth(date))
 }
 
-/**
- * Get the number of days in a month
- * @param date - The date to check
- * @returns Number of days in the month
- */
 export function getMonthDays(date: Date): number {
   return getDaysInMonth(date)
 }
 
-/**
- * Generate week view data with padding for previous/next week days
- * Supports configurable week start day (Sunday or Monday)
- * 
- * @param week - Week number (1-52)
- * @param year - Full year (e.g., 2024)
- * @param weekStartDay - 0 for Sunday, 1 for Monday
- * @returns CalendarWeekView with days array containing CalendarDay objects
- */
-export function generateWeekView(
-  week: number,
-  year: number,
-  weekStartDay: WeekStartDay = 0
-): CalendarWeekView {
-  const currentDate = new Date(year, 0, 1)
-  const weekStart = startOfWeek(currentDate, { weekStartsOn: weekStartDay })
-  const weekEnd = endOfWeek(weekStart, { weekStartsOn: weekStartDay })
-  const allDays = eachDayOfInterval({ start: weekStart, end: weekEnd })
-  const days: CalendarDay[] = []
-  for (const date of allDays) {
-    days.push({ date, day: getDate(date), month: getMonth(date), year: getYear(date), isCurrentMonth: false, isPrevMonth: false, isNextMonth: false, isToday: false })
+export function generateDailyTimeSlots(date: Date, intervalMinutes: number = 30): { start: Date, end: Date }[] {
+  const timeSlots: { start: Date, end: Date }[] = []
+  const startDate = startOfDay(date)
+  const endDate = endOfDay(date)
+  for (let time = startDate; time < endDate; time = addMinutes(time, intervalMinutes)) {
+    timeSlots.push({
+      start: time,
+      end: addMinutes(time, intervalMinutes),
+    })
   }
-  return { week, year, days }
+  return timeSlots as { start: Date, end: Date }[]
 }
 
-/**
- * Generate month view data with padding for previous/next month days
- * Supports configurable week start day (Sunday or Monday)
- * 
- * @param month - Month index (0-11)
- * @param year - Full year (e.g., 2024)
- * @param weekStartDay - 0 for Sunday, 1 for Monday
- * @returns CalendarMonthView with weeks array containing CalendarDay objects
- */
+export function generateWeekView(currentDate: Date): CalendarWeekView {
+  // Get an array of CalendarDay objects for the current week
+  const days = eachDayOfInterval({
+    start: startOfWeek(currentDate),
+    end: endOfWeek(currentDate)
+  })
+
+  return {
+    week: getWeek(currentDate),
+    year: getYear(currentDate),
+    days: days.map((date) => ({
+      date,
+      day: getDate(date),
+      month: getMonth(date),
+      year: getYear(date),
+      week: getWeek(date),
+      weekDay: format(date, 'EEEE'),
+      isCurrentMonth: getMonth(date) === getMonth(currentDate) && getYear(date) === getYear(currentDate),
+      isPrevMonth: getMonth(date) < getMonth(currentDate),
+      isNextMonth: getMonth(date) > getMonth(currentDate),
+      isToday: isToday(date)
+    }))
+  }
+}
+
 export function generateMonthView(
   month: number,
   year: number,
@@ -118,6 +117,8 @@ export function generateMonthView(
       day: getDate(date),
       month: dayMonth,
       year: dayYear,
+      week: getWeek(date),
+      weekDay: format(date, 'EEEE'),
       isCurrentMonth: dayMonth === month && dayYear === year,
       isPrevMonth: dayYear < year || (dayYear === year && dayMonth < month),
       isNextMonth: dayYear > year || (dayYear === year && dayMonth > month),
@@ -140,13 +141,6 @@ export function generateMonthView(
   }
 }
 
-/**
- * Navigate to a different month/year
- * @param currentDate - Current date
- * @param direction - 'prev' or 'next'
- * @param unit - 'month', 'week', or 'day'
- * @returns New date after navigation
- */
 export function navigateDate(
   currentDate: Date,
   direction: 'prev' | 'next',
@@ -161,14 +155,6 @@ export function navigateDate(
   return navigators[unit][direction](currentDate, 1)
 }
 
-/**
- * Get events for a specific day
- * Handles all-day events and events that span multiple days
- * 
- * @param date - The date to get events for
- * @param events - Array of calendar events
- * @returns Events occurring on that day
- */
 export function getEventsForDay(date: Date, events: CalendarEvent[]): CalendarEvent[] {
   return events.filter((event) => {
     // Check if the event starts on this day
@@ -185,13 +171,6 @@ export function getEventsForDay(date: Date, events: CalendarEvent[]): CalendarEv
   })
 }
 
-/**
- * Group events by date for efficient lookup
- * Uses ISO date string (YYYY-MM-DD) as key
- * 
- * @param events - Array of calendar events
- * @returns Object with ISO date keys and arrays of events
- */
 export function groupEventsByDate(events: CalendarEvent[]): EventsByDate {
   const grouped: EventsByDate = {}
 
@@ -217,40 +196,18 @@ export function groupEventsByDate(events: CalendarEvent[]): EventsByDate {
   return grouped
 }
 
-/**
- * Get the date key for a given date (used for event lookup)
- * @param date - Date to convert
- * @returns ISO date string (YYYY-MM-DD)
- */
 export function getDateKey(date: Date): string {
   return format(date, 'yyyy-MM-dd')
 }
 
-/**
- * Parse a date key back to a Date object
- * @param key - ISO date string (YYYY-MM-DD)
- * @returns Date object
- */
 export function parseDateKey(key: string): Date {
   return parseISO(key)
 }
 
-/**
- * Format a date for display
- * @param date - Date to format
- * @param formatStr - date-fns format string
- * @returns Formatted date string
- */
 export function formatDate(date: Date, formatStr: string): string {
   return format(date, formatStr)
 }
 
-/**
- * Get weekday names based on week start day
- * @param weekStartDay - 0 for Sunday, 1 for Monday
- * @param formatType - 'long' (Sunday), 'short' (Sun), or 'narrow' (S)
- * @returns Array of weekday names
- */
 export function getWeekdayNames(
   weekStartDay: WeekStartDay = 0,
   formatType: 'long' | 'short' | 'narrow' = 'long'
@@ -270,24 +227,6 @@ export function getWeekdayNames(
   }).map((day) => format(day, formatMap[formatType]))
 }
 
-/**
- * Check if two dates are in the same month and year
- * @param date1 - First date
- * @param date2 - Second date
- * @returns True if same month and year
- */
 export function isSameMonth(date1: Date, date2: Date): boolean {
   return getMonth(date1) === getMonth(date2) && getYear(date1) === getYear(date2)
-}
-
-// Re-export commonly used date-fns functions for convenience
-export {
-  isToday,
-  isSameDay,
-  format,
-  getMonth,
-  getYear,
-  getDate,
-  addMonths,
-  subMonths,
 }
