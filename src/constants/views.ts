@@ -7,6 +7,7 @@ import SettingsView from "@/views/settings";
 import OnboardingView from "@/views/onboarding";
 import NotesView from "@/views/notes";
 import EmailView from "@/views/email";
+import FeedView from "@/views/feed";
 
 export const APP_VIEW_CONFIG = {
   'onboarding': {
@@ -26,6 +27,12 @@ export const APP_VIEW_CONFIG = {
     'path': 'email',
     'fileExplorer': true,
     'sidebar': true,
+  },
+  "feed": {
+    'view': FeedView,
+    'path': 'feed',
+    'fileExplorer': false,
+    'sidebar': false,
   },
   "tasks": {
     'view': TaskView,

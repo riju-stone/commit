@@ -30,7 +30,7 @@ function SidebarComponent({ isOpen, children }: SidebarComponentProps) {
   return (
     <motion.div
       layout
-      className="h-screen bg-black/60 backdrop-blur-sm flex flex-col items-start justify-start"
+      className="h-screen bg-black/50 backdrop-blur-sm flex flex-col items-start justify-start"
       variants={SIDEBAR_CONTENT_ANIMATION.sidebarWrapper}
       initial="closed"
       animate={isOpen ? "open" : "closed"}
