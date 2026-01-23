@@ -15,7 +15,7 @@ const SETTINGS_VIEW_ANIMATION = {
 
 function SettingsView() {
   return (
-    <div className="grow w-full h-screen bg-black/70 flex items-center justify-center overflow-hidden text-white">
+    <div className="grow w-full h-screen bg-black/80 flex items-center justify-center overflow-hidden text-white">
       <motion.div layout variants={SETTINGS_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">SettingsView</motion.div>
     </div>
   )

@@ -1,23 +1,62 @@
 import { useTimelineDays } from '@/hooks/calendar'
 import { format, parseISO } from 'date-fns'
 import { useMemo, memo } from 'react'
+import { motion } from 'motion/react'
+
+const DAY_ITEM_PARENT = {
+  initial: {
+    staggerChildren: 0.1,
+  },
+  hover: {
+    staggerChildren: 0.1,
+  }
+}
+
+const DAY_ITEM_LINE = {
+  initial: {
+    width: "50px",
+    backgroundColor: "#fff",
+  },
+  hover: {
+    width: "75px",
+    backgroundColor: "#FA5C5C",
+  },
+}
+
+const DAY_ITEM_LABEL = {
+  initial: {
+    color: "#fff",
+  },
+  hover: {
+    color: "#FA5C5C",
+  },
+}
 
 const DayItem = memo(({ day }: { day: Date }) => {
   const dayLabel = useMemo(() => format(day, 'dd'), [day])
   return (
-    <div className='w-full flex gap-2 justify-end items-center'>
-      <div className='w-1/4 h-px bg-white/30' />
-      <div className='text-xs text-white/60'>
+    <motion.div
+      className='w-full flex gap-2 justify-end items-center cursor-pointer'
+      variants={DAY_ITEM_PARENT}
+      initial="initial"
+      whileHover="hover"
+    >
+      <motion.div
+        className='h-px'
+        variants={DAY_ITEM_LINE}
+      />
+      <motion.div className='text-sm'
+        variants={DAY_ITEM_LABEL}>
         {dayLabel}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div >
   )
 })
 
 const MonthSection = memo(({ month, days, monthLabel }: { month: string; days: Date[]; monthLabel: string }) => {
   return (
     <div className='w-full flex flex-col'>
-      <div className='w-fit text-sm text-white/60 bg-black/30 py-1 px-2 rounded-lg sticky top-0'>
+      <div className='w-fit text-sm text-white bg-black/30 border border-white/20 py-1 px-2 rounded-lg sticky top-0'>
         {monthLabel}
       </div>
 

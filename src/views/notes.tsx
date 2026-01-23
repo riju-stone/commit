@@ -16,7 +16,7 @@ const NOTES_VIEW_ANIMATION = {
 
 function NotesView() {
   return (
-    <div className="grow w-screen h-screen bg-black/70 flex items-center justify-center overflow-hidden text-white">
+    <div className="grow w-screen h-screen bg-black/80 flex items-center justify-center overflow-hidden text-white">
       <motion.div layout
         className="w-full h-full flex items-center justify-center"
         variants={NOTES_VIEW_ANIMATION} initial="initial"

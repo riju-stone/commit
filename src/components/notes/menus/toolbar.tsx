@@ -11,8 +11,8 @@ function ToolbarComponent() {
     <div className='absolute flex items-center justify-center bottom-7 left-1/2 -translate-x-1/2 h-[45px] backdrop-blur-sm border-2 border-white/20 rounded-xl z-99'>
       <div className='flex gap-[5px] bg-transparent rounded-[5px] p-1'>
         <Popover>
-          <PopoverTrigger>
-            <Tooltip delayDuration={500}>
+          <Tooltip delayDuration={500}>
+            <PopoverTrigger asChild>
               <TooltipTrigger asChild>
                 <Button
                   variant='ghost' size='sm'
@@ -20,11 +20,11 @@ function ToolbarComponent() {
                   <Heading />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                <p>Heading</p>
-              </TooltipContent>
-            </Tooltip>
-          </PopoverTrigger>
+            </PopoverTrigger>
+            <TooltipContent>
+              <p>Heading</p>
+            </TooltipContent>
+          </Tooltip>
           <PopoverContent side='top' align='center' className='h-[45px] w-fit mb-2 flex items-center justify-center gap-1 bg-transparent backdrop-blur-sm border-2 border-white/20 rounded-xl p-1'>
             <Tooltip delayDuration={500}>
               <TooltipTrigger asChild>
@@ -77,8 +77,8 @@ function ToolbarComponent() {
         </Popover>
 
         <Popover>
-          <PopoverTrigger>
-            <Tooltip delayDuration={500}>
+          <Tooltip delayDuration={500}>
+            <PopoverTrigger asChild>
               <TooltipTrigger asChild>
                 <Button
                   variant='ghost' size='sm' className='text-white'
@@ -86,11 +86,11 @@ function ToolbarComponent() {
                   <Type />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
-                <p>Font Style</p>
-              </TooltipContent>
-            </Tooltip>
-          </PopoverTrigger>
+            </PopoverTrigger>
+            <TooltipContent>
+              <p>Font Style</p>
+            </TooltipContent>
+          </Tooltip>
           <PopoverContent side='top' align='center' className='h-[45px] w-fit mb-2 flex items-center justify-center gap-1 bg-transparent backdrop-blur-sm border-2 border-white/20 rounded-xl p-1'>
 
             <Tooltip delayDuration={500}>

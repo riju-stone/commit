@@ -15,7 +15,7 @@ const EMAIL_VIEW_ANIMATION = {
 
 function EmailView() {
   return (
-    <div className="grow w-full h-screen bg-black/70 flex items-center justify-center overflow-hidden text-white">
+    <div className="grow w-full h-screen bg-black/80 flex items-center justify-center overflow-hidden text-white">
       <motion.div layout variants={EMAIL_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">EmailView</motion.div>
     </div>
   )

@@ -15,7 +15,7 @@ const FEED_VIEW_ANIMATION = {
 
 function FeedView() {
   return (
-    <div className="grow w-full h-screen bg-black/70 flex items-center justify-center overflow-hidden text-white">
+    <div className="grow w-full h-screen bg-black/80 flex items-center justify-center overflow-hidden text-white">
       <motion.div layout variants={FEED_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">FeedView</motion.div>
     </div>
   )
