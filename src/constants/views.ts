@@ -31,7 +31,7 @@ export const APP_VIEW_CONFIG = {
   "feed": {
     'view': FeedView,
     'path': 'feed',
-    'fileExplorer': false,
+    'fileExplorer': true,
     'sidebar': false,
   },
   "tasks": {

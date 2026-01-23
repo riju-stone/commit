@@ -64,12 +64,7 @@ function NotesEditorComponent() {
           class: 'task-list',
         },
       }),
-      CustomTaskItem.configure({
-        nested: true,
-        HTMLAttributes: {
-          class: 'task-item',
-        },
-      }),
+      CustomTaskItem,
     ],
     content: ``,
     editorProps: {

@@ -1,8 +1,7 @@
 import { Button } from '@/components/ui/button'
-import { Heading, Heading1, Heading2, Heading3, Heading4, Image, Table, TextAlignCenter, TextAlignEnd, TextAlignJustify, TextAlignStart, Type, ListChecks } from 'lucide-react'
+import { Heading, Heading1, Heading2, Heading3, Heading4, Image, Table, TextAlignJustify, TextAlignStart, TextAlignCenter, Type, ListChecks, TextAlignEnd } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
-import { ToggleGroup, ToggleGroupItem } from '@radix-ui/react-toggle-group';
 import { useNoteStore } from '@/store/noteStore';
 
 function ToolbarComponent() {
@@ -94,56 +93,55 @@ function ToolbarComponent() {
           </PopoverTrigger>
           <PopoverContent side='top' align='center' className='h-[45px] w-fit mb-2 flex items-center justify-center gap-1 bg-transparent backdrop-blur-sm border-2 border-white/20 rounded-xl p-1'>
 
-            <ToggleGroup type='single' value='left'
-              className='dark'
-              onValueChange={(value: string) => editor?.chain().focus().setTextAlign(value).run()}>
-
-              <ToggleGroupItem value='left' className='text-white'>
-                <Tooltip delayDuration={500}>
-                  <TooltipTrigger asChild>
-                    <TextAlignStart />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Align Left</p>
-                  </TooltipContent>
-                </Tooltip>
-              </ToggleGroupItem>
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger asChild>
+                <Button variant='ghost' size='sm' className='text-white'
+                  onClick={() => { editor?.chain().focus().setTextAlign('left').run() }}>
+                  <TextAlignStart />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Align Left</p>
+              </TooltipContent>
+            </Tooltip>
 
 
-              <ToggleGroupItem value='center' className='text-white'>
-                <Tooltip delayDuration={500}>
-                  <TooltipTrigger asChild>
-                    <TextAlignCenter />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Align Center</p>
-                  </TooltipContent>
-                </Tooltip>
-              </ToggleGroupItem>
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger asChild>
+                <Button variant='ghost' size='sm' className='text-white'
+                  onClick={() => { editor?.chain().focus().setTextAlign('center').run() }}>
+                  <TextAlignCenter />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Align Center</p>
+              </TooltipContent>
+            </Tooltip>
 
 
-              <ToggleGroupItem value='right' className='text-white'>
-                <Tooltip delayDuration={500}>
-                  <TooltipTrigger asChild>
-                    <TextAlignEnd />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Align Right</p>
-                  </TooltipContent>
-                </Tooltip>
-              </ToggleGroupItem>
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger asChild>
+                <Button variant='ghost' size='sm' className='text-white'
+                  onClick={() => { editor?.chain().focus().setTextAlign('right').run() }}>
+                  <TextAlignEnd />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Align Right</p>
+              </TooltipContent>
+            </Tooltip>
 
-              <ToggleGroupItem value='justify' className='text-white'>
-                <Tooltip delayDuration={500}>
-                  <TooltipTrigger asChild>
-                    <TextAlignJustify />
-                  </TooltipTrigger>
-                  <TooltipContent>
-                    <p>Align Justify</p>
-                  </TooltipContent>
-                </Tooltip>
-              </ToggleGroupItem>
-            </ToggleGroup>
+            <Tooltip delayDuration={500}>
+              <TooltipTrigger asChild>
+                <Button variant='ghost' size='sm' className='text-white'
+                  onClick={() => { editor?.chain().focus().setTextAlign('justify').run() }}>
+                  <TextAlignJustify />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Align Justify</p>
+              </TooltipContent>
+            </Tooltip>
           </PopoverContent>
         </Popover>
 
