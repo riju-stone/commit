@@ -22,6 +22,8 @@ import {
   addMinutes,
   endOfDay,
   startOfDay,
+  eachMonthOfInterval,
+  endOfMonth,
 } from 'date-fns'
 
 import type {
@@ -43,6 +45,64 @@ export function getMonthStartDay(date: Date): number {
 
 export function getMonthDays(date: Date): number {
   return getDaysInMonth(date)
+}
+
+export function generateTimelineDays(startDate: Date, days: number) {
+  let timelineDays: Record<string, Date[]> = {}
+
+  // Calculate the end date (going backwards from startDate)
+  // days - 1 because we want to include startDate itself, giving us exactly 'days' days
+  const endDate = subDays(startDate, days - 1)
+  
+  // Generate months from endDate to startDate (oldest to newest)
+  // We use the start of the end month and the start of the start month
+  // To ensure we include the start month, we add 1 month to the end
+  const months = eachMonthOfInterval({
+    start: startOfMonth(endDate),
+    end: addMonths(startOfMonth(startDate), 1)
+  });
+
+  // Pre-compute month strings to avoid repeated formatting
+  const startMonthAndYear = format(startDate, 'yyyy-MM')
+  const endMonthAndYear = format(endDate, 'yyyy-MM')
+
+  for (const month of months) {
+    const monthAndYear = format(month, 'yyyy-MM')
+    
+    // Skip if this month is beyond our start date
+    if (month > startDate) {
+      continue
+    }
+    
+    // Determine the start and end dates for this month
+    let monthStart: Date
+    let monthEnd: Date
+    
+    if (monthAndYear === startMonthAndYear) {
+      // Current month: from start of month to startDate
+      monthStart = startOfMonth(month)
+      monthEnd = startDate
+    } else if (monthAndYear === endMonthAndYear) {
+      // Oldest month: from endDate to end of month
+      monthStart = endDate
+      monthEnd = endOfMonth(month)
+    } else {
+      // Middle months: full month
+      monthStart = startOfMonth(month)
+      monthEnd = endOfMonth(month)
+    }
+    
+    // Generate days and reverse them immediately (newest first) to avoid reversing in render
+    const days = eachDayOfInterval({
+      start: monthStart,
+      end: monthEnd
+    });
+    
+    // Store days in reverse order (newest first) for optimal rendering
+    timelineDays[monthAndYear] = days.reverse();
+  }
+
+  return timelineDays;
 }
 
 export function generateDailyTimeSlots(date: Date, intervalMinutes: number = 30): { start: Date, end: Date }[] {

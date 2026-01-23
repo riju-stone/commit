@@ -37,7 +37,7 @@ function SidebarComponent({ isOpen, children }: SidebarComponentProps) {
       transition={SIDEBAR_CONTENT_ANIMATION.transition}
     >
       {children && (
-        <div className="w-full h-full overflow-x-hidden">
+        <div className="w-full h-full overflow-x-hidden text-nowrap">
           {children}
         </div>
       )}

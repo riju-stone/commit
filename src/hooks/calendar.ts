@@ -2,7 +2,7 @@ import { useCalendarStore } from "@/store/calendarStore"
 import { CalendarMonthView, CalendarEvent, CalendarWeekView } from "@/types/calendar"
 import { useMemo } from "react"
 import { getMonth, getYear } from "date-fns"
-import { generateDailyTimeSlots, generateMonthView, generateWeekView, getWeekdayNames } from "@/utils/calendar"
+import { generateDailyTimeSlots, generateMonthView, generateTimelineDays, generateWeekView, getWeekdayNames } from "@/utils/calendar"
 
 /**
  * Hook to get the current month view data
@@ -38,6 +38,10 @@ export function useWeekViewData(): CalendarWeekView {
 export function useDailyTimeSlots(intervalMinutes: number = 120): { start: Date, end: Date }[] {
   const currentDate = useCalendarStore((state) => state.currentDate)
   return useMemo(() => generateDailyTimeSlots(currentDate, intervalMinutes), [currentDate])
+}
+
+export function useTimelineDays(startDate: Date, days: number): Record<string, Date[]> {
+  return useMemo(() => generateTimelineDays(startDate, days), [startDate, days])
 }
 
 /**
