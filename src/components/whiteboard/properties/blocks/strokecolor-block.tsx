@@ -37,17 +37,17 @@ export const StrokeColorBlock: React.FC = () => {
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Label htmlFor="stroke-width-field" className="flex-none px-1 cursor-help">
+              <Label htmlFor="stroke-width-field" className="flex-none px-1 cursor-help dark text-white">
                 <StrokeSolidIcon size={16} />
               </Label>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Stroke width</p>
             </TooltipContent>
           </Tooltip>
           <NumberFieldComponent
             id="stroke-width-field"
-            className="grow text-xs h-7"
+            className="grow text-xs h-7 dark text-white"
             value={strokeWidth}
             onChange={(value: number) => {
               const updated = batchUpdateShapes(editor, currentSelection, { strokeWidth: value });
@@ -58,17 +58,17 @@ export const StrokeColorBlock: React.FC = () => {
         <div className="flex items-center gap-2">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Label htmlFor="stroke-pattern-field" className="flex-none px-1 cursor-help">
+              <Label htmlFor="stroke-pattern-field" className="flex-none px-1 cursor-help dark text-white">
                 <StrokeDottedIcon size={16} />
               </Label>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Stroke pattern</p>
             </TooltipContent>
           </Tooltip>
           <TextFieldComponent
             id="stroke-pattern-field"
-            className="grow text-xs h-7"
+            className="grow text-xs h-7 dark text-white"
             value={
               Array.isArray(strokePattern)
                 ? strokePattern.length > 0
@@ -85,9 +85,10 @@ export const StrokeColorBlock: React.FC = () => {
         </div>
       </div>
       <div className="flex h-7 items-center gap-3">
-        <Label className="font-normal text-xs">Roughness</Label>
+        <Label className="font-normal text-xs text-white">Roughness</Label>
         <div className="w-full">
           <Slider
+            className="dark text-white"
             max={5}
             step={0.5}
             min={0}

@@ -21,7 +21,7 @@ export function batchUpdateShapes<T extends Record<string, unknown>>(
   // Use the editor's built-in batch update - it handles all shapes in one transaction
   editor.actions.update(updates, shapes);
   
-  return editor.selection.shapes as Shape[];
+  return [...(editor.selection.shapes as Shape[])];
 }
 
 const SCREEN_LEFT_MARGIN = 16;

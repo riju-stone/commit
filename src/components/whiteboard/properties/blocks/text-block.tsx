@@ -100,12 +100,12 @@ export const TextBlock: React.FC = () => {
             setCurrentSelection(updated);
           }}
         >
-          <SelectTrigger className="h-7 text-xs" title="Font Family">
+          <SelectTrigger className="h-7 text-xs dark text-white" title="Font Family">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
+          <SelectContent className="dark">
             {fontFamilies.map((family: string) => (
-              <SelectItem className="text-xs" key={family} value={family}>
+              <SelectItem className="text-xs dark text-white" key={family} value={family}>
                 {family}
               </SelectItem>
             ))}
@@ -122,35 +122,35 @@ export const TextBlock: React.FC = () => {
               setCurrentSelection(updated);
             }}
           >
-            <SelectTrigger className="h-7 text-xs w-full" title="Font Weight">
+            <SelectTrigger className="h-7 text-xs w-full dark text-white" title="Font Weight">
               <SelectValue />
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem className="text-xs" value="100">
+            <SelectContent className="dark">
+              <SelectItem className="text-xs dark text-white" value="100">
                 Thin
               </SelectItem>
-              <SelectItem className="text-xs" value="200">
+              <SelectItem className="text-xs dark text-white" value="200">
                 ExtraLight
               </SelectItem>
-              <SelectItem className="text-xs" value="300">
+              <SelectItem className="text-xs dark text-white" value="300">
                 Light
               </SelectItem>
-              <SelectItem className="text-xs" value="400">
+              <SelectItem className="text-xs dark text-white" value="400">
                 Regular
               </SelectItem>
-              <SelectItem className="text-xs" value="500">
+              <SelectItem className="text-xs dark text-white" value="500">
                 Medium
               </SelectItem>
-              <SelectItem className="text-xs" value="600">
+              <SelectItem className="text-xs dark text-white" value="600">
                 SemiBold
               </SelectItem>
-              <SelectItem className="text-xs" value="700">
+              <SelectItem className="text-xs dark text-white" value="700">
                 Bold
               </SelectItem>
-              <SelectItem className="text-xs" value="800">
+              <SelectItem className="text-xs dark text-white" value="800">
                 ExtraBold
               </SelectItem>
-              <SelectItem className="text-xs" value="900">
+              <SelectItem className="text-xs dark text-white" value="900">
                 Black
               </SelectItem>
             </SelectContent>
@@ -163,7 +163,7 @@ export const TextBlock: React.FC = () => {
               const updated = batchUpdateShapes(editor, currentSelection, { fontSize: value });
               setCurrentSelection(updated);
             }}
-            className="w-20 h-7 text-xs items-center"
+            className="w-20 h-7 text-xs items-center dark text-white"
             title="Font Size"
           />
           <DropdownMenu>
@@ -171,16 +171,16 @@ export const TextBlock: React.FC = () => {
               <div className="flex h-7 text-xs min-w-6 relative -left-7 items-center">
                 <Button
                   variant="ghost"
-                  className="text-muted-foreground h-6 min-w-6 px-0"
+                  className="h-6 min-w-6 px-0 dark text-white"
                 >
                   <ChevronsUpDownIcon size={12} />
                 </Button>
               </div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent>
+            <DropdownMenuContent className="dark">
               {FONT_SIZES.map((size: number) => (
                 <DropdownMenuItem
-                  className="text-xs"
+                  className="text-xs dark text-white"
                   key={size}
                   onSelect={() => {
                     const updated = batchUpdateShapes(editor, currentSelection, { fontSize: size });
@@ -199,8 +199,10 @@ export const TextBlock: React.FC = () => {
           <ToggleGroup
             type="single"
             size="sm"
+            className="dark text-white"
             value={horzAlign}
             onValueChange={(value) => {
+              if (!value) return;
               const updated = batchUpdateShapes(editor, currentSelection, { horzAlign: value as HorzAlignEnum });
               setCurrentSelection(updated);
             }}
@@ -209,12 +211,12 @@ export const TextBlock: React.FC = () => {
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   value={HorzAlign.LEFT}
-                  className="h-7 w-7 p-0"
+                  className="h-7 w-7 p-0 dark text-white"
                 >
                   <AlignLeftIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Align left</p>
               </TooltipContent>
             </Tooltip>
@@ -222,12 +224,12 @@ export const TextBlock: React.FC = () => {
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   value={HorzAlign.CENTER}
-                  className="h-7 w-7 p-0"
+                  className="h-7 w-7 p-0 dark text-white"
                 >
                   <AlignCenterIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Align center</p>
               </TooltipContent>
             </Tooltip>
@@ -235,12 +237,12 @@ export const TextBlock: React.FC = () => {
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   value={HorzAlign.RIGHT}
-                  className="h-7 w-7 p-0"
+                  className="h-7 w-7 p-0 dark text-white"
                 >
                   <AlignRightIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Align right</p>
               </TooltipContent>
             </Tooltip>
@@ -250,6 +252,7 @@ export const TextBlock: React.FC = () => {
             size="sm"
             value={vertAlign}
             onValueChange={(value) => {
+              if (!value) return;
               const updated = batchUpdateShapes(editor, currentSelection, { vertAlign: value as VertAlignEnum });
               setCurrentSelection(updated);
             }}
@@ -258,12 +261,12 @@ export const TextBlock: React.FC = () => {
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   value={VertAlign.TOP}
-                  className="h-7 w-7 p-0"
+                  className="h-7 w-7 p-0 dark text-white"
                 >
                   <VerticalTopIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Align top</p>
               </TooltipContent>
             </Tooltip>
@@ -271,12 +274,12 @@ export const TextBlock: React.FC = () => {
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   value={VertAlign.MIDDLE}
-                  className="h-7 w-7 p-0"
+                  className="h-7 w-7 p-0 dark text-white"
                 >
                   <VerticalMiddleIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Align middle</p>
               </TooltipContent>
             </Tooltip>
@@ -284,12 +287,12 @@ export const TextBlock: React.FC = () => {
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   value={VertAlign.BOTTOM}
-                  className="h-7 w-7 p-0"
+                  className="h-7 w-7 p-0 dark text-white"
                 >
                   <VerticalBottomIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Align bottom</p>
               </TooltipContent>
             </Tooltip>
@@ -301,17 +304,17 @@ export const TextBlock: React.FC = () => {
           <div className="flex items-center gap-2">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Label htmlFor="text-line-height-field" className="text-xs px-1 cursor-help">
+                <Label htmlFor="text-line-height-field" className="text-xs px-1 cursor-help dark text-white">
                   <LineHeightIcon size={16} />
                 </Label>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Line height</p>
               </TooltipContent>
             </Tooltip>
             <NumberFieldComponent
               id="text-line-height-field"
-              className="grow text-xs h-7"
+              className="grow text-xs h-7 dark text-white"
               value={lineHeight}
               onChange={(value: number) => {
                 const updated = batchUpdateShapes(editor, currentSelection, { lineHeight: value });
@@ -322,17 +325,17 @@ export const TextBlock: React.FC = () => {
           <div className="flex items-center gap-2">
             <Tooltip>
               <TooltipTrigger asChild>
-                <Label htmlFor="text-paragraph-spacing-field" className="text-xs cursor-help">
+                <Label htmlFor="text-paragraph-spacing-field" className="text-xs cursor-help dark text-white">
                   <ParagraphSpacingIcon size={16} />
                 </Label>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Paragraph spacing</p>
               </TooltipContent>
             </Tooltip>
             <NumberFieldComponent
               id="text-paragraph-spacing-field"
-              className="grow text-xs h-7"
+              className="grow text-xs h-7 dark text-white"
               value={paragraphSpacing}
               onChange={(value: number) => {
                 const updated = batchUpdateShapes(editor, currentSelection, { paragraphSpacing: value });
@@ -345,7 +348,7 @@ export const TextBlock: React.FC = () => {
               <Toggle
                 variant="outline"
                 size="sm"
-                className="w-7 h-7 p-1"
+                className="w-7 h-7 p-1 dark text-white"
                 pressed={wordWrap}
                 onPressedChange={(pressed) => {
                   const updated = batchUpdateShapes(editor, currentSelection, { wordWrap: pressed });
@@ -355,7 +358,7 @@ export const TextBlock: React.FC = () => {
                 <WrapTextIcon size={16} />
               </Toggle>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Word wrap</p>
             </TooltipContent>
           </Tooltip>

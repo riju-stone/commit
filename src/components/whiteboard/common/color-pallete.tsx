@@ -95,7 +95,7 @@ const ColorItem: React.FC<ColorItemProps> = ({
       className={cn(
         "h-[18px] w-[18px] cursor-pointer border border-foreground/20 rounded-full",
         className,
-        value === "$background" || value === "$transparent" ? "border" : ""
+        value === "$background" || value === "$transparent" ? "border border-foreground/60 text-white" : ""
       )}
       style={
         value === "$transparent"

@@ -34,50 +34,52 @@ export const FillColorBlock: React.FC = () => {
       />
       <div className="flex items-center justify-center">
         <ToggleGroup
+          className="dark text-white border border-foreground/10 rounded-md"
           type="single"
           value={fillStyle}
           onValueChange={(value) => {
+            if (!value) return;
             const updated = batchUpdateShapes(editor, currentSelection, { fillStyle: value as FillStyleEnum });
             setCurrentSelection(updated);
           }}
         >
           <Tooltip>
             <TooltipTrigger asChild>
-              <ToggleGroupItem size="sm" value={FillStyle.NONE}>
+              <ToggleGroupItem className="dark text-white" size="sm" value={FillStyle.NONE}>
                 <FillNoneIcon size={16} />
               </ToggleGroupItem>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>No fill</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <ToggleGroupItem size="sm" value={FillStyle.SOLID}>
+              <ToggleGroupItem className="dark text-white" size="sm" value={FillStyle.SOLID}>
                 <FillSolidIcon size={16} />
               </ToggleGroupItem>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Solid fill</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <ToggleGroupItem size="sm" value={FillStyle.HACHURE}>
+              <ToggleGroupItem className="dark text-white" size="sm" value={FillStyle.HACHURE}>
                 <FillHachureIcon size={16} />
               </ToggleGroupItem>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Hachure fill</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <ToggleGroupItem size="sm" value={FillStyle.CROSS_HATCH}>
+              <ToggleGroupItem className="dark text-white" size="sm" value={FillStyle.CROSS_HATCH}>
                 <FillCrossHatchIcon size={16} />
               </ToggleGroupItem>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Cross-hatch fill</p>
             </TooltipContent>
           </Tooltip>

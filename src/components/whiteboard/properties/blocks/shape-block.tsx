@@ -23,14 +23,15 @@ export const ShapeBlock: React.FC = () => {
           <TooltipTrigger asChild>
             <div className="flex items-center gap-2">
               <Label
+
                 htmlFor="shape-rotate-field"
-                className="text-sm flex-none px-1"
+                className="text-sm flex-none px-1 dark text-white"
               >
                 <RotateCcwIcon size={16} />
               </Label>
               <NumberFieldComponent
                 id="shape-rotate-field"
-                className="flex-grow text-xs h-7"
+                className="grow text-xs h-7 dark text-white"
                 value={rotate}
                 onChange={(value: number) => {
                   const updated = batchUpdateShapes(editor, currentSelection, { rotate: value });
@@ -39,7 +40,7 @@ export const ShapeBlock: React.FC = () => {
               />
             </div>
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="dark">
             <p>Rotate</p>
           </TooltipContent>
         </Tooltip>
@@ -48,7 +49,7 @@ export const ShapeBlock: React.FC = () => {
             <Toggle
               variant="outline"
               size="sm"
-              className="w-7 h-7 px-1 justify-center flex-none"
+              className="w-7 h-7 px-1 justify-center flex-none dark text-white"
               pressed={!rotatable}
               onPressedChange={(pressed) => {
                 const updated = batchUpdateShapes(editor, currentSelection, { rotatable: !pressed });
@@ -58,15 +59,16 @@ export const ShapeBlock: React.FC = () => {
               <LockIcon size={16} />
             </Toggle>
           </TooltipTrigger>
-          <TooltipContent>
+          <TooltipContent className="dark">
             <p>Lock Rotation</p>
           </TooltipContent>
         </Tooltip>
       </div>
       <div className="flex h-7 items-center gap-3">
-        <Label className="font-normal text-xs">Opacity</Label>
+        <Label className="font-normal text-xs text-white">Opacity</Label>
         <div className="w-full">
           <Slider
+            className="dark text-white"
             max={1}
             step={0.1}
             min={0}

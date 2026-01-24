@@ -64,7 +64,7 @@ const ColorFieldComponent: React.FC<ColorFieldProps> = ({
             side="left"
             align="start"
             sideOffset={8}
-            className="w-fit text-center"
+            className="w-fit text-center dark"
           >
             <ColorPanel
               value={
@@ -79,7 +79,7 @@ const ColorFieldComponent: React.FC<ColorFieldProps> = ({
       <div className="w-full">
         <Input
           value={color ?? ""}
-          className="h-7 text-xs text-muted-foreground"
+          className="h-7 text-xs dark text-white"
           readOnly
         />
       </div>

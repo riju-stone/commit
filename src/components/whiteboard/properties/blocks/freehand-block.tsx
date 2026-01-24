@@ -15,9 +15,10 @@ export const FreehandBlock: React.FC = () => {
 
   return (<>
     <div className="flex h-7 text-xs items-center gap-3">
-      <Label className="font-normal text-xs w-28">Thining</Label>
+      <Label className="font-normal text-xs w-28 text-white">Thining</Label>
       <div className="w-full">
         <Slider
+          className="dark text-white"
           max={1}
           step={0.1}
           min={0}
@@ -30,9 +31,10 @@ export const FreehandBlock: React.FC = () => {
       </div>
     </div>
     <div className="flex h-7 text-xs items-center gap-3">
-      <Label className="font-normal text-xs w-28">Tail Taper</Label>
+      <Label className="font-normal text-xs w-28 text-white">Tail Taper</Label>
       <div className="w-full">
         <Slider
+          className="dark text-white"
           max={1}
           step={0.01}
           min={0}
@@ -45,9 +47,10 @@ export const FreehandBlock: React.FC = () => {
       </div>
     </div>
     <div className="flex h-7 text-xs items-center gap-3">
-      <Label className="font-normal text-xs w-28">Head Taper</Label>
+      <Label className="font-normal text-xs w-28 text-white">Head Taper</Label>
       <div className="w-full">
         <Slider
+          className="dark text-white"
           max={1}
           step={0.01}
           min={0}

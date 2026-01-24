@@ -1,10 +1,6 @@
 import { Box, Doc, Editor, Page, Shape } from "@dgmjs/core"
 import { TiptapEditor } from "@dgmjs/react"
 
-// ============================================================================
-// Store Types
-// ============================================================================
-
 export type WhiteboardState = {
   editor: Editor | null
   gridScale: number
@@ -43,10 +39,6 @@ export type WhiteboardActions = {
 
 export type WhiteboardStore = WhiteboardState & WhiteboardActions
 
-// ============================================================================
-// Document Persistence Types (for future file export/local save)
-// ============================================================================
-
 export interface WhiteboardDocument {
   id: string
   name: string
@@ -83,10 +75,6 @@ export interface DocumentMetadata {
   updatedAt: string
   thumbnail?: string
 }
-
-// ============================================================================
-// Document Slice Types (for store integration)
-// ============================================================================
 
 export interface DocumentSliceState {
   document: WhiteboardDocument | null

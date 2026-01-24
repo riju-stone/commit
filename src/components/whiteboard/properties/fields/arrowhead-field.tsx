@@ -113,9 +113,9 @@ export const SelectArrowheadComponent: React.FC<SelectArrowheadProps> = ({
     <Popover open={open} onOpenChange={(open) => setOpen(open)}>
       <PopoverTrigger asChild>
         <Button
-          variant="outline"
-          size="sm"
-          className={cn("rounded-sm w-7 h-7 px-1", className)}
+          variant="ghost"
+          size="icon"
+          className={cn("rounded-sm w-7 h-7 px-1 dark text-white", className)}
         >
           <ArrowheadIcon
             value={value ?? LineEndType.FLAT}
@@ -123,7 +123,7 @@ export const SelectArrowheadComponent: React.FC<SelectArrowheadProps> = ({
           />
         </Button>
       </PopoverTrigger>
-      <PopoverContent className="w-fit p-2">
+      <PopoverContent className="w-fit p-2 dark">
         <div className="grid grid-cols-5 gap-0.5 w-fit">
           {Object.values(LineEndType).map((value) => (
             <Tooltip key={value}>
@@ -131,7 +131,7 @@ export const SelectArrowheadComponent: React.FC<SelectArrowheadProps> = ({
                 <Button
                   variant="ghost"
                   size="icon"
-                  className={cn("h-7 w-7")}
+                  className={cn("dark text-white")}
                   onClick={() => {
                     setOpen(false);
                     if (onValueChange) onValueChange(value);
@@ -143,7 +143,7 @@ export const SelectArrowheadComponent: React.FC<SelectArrowheadProps> = ({
                   />
                 </Button>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>{toPascalCaseWithSpace(value)}</p>
               </TooltipContent>
             </Tooltip>

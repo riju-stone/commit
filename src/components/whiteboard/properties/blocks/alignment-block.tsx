@@ -134,30 +134,28 @@ export const AlignmentBlock: React.FC = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleBringToFront}
               >
                 <AlignBringToFrontIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Bring to front</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleBringForward}
               >
                 <AlignBringForwardIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Bring forward</p>
             </TooltipContent>
           </Tooltip>
@@ -166,45 +164,43 @@ export const AlignmentBlock: React.FC = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleAlignLeft}
               >
                 <AlignStartVerticalIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Align left</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleAlignCenter}
               >
                 <AlignCenterVerticalIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Align center</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
+                variant="ghost"
                 size="icon"
-                className="w-7 h-7"
+                className="w-7 h-7 text-white"
                 onClick={handleAlignRight}
               >
                 <AlignEndVerticalIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Align right</p>
             </TooltipContent>
           </Tooltip>
@@ -215,30 +211,28 @@ export const AlignmentBlock: React.FC = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleSendToBack}
               >
                 <AlignSendToBackIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Send to back</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleSendBackward}
               >
                 <AlignSendBackwardIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Send backward</p>
             </TooltipContent>
           </Tooltip>
@@ -247,45 +241,42 @@ export const AlignmentBlock: React.FC = () => {
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleAlignTop}
               >
                 <AlignStartHorizontalIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Align top</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleAlignMiddle}
               >
                 <AlignCenterHorizontalIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Align middle</p>
             </TooltipContent>
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
-                variant="outline"
-                size="icon"
-                className="w-7 h-7"
+                variant="ghost"
+                className="w-7 h-7 text-white"
                 onClick={handleAlignBottom}
               >
                 <AlignEndHorizontalIcon size={16} />
               </Button>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Align bottom</p>
             </TooltipContent>
           </Tooltip>

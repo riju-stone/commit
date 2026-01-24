@@ -30,24 +30,24 @@ export const PageBlock: React.FC = () => {
         />
       </div>
       <div className="flex items-center justify-between w-full gap-3">
-        <Label className="w-16 whitespace-nowrap text-xs">Size</Label>
+        <Label className="w-16 whitespace-nowrap text-xs text-white">Size</Label>
         <Select
           value={pageSize}
           onValueChange={(value) => {
             editor?.actions.update({ size: JSON.parse(value) }, [page as Page]);
           }}
         >
-          <SelectTrigger className="w-full text-xs h-7" title="Font Family">
+          <SelectTrigger className="w-full text-xs h-7 dark text-white" title="Font Family">
             <SelectValue />
           </SelectTrigger>
-          <SelectContent>
-            <SelectItem className="text-xs" value="null">
+          <SelectContent className="dark">
+            <SelectItem className="text-xs dark text-white" value="null">
               Infinite
             </SelectItem>
-            <SelectItem className="text-xs" value="[960,720]">
+            <SelectItem className="text-xs dark text-white" value="[960,720]">
               4:3
             </SelectItem>
-            <SelectItem className="text-xs" value="[960,540]">
+            <SelectItem className="text-xs dark text-white" value="[960,540]">
               16:9
             </SelectItem>
           </SelectContent>

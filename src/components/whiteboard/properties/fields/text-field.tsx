@@ -36,7 +36,7 @@ const TextFieldComponent = React.forwardRef<HTMLInputElement, TextFieldProps>(
       <Input
         type={type}
         value={state}
-        className={cn("", className)}
+        className={cn("dark text-white", className)}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}

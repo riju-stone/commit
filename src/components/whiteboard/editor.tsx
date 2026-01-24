@@ -1,7 +1,7 @@
 import { useWhiteboardStore } from '@/store/whiteboardStore';
-import { Box, Editor, FillStyle, HorzAlign, Shape, VertAlign } from '@dgmjs/core';
+import { Box, Editor, FillStyle, HorzAlign, Shape, Text as TextShape, VertAlign } from '@dgmjs/core';
 import { DGMEditor, TiptapEditor } from '@dgmjs/react';
-import { useCallback, useRef } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 function WhiteBoardEditorComponent() {
   // Use selective subscriptions to prevent unnecessary re-renders
@@ -12,8 +12,6 @@ function WhiteBoardEditorComponent() {
   const setActiveHandler = useWhiteboardStore((state) => state.setActiveHandler);
   const setGridOrigin = useWhiteboardStore((state) => state.setGridOrigin);
   const setGridScale = useWhiteboardStore((state) => state.setGridScale);
-
-  const tiptapEditorRef = useRef<TiptapEditor | null>(null);
 
   const handleEditorMount = async (editorInstance: Editor) => {
     editorInstance.newDoc()
@@ -29,7 +27,7 @@ function WhiteBoardEditorComponent() {
 
   const handleShapeInitialize = (shape: Shape) => {
     shape.fillStyle =
-      shape instanceof Text ? FillStyle.NONE : FillStyle.HACHURE;
+      shape instanceof TextShape ? FillStyle.NONE : FillStyle.HACHURE;
 
     shape.fillColor = 'rgba(255, 255, 255, 0.2)';
     shape.fontFamily = 'Gloria Hallelujah';
@@ -37,13 +35,10 @@ function WhiteBoardEditorComponent() {
     shape.fontSize = 20;
     shape.fontColor = "#fff";
     shape.roughness = 1;
+  };
 
-    // Center align text in Box-based shapes (Rectangle, Ellipse, etc.)
-    if (shape instanceof Box || shape.type === "Rectangle" || shape.type === "Ellipse") {
-      const boxShape = shape as Box;
-      boxShape.horzAlign = HorzAlign.CENTER;
-      boxShape.vertAlign = VertAlign.MIDDLE;
-    }
+  const handleSelectionChange = (selection: Shape[]) => {
+    setCurrentSelection(selection);
   };
 
   const handleScroll = useCallback((origin: number[]) => {
@@ -57,29 +52,6 @@ function WhiteBoardEditorComponent() {
       setGridScale(scale);
     }
   }, [editor, setGridOrigin, setGridScale]);
-
-  const handleTextInplaceEditorMount = (tiptapEditor: TiptapEditor) => {
-    tiptapEditorRef.current = tiptapEditor;
-  };
-
-  const handleTextInplaceEditorOpen = (shape: Box) => {
-    // Set center alignment on the shape when text editing starts
-    if (editor && (shape.horzAlign !== HorzAlign.CENTER || shape.vertAlign !== VertAlign.MIDDLE)) {
-      editor.actions.update({
-        horzAlign: HorzAlign.CENTER,
-        vertAlign: VertAlign.MIDDLE,
-      }, [shape]);
-    }
-
-    // Also set the Tiptap editor's text alignment to center
-    if (tiptapEditorRef.current) {
-      // Small delay to ensure the editor is ready
-      setTimeout(() => {
-        // Cast to any to access setTextAlign command which may not be in type definitions
-        (tiptapEditorRef.current as any)?.commands?.setTextAlign?.('center');
-      }, 0);
-    }
-  };
 
   return (
 
@@ -96,15 +68,13 @@ function WhiteBoardEditorComponent() {
           maxHeight: 2800,
         },
       }}
-      snapToObjects={true}
+      // snapToObjects={true}
       onMount={handleEditorMount}
       onShapeInitialize={handleShapeInitialize}
       onActiveHandlerChange={(handler) => setActiveHandler(handler)}
       onScroll={handleScroll}
       onZoom={handleZoom}
-      onSelectionChange={setCurrentSelection}
-      onTextInplaceEditorMount={handleTextInplaceEditorMount}
-      onTextInplaceEditorOpen={handleTextInplaceEditorOpen}
+      onSelectionChange={handleSelectionChange}
     />
   )
 }

@@ -54,7 +54,7 @@ const NumberFieldComponent = React.forwardRef<HTMLInputElement, NumberFieldProps
     return (
       <Input
         value={state}
-        className={cn("", className)}
+        className={cn("dark text-white", className)}
         onChange={handleChange}
         onKeyDown={handleKeyDown}
         onBlur={handleBlur}

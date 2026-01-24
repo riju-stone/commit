@@ -26,6 +26,7 @@ export const ControlBlock: React.FC = () => {
       <div className="grid h-7 grid-cols-2 items-center">
         <div className="flex items-center gap-2">
           <Checkbox
+            className="dark"
             id="shape-visible-checkbox"
             checked={visible}
             onCheckedChange={(checked) => {
@@ -36,7 +37,7 @@ export const ControlBlock: React.FC = () => {
             }}
           />
           <Label
-            className="font-normal text-xs"
+            className="font-normal text-xs text-white"
             htmlFor="shape-visible-checkbox"
           >
             Visible
@@ -44,6 +45,7 @@ export const ControlBlock: React.FC = () => {
         </div>
         <div className="flex items-center gap-2">
           <Checkbox
+            className="dark"
             id="shape-connectable-checkbox"
             checked={connectable}
             onCheckedChange={(checked) => {
@@ -54,7 +56,7 @@ export const ControlBlock: React.FC = () => {
             }}
           />
           <Label
-            className="font-normal text-xs"
+            className="font-normal text-xs text-white"
             htmlFor="shape-connectable-checkbox"
           >
             Connectable
@@ -64,6 +66,7 @@ export const ControlBlock: React.FC = () => {
       <div className="grid h-7 grid-cols-2 items-center">
         <div className="flex items-center gap-2">
           <Checkbox
+            className="dark"
             id="shape-rotatable-checkbox"
             checked={rotatable}
             onCheckedChange={(checked) => {
@@ -74,7 +77,7 @@ export const ControlBlock: React.FC = () => {
             }}
           />
           <Label
-            className="font-normal peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-xs"
+            className="font-normal peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-xs text-white"
             htmlFor="shape-rotatable-checkbox"
           >
             Rotatable
@@ -82,6 +85,7 @@ export const ControlBlock: React.FC = () => {
         </div>
         <div className="flex items-center gap-2">
           <Checkbox
+            className="dark"
             id="shape-anchored-checkbox"
             checked={anchored}
             disabled={!isBox}
@@ -93,7 +97,7 @@ export const ControlBlock: React.FC = () => {
             }}
           />
           <Label
-            className="font-normal peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-xs"
+            className="font-normal peer-disabled:cursor-not-allowed peer-disabled:opacity-70 text-xs text-white"
             htmlFor="shape-anchored-checkbox"
           >
             Anchored

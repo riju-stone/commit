@@ -54,7 +54,7 @@ interface PropertySectionProps {
 function PropertySection({ title, icon, children }: PropertySectionProps) {
   return (
     <div className="flex flex-col gap-2.5">
-      <div className="flex items-center gap-2 text-foreground/60 text-[10px] font-semibold uppercase tracking-widest">
+      <div className="flex items-center gap-2 text-white text-[10px] font-semibold uppercase tracking-widest">
         {icon}
         <span>{title}</span>
       </div>
@@ -67,7 +67,7 @@ function PageProperties() {
   return (
     <div className="flex flex-col gap-4 p-3 h-full overflow-y-auto">
       <div className="flex flex-col gap-1 pb-2 border-b border-foreground/10">
-        <h3 className="text-sm font-semibold text-foreground/90">Page</h3>
+        <h3 className="text-sm font-semibold text-white">Page</h3>
       </div>
       <PageBlock />
     </div>
@@ -95,9 +95,9 @@ function ShapeProperties() {
     <div className="flex flex-col gap-5 p-3 h-full overflow-y-auto">
       {/* Header */}
       <div className="flex flex-col gap-1 pb-2 border-b border-foreground/10">
-        <h3 className="text-sm font-semibold text-foreground/90 truncate">{shapeTypeLabel}</h3>
+        <h3 className="text-sm font-semibold truncate dark text-white">{shapeTypeLabel}</h3>
         {currentSelection.length > 1 && (
-          <span className="text-foreground/50 text-xs">{shapeTypes.join(", ")}</span>
+          <span className="text-xs dark text-white">{shapeTypes.join(", ")}</span>
         )}
       </div>
 
@@ -154,12 +154,13 @@ function ShapeProperties() {
 
 export const PropertySidebar: React.FC = () => {
   const editor = useWhiteboardStore((state) => state.editor);
+  const currentSelection = useWhiteboardStore((state) => state.currentSelection);
 
   const currentPage = editor?.getCurrentPage();
-  const shapes = editor?.selection.shapes as Shape[];
+  const shapes = currentSelection;
 
   return (
-    <div className="bg-transparent h-full">
+    <div className="bg-none h-full">
       {currentPage && shapes && shapes.length === 0 ? (
         <PageProperties />
       ) : shapes && shapes.length > 0 ? (
@@ -167,7 +168,7 @@ export const PropertySidebar: React.FC = () => {
           <ShapeProperties />
         </ScrollArea>
       ) : (
-        <div className="p-3 text-xs text-foreground/40">No shapes selected</div>
+        <div className="p-3 text-xs text-white">No shapes selected</div>
       )}
     </div>
   );

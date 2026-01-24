@@ -1,24 +1,21 @@
-import { Editor, EditorContent, useEditor } from "@tiptap/react"
-import { StarterKit } from "@tiptap/starter-kit";
+import { EditorContent, useEditor } from "@tiptap/react"
 import { TableKit } from "@tiptap/extension-table"
 import { Image } from "@tiptap/extension-image"
 import { ImageUploadNode } from '@/lib/image-upload-node'
 import Math from "@tiptap/extension-mathematics"
-import Typography from "@tiptap/extension-typography"
 import TextAlign from "@tiptap/extension-text-align"
 import { TextStyle } from "@tiptap/extension-text-style"
-import TaskList from "@tiptap/extension-task-list"
-import TaskItem from "@tiptap/extension-task-item"
 import { BubbleMenu } from "@tiptap/react/menus"
 import BubbleMenuComponent from "./menus/bubble"
 import { useEffect, useRef } from "react"
 import ToolbarComponent from "./menus/toolbar"
 import { handleImageUpload } from "@/lib/tiptap-utils";
 import { useNoteStore } from "@/store/noteStore";
+import { TaskItem, TaskList } from '@tiptap/extension-list'
+import { StarterKit } from '@tiptap/starter-kit'
 
-// Define custom TaskItem extension outside component to prevent recreation on each render
 const CustomTaskItem = TaskItem.extend({
-  content: "inline*",
+  content: 'inline*',
 })
 
 function NotesEditorComponent() {
@@ -52,19 +49,14 @@ function NotesEditorComponent() {
         onError: (error) => console.error('Upload failed:', error),
       }),
       Math,
-      Typography,
+      TaskList,
+      CustomTaskItem,
       TextAlign.configure({
         types: ['heading', 'paragraph'],
         alignments: ['left', 'center', 'right', 'justify'],
         defaultAlignment: 'left',
       }),
       TextStyle,
-      TaskList.configure({
-        HTMLAttributes: {
-          class: 'task-list',
-        },
-      }),
-      CustomTaskItem,
     ],
     content: ``,
     editorProps: {
@@ -79,7 +71,6 @@ function NotesEditorComponent() {
     editable: true,
   });
 
-  // Sync editor instance with the store
   useEffect(() => {
     if (editor) {
       setEditor(editor)
@@ -89,7 +80,6 @@ function NotesEditorComponent() {
     }
   }, [editor, setEditor])
 
-  // Reset dirty ref when document is saved
   useEffect(() => {
     const unsubscribe = useNoteStore.subscribe(
       (state) => state.isDirty,
@@ -105,16 +95,18 @@ function NotesEditorComponent() {
   return (
     <div className="w-[75%] min-w-[400px] max-w-[800px] h-screen mt-[100px] [&>textarea]:h-full [&>div.ProseMirror]:w-full">
       <EditorContent editor={editor} />
-      <BubbleMenu
-        editor={editor as unknown as Editor}
-        options={{
-          offset: 10,
-          autoPlacement: true,
-          strategy: "absolute"
-        }}
-      >
-        <BubbleMenuComponent />
-      </BubbleMenu>
+      {editor && (
+        <BubbleMenu
+          editor={editor}
+          options={{
+            offset: 10,
+            autoPlacement: true,
+            strategy: "absolute"
+          }}
+        >
+          <BubbleMenuComponent />
+        </BubbleMenu>
+      )}
       <ToolbarComponent />
     </div>
   )

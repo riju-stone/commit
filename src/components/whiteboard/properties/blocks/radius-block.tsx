@@ -31,10 +31,11 @@ function CornerRadiusBlock() {
             const updated = batchUpdateShapes(editor, boxShapes, { corners: [value, value, value, value] });
             setCurrentSelection(updated);
           }}
-          className="w-16 h-6 text-xs bg-white/5 border-white/10 text-white/80"
+          className="w-16 h-6 text-xs dark  text-white"
         />
       </div>
       <Slider
+        className="dark text-white"
         min={0}
         max={100}
         step={1}

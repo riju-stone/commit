@@ -31,7 +31,7 @@ const TextareaFieldComponent = React.forwardRef<
   return (
     <Textarea
       value={state}
-      className={cn("", className)}
+      className={cn("dark text-white", className)}
       onChange={handleChange}
       onBlur={handleBlur}
       ref={ref}

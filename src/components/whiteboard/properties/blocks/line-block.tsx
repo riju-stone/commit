@@ -54,7 +54,7 @@ export const LineBlock: React.FC = () => {
                 />
               </div>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Tail arrowhead</p>
             </TooltipContent>
           </Tooltip>
@@ -63,7 +63,7 @@ export const LineBlock: React.FC = () => {
               <div>
                 <SelectArrowheadComponent
                   id="line-tail-end"
-                  className="rounded-l-none -ml-px"
+                  className="rounded-l-none -ml-px dark text-white"
                   value={headEndType}
                   title="Head arrowhead"
                   onValueChange={(value) => {
@@ -73,7 +73,7 @@ export const LineBlock: React.FC = () => {
                 />
               </div>
             </TooltipTrigger>
-            <TooltipContent>
+            <TooltipContent className="dark">
               <p>Head arrowhead</p>
             </TooltipContent>
           </Tooltip>
@@ -83,6 +83,7 @@ export const LineBlock: React.FC = () => {
             type="single"
             value={lineType}
             onValueChange={(value) => {
+              if (!value) return;
               const updated = batchUpdateShapes(editor, currentSelection, { lineType: value as LineTypeEnum });
               setCurrentSelection(updated);
             }}
@@ -90,14 +91,14 @@ export const LineBlock: React.FC = () => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <ToggleGroupItem
-                  className="w-7 h-7 p-1"
+                  className="w-7 h-7 p-1 dark text-white"
                   size="sm"
                   value={LineType.STRAIGHT}
                 >
                   <LineStraightIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Straight line</p>
               </TooltipContent>
             </Tooltip>
@@ -105,13 +106,13 @@ export const LineBlock: React.FC = () => {
               <TooltipTrigger asChild>
                 <ToggleGroupItem
                   size="sm"
-                  className="w-7 h-7 p-1"
+                  className="w-7 h-7 p-1 dark text-white"
                   value={LineType.CURVE}
                 >
                   <LineCurveIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
-              <TooltipContent>
+              <TooltipContent className="dark">
                 <p>Curved line</p>
               </TooltipContent>
             </Tooltip>
@@ -120,7 +121,7 @@ export const LineBlock: React.FC = () => {
       </div>
       {isConnector && (
         <div className="flex items-center h-7 gap-3">
-          <Label className="font-normal text-xs">Margin</Label>
+          <Label className="font-normal text-xs text-white">Margin</Label>
           <div className="w-full">
             <Slider
               max={50}
