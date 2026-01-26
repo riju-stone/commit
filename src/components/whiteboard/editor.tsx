@@ -59,7 +59,7 @@ function WhiteBoardEditorComponent() {
       darkMode={darkMode}
       className="w-full h-screen [&_canvas]:w-screen [&_canvas]:h-full [&_canvas]:bg-background"
       options={{
-        canvasColor: "#222831",
+        canvasColor: "#28282B",
         showDOM: true,
         keymapEventTarget: window,
         imageResize: {

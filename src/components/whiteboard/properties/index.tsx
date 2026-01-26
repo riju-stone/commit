@@ -1,5 +1,4 @@
 import React from "react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { PageBlock } from "./blocks/page-block";
 import { FillColorBlock } from "./blocks/fillcolor-block";
 import { StrokeColorBlock } from "./blocks/strokecolor-block";
@@ -92,9 +91,9 @@ function ShapeProperties() {
       : `${currentSelection.length} shapes selected`;
 
   return (
-    <div className="flex flex-col gap-5 p-3 h-full overflow-y-auto">
+    <div className="flex h-full flex-col gap-5 p-3 pb-5 overflow-y-auto overscroll-none scrollbar-hide">
       {/* Header */}
-      <div className="flex flex-col gap-1 pb-2 border-b border-foreground/10">
+      <div className="flex flex-col gap-1 pb-2 border-b border-white/20">
         <h3 className="text-sm font-semibold truncate dark text-white">{shapeTypeLabel}</h3>
         {currentSelection.length > 1 && (
           <span className="text-xs dark text-white">{shapeTypes.join(", ")}</span>
@@ -160,13 +159,11 @@ export const PropertySidebar: React.FC = () => {
   const shapes = currentSelection;
 
   return (
-    <div className="bg-none h-full">
+    <div className="bg-none mt-[40px] h-[calc(100vh-40px)] overflow-hidden">
       {currentPage && shapes && shapes.length === 0 ? (
         <PageProperties />
       ) : shapes && shapes.length > 0 ? (
-        <ScrollArea className="h-full w-full">
-          <ShapeProperties />
-        </ScrollArea>
+        <ShapeProperties />
       ) : (
         <div className="p-3 text-xs text-white">No shapes selected</div>
       )}

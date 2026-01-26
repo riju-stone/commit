@@ -42,10 +42,10 @@ const DayItem = memo(({ day }: { day: Date }) => {
       whileHover="hover"
     >
       <motion.div
-        className='h-px'
+        className='h-[2px] bg-white/40'
         variants={DAY_ITEM_LINE}
       />
-      <motion.div className='text-sm'
+      <motion.div className='text-sm text-white/40'
         variants={DAY_ITEM_LABEL}>
         {dayLabel}
       </motion.div>
@@ -56,7 +56,7 @@ const DayItem = memo(({ day }: { day: Date }) => {
 const MonthSection = memo(({ month, days, monthLabel }: { month: string; days: Date[]; monthLabel: string }) => {
   return (
     <div className='w-full flex flex-col'>
-      <div className='w-fit text-sm text-white bg-black/30 border border-white/20 py-1 px-2 rounded-lg sticky top-0'>
+      <div className='w-fit text-sm text-white bg-black/20 border border-white/20 py-1 px-2 rounded-lg sticky top-0'>
         {monthLabel}
       </div>
 
