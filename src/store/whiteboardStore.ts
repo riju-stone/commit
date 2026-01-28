@@ -19,9 +19,6 @@ const initialState: WhiteboardState = {
   doc: null,
   currentPage: null,
   currentSelection: [],
-  libraries: [],
-  tiptapEditor: null,
-  editingText: null,
 }
 
 export const whiteboardActions = {
@@ -76,8 +73,5 @@ export const useWhiteboardStore = create<WhiteboardStore>()(
     setDoc: (doc) => set({ doc }),
     setCurrentPage: (page) => set({ currentPage: page }),
     setCurrentSelection: (selection) => set({ currentSelection: selection }),
-    setLibraries: (libraries) => set({ libraries }),
-    setTiptapEditor: (tiptapEditor) => set({ tiptapEditor }),
-    setEditingText: (editingText) => set({ editingText }),
   }))
 )

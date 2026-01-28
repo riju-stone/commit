@@ -38,7 +38,7 @@ function StatusBarComponent() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut", delay: 0.2 }}
+            transition={{ duration: 0.2, ease: "easeInOut" }}
             className="bg-transparent border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white/60 rounded-[5px] transition-all duration-200 ease-in-out p-1.5 hover:text-white disabled:text-[#3c3c3c] disabled:cursor-not-allowed last:mr-[10px]"
             onClick={toggleSidebar}>
             <PanelRight />

@@ -1,6 +1,28 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Editor, geometry, Shape } from "@dgmjs/core";
+import { Editor, geometry, Shape, textUtils } from "@dgmjs/core";
+import { useWhiteboardStore } from "@/store/whiteboardStore";
+
+/**
+ * Ensures all paragraph nodes in a text doc have textAlign set from the shape's horzAlign.
+ * Tiptap can produce paragraphs without textAlign when typing; the dgmjs renderer falls
+ * back to "left" for missing attrs, causing center-aligned text to snap left.
+ * Use this after any text update (e.g. in onTransaction) to preserve alignment.
+ */
+export function ensureTextAlignInDoc(
+  doc: { type: string; content?: any[] },
+  horzAlign: string
+): { type: string; content?: any[] } {
+  const cloned = structuredClone(doc) as { type: string; content: any[] };
+  if (!Array.isArray(cloned.content)) cloned.content = [];
+  textUtils.visitTextNodes(cloned, (node: any) => {
+    if (node.type === "paragraph") {
+      if (!node.attrs) node.attrs = {};
+      node.attrs.textAlign = horzAlign;
+    }
+  });
+  return cloned;
+}
 
 /**
  * Batch update multiple shapes with the same properties in a single transaction.
@@ -17,10 +39,10 @@ export function batchUpdateShapes<T extends Record<string, unknown>>(
   updates: T
 ): Shape[] {
   if (!editor || shapes.length === 0) return [];
-  
+
   // Use the editor's built-in batch update - it handles all shapes in one transaction
   editor.actions.update(updates, shapes);
-  
+
   return [...(editor.selection.shapes as Shape[])];
 }
 
@@ -52,8 +74,8 @@ export function merge<T>(
   return vs.length !== 1
     ? initial
     : stringifiedCompare
-      ? JSON.parse(vs[0] as string)
-      : vs[0];
+      ? JSON.parse(vs[0] as string) as T
+      : vs[0] as T;
 }
 
 export function toPascalCaseWithSpace(str: string) {
@@ -77,8 +99,9 @@ export function moveToAboveOrBelow(
   rect: number[][],
   gap: number = 46
 ): boolean {
-  const canvasWidth = window.editor.canvasElement?.offsetWidth || 0;
-  const canvasHeight = window.editor.canvasElement?.offsetHeight || 0;
+  const editor = useWhiteboardStore((state) => state.editor);
+  const canvasWidth = editor?.canvasElement?.offsetWidth || 0;
+  const canvasHeight = editor?.canvasElement?.offsetHeight || 0;
 
   const cp = geometry.center(rect);
   const isBelow = cp[1] < canvasHeight / 2;

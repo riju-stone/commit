@@ -39,14 +39,14 @@ function WhiteboardView() {
   return (
     <div className="grow w-full h-screen bg-transparent flex items-center justify-center overflow-hidden text-white" ref={containerRef}>
       <motion.div layout className="w-full h-screen relative" variants={WHITEBOARD_VIEW_ANIMATION} initial="initial" animate="visible" exit="initial">
-        <ContextMenu>
-          <ContextMenuTrigger asChild>
-            <div className="w-full h-screen">
-              <WhiteboardEditorComponent />
-            </div>
-          </ContextMenuTrigger>
-          <WhiteboardContextMenuComponent />
-        </ContextMenu>
+        {/* <ContextMenu> */}
+        {/* <ContextMenuTrigger asChild> */}
+        <div className="w-full h-screen">
+          <WhiteboardEditorComponent />
+        </div>
+        {/* </ContextMenuTrigger> */}
+        {/* <WhiteboardContextMenuComponent /> */}
+        {/* </ContextMenu> */}
         <DottedGridOverlay />
         <WhiteboardToolbarComponent />
       </motion.div>

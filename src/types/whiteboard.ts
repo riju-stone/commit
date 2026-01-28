@@ -1,5 +1,4 @@
-import { Box, Doc, Editor, Page, Shape } from "@dgmjs/core"
-import { TiptapEditor } from "@dgmjs/react"
+import { Doc, Editor, Page, Shape } from "@dgmjs/core"
 
 export type WhiteboardState = {
   editor: Editor | null
@@ -14,9 +13,6 @@ export type WhiteboardState = {
   currentSelection: Shape[]
   doc: Doc | null
   currentPage: Page | null
-  libraries: Doc[]
-  tiptapEditor: TiptapEditor | null
-  editingText: Box | null
 }
 
 export type WhiteboardActions = {
@@ -32,9 +28,6 @@ export type WhiteboardActions = {
   setCurrentSelection: (selection: Shape[]) => void
   setDoc: (doc: Doc) => void
   setCurrentPage: (page: Page) => void
-  setLibraries: (libraries: Doc[]) => void
-  setTiptapEditor: (tiptapEditor: TiptapEditor | null) => void
-  setEditingText: (editingText: Box | null) => void
 }
 
 export type WhiteboardStore = WhiteboardState & WhiteboardActions

@@ -1,7 +1,11 @@
 import { useWhiteboardStore } from '@/store/whiteboardStore';
-import { Box, Editor, FillStyle, HorzAlign, Shape, Text as TextShape, VertAlign } from '@dgmjs/core';
-import { DGMEditor, TiptapEditor } from '@dgmjs/react';
-import { useCallback, useEffect, useRef } from 'react'
+import type { Transaction } from '@dgmjs/core';
+import { AssignMutation, Box, Editor, FillStyle, HorzAlign, macro, Shape, Text as TextShape, VertAlign } from '@dgmjs/core';
+import { DGMEditor } from '@dgmjs/react';
+import { useCallback, useEffect } from 'react';
+import { ensureTextAlignInDoc } from '@/utils/whiteboard';
+
+let isApplyingTextAlignFixup = false;
 
 function WhiteBoardEditorComponent() {
   // Use selective subscriptions to prevent unnecessary re-renders
@@ -12,6 +16,42 @@ function WhiteBoardEditorComponent() {
   const setActiveHandler = useWhiteboardStore((state) => state.setActiveHandler);
   const setGridOrigin = useWhiteboardStore((state) => state.setGridOrigin);
   const setGridScale = useWhiteboardStore((state) => state.setGridScale);
+
+  useEffect(() => {
+    if (!editor) return;
+    const handler = (tx: Transaction) => {
+      if (isApplyingTextAlignFixup) return;
+      const fixups: { shape: InstanceType<typeof Box>; patched: unknown }[] = [];
+      for (const mut of tx.mutations) {
+        if (!(mut instanceof AssignMutation) || mut.field !== 'text') continue;
+        const obj = mut.obj;
+        if (!(obj instanceof Box)) continue;
+        const raw = obj.text;
+        if (typeof raw !== 'object' || raw?.type !== 'doc') continue;
+        const horzAlign = obj.horzAlign ?? HorzAlign.CENTER;
+        const patched = ensureTextAlignInDoc(raw, horzAlign);
+        if (JSON.stringify(patched) === JSON.stringify(raw)) continue;
+        fixups.push({ shape: obj, patched });
+      }
+      if (fixups.length === 0) return;
+      isApplyingTextAlignFixup = true;
+      try {
+        const page = editor.getCurrentPage();
+        if (page && editor.canvas) {
+          editor.transform.transact((t) => {
+            for (const { shape, patched } of fixups) {
+              t.assign(shape, 'text', patched);
+            }
+            macro.resolveAllConstraints(t, page, editor.canvas);
+          });
+        }
+      } finally {
+        isApplyingTextAlignFixup = false;
+      }
+    };
+    const disposable = editor.transform.onTransaction.addListener(handler);
+    return () => disposable.dispose();
+  }, [editor]);
 
   const handleEditorMount = async (editorInstance: Editor) => {
     editorInstance.newDoc()
@@ -29,7 +69,7 @@ function WhiteBoardEditorComponent() {
     shape.fillStyle =
       shape instanceof TextShape ? FillStyle.NONE : FillStyle.HACHURE;
 
-    shape.fillColor = 'rgba(255, 255, 255, 0.2)';
+    shape.fillColor = '$gray10';
     shape.fontFamily = 'Gloria Hallelujah';
     shape.strokeColor = "rgba(255, 255, 255, 1)";
     shape.fontSize = 20;
@@ -57,10 +97,10 @@ function WhiteBoardEditorComponent() {
 
     <DGMEditor
       darkMode={darkMode}
-      className="w-full h-screen [&_canvas]:w-screen [&_canvas]:h-full [&_canvas]:bg-background"
+      className="w-full h-screen [&_canvas]:w-screen [&_canvas]:h-full"
       options={{
         canvasColor: "#28282B",
-        showDOM: true,
+        allowCreateTextOnConnector: true,
         keymapEventTarget: window,
         imageResize: {
           quality: 1,
@@ -68,7 +108,7 @@ function WhiteBoardEditorComponent() {
           maxHeight: 2800,
         },
       }}
-      // snapToObjects={true}
+      snapToObjects={true}
       onMount={handleEditorMount}
       onShapeInitialize={handleShapeInitialize}
       onActiveHandlerChange={(handler) => setActiveHandler(handler)}
