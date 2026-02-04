@@ -11,7 +11,7 @@ import { useWhiteboardStore } from "@/store/whiteboardStore";
  */
 export function ensureTextAlignInDoc(
   doc: { type: string; content?: any[] },
-  horzAlign: string
+  horzAlign: string,
 ): { type: string; content?: any[] } {
   const cloned = structuredClone(doc) as { type: string; content: any[] };
   if (!Array.isArray(cloned.content)) cloned.content = [];
@@ -27,7 +27,7 @@ export function ensureTextAlignInDoc(
 /**
  * Batch update multiple shapes with the same properties in a single transaction.
  * This is more efficient than updating shapes one by one with forEach.
- * 
+ *
  * @param editor - The DGM editor instance
  * @param shapes - Array of shapes to update
  * @param updates - Properties to update on all shapes
@@ -36,7 +36,7 @@ export function ensureTextAlignInDoc(
 export function batchUpdateShapes<T extends Record<string, unknown>>(
   editor: Editor | null,
   shapes: Shape[],
-  updates: T
+  updates: T,
 ): Shape[] {
   if (!editor || shapes.length === 0) return [];
 
@@ -66,16 +66,10 @@ export function unique<T>(A: Array<T>): Array<T> {
 export function merge<T>(
   values: T[],
   stringifiedCompare: boolean = false,
-  initial: T | undefined = undefined
+  initial: T | undefined = undefined,
 ): T | undefined {
-  const vs = stringifiedCompare
-    ? unique<string>(values.map((v) => JSON.stringify(v)))
-    : unique<T>(values);
-  return vs.length !== 1
-    ? initial
-    : stringifiedCompare
-      ? JSON.parse(vs[0] as string) as T
-      : vs[0] as T;
+  const vs = stringifiedCompare ? unique<string>(values.map((v) => JSON.stringify(v))) : unique<T>(values);
+  return vs.length !== 1 ? initial : stringifiedCompare ? (JSON.parse(vs[0] as string) as T) : (vs[0] as T);
 }
 
 export function toPascalCaseWithSpace(str: string) {
@@ -94,11 +88,7 @@ export function toPascalCaseWithSpace(str: string) {
  * @param rect
  * @return true if position is below, false otherwise
  */
-export function moveToAboveOrBelow(
-  element: HTMLElement,
-  rect: number[][],
-  gap: number = 46
-): boolean {
+export function moveToAboveOrBelow(element: HTMLElement, rect: number[][], gap: number = 46): boolean {
   const editor = useWhiteboardStore((state) => state.editor);
   const canvasWidth = editor?.canvasElement?.offsetWidth || 0;
   const canvasHeight = editor?.canvasElement?.offsetHeight || 0;

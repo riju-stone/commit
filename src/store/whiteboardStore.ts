@@ -1,10 +1,7 @@
-import { create } from "zustand"
-import { subscribeWithSelector } from "zustand/middleware"
-import type {
-  WhiteboardState,
-  WhiteboardStore,
-} from "@/types/whiteboard"
-import type { Editor } from "@dgmjs/core"
+import { create } from "zustand";
+import { subscribeWithSelector } from "zustand/middleware";
+import type { WhiteboardState, WhiteboardStore } from "@/types/whiteboard";
+import type { Editor } from "@dgmjs/core";
 
 const initialState: WhiteboardState = {
   editor: null,
@@ -19,44 +16,44 @@ const initialState: WhiteboardState = {
   doc: null,
   currentPage: null,
   currentSelection: [],
-}
+};
 
 export const whiteboardActions = {
   /**
    * Activate a handler tool on the editor and update store state.
    */
   activateHandler: (handler: string) => {
-    const state = useWhiteboardStore.getState()
-    state.editor?.activateHandler(handler)
-    state.setActiveHandler(handler)
+    const state = useWhiteboardStore.getState();
+    state.editor?.activateHandler(handler);
+    state.setActiveHandler(handler);
   },
 
   /**
    * Toggle grid visibility on the editor and update store state.
    */
   setShowGrid: (showGrid: boolean) => {
-    const state = useWhiteboardStore.getState()
-    state.setShowGrid(showGrid)
+    const state = useWhiteboardStore.getState();
+    state.setShowGrid(showGrid);
   },
 
   /**
    * Toggle snap to grid on the editor and update store state.
    */
   setSnapToGrid: (snapToGrid: boolean) => {
-    const state = useWhiteboardStore.getState()
+    const state = useWhiteboardStore.getState();
     // Note: snapToGrid is managed through the store and passed to the DGMEditor component
-    state.setSnapToGrid(snapToGrid)
+    state.setSnapToGrid(snapToGrid);
   },
 
   /**
    * Toggle snap to objects on the editor and update store state.
    */
   setSnapToObjects: (snapToObjects: boolean) => {
-    const state = useWhiteboardStore.getState()
+    const state = useWhiteboardStore.getState();
     // Note: snapToObjects is managed through the store and passed to the DGMEditor component
-    state.setSnapToObjects(snapToObjects)
+    state.setSnapToObjects(snapToObjects);
   },
-}
+};
 
 export const useWhiteboardStore = create<WhiteboardStore>()(
   subscribeWithSelector((set) => ({
@@ -73,5 +70,5 @@ export const useWhiteboardStore = create<WhiteboardStore>()(
     setDoc: (doc) => set({ doc }),
     setCurrentPage: (page) => set({ currentPage: page }),
     setCurrentSelection: (selection) => set({ currentSelection: selection }),
-  }))
-)
+  })),
+);
