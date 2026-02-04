@@ -7,6 +7,8 @@ import { PropertySidebar } from "./components/whiteboard/properties";
 import { APP_VIEW_CONFIG } from "@/constants/views";
 import useAppStore from "./store/appStore";
 import CalendarSidebarComponent from "./components/journal/calendar-sidebar";
+import EmailSidebarComponent from "./components/email/email-sidebar";
+import EmailViewerComponent from "./components/email/email-viewer";
 
 function App() {
   const { activeTab, sidebarOpen } = useAppStore()
@@ -14,6 +16,7 @@ function App() {
 
   const isWhiteboardView = activeTab === 'whiteboard'
   const isJournalView = activeTab === 'journal'
+  const isEmailView = activeTab === 'email'
 
   return (
     <main className="h-screen w-screen flex flex-col justify-center items-center">
@@ -22,10 +25,12 @@ function App() {
         <ActivityBarComponent />
         <FileExplorerComponent>
           {isJournalView && <CalendarSidebarComponent />}
+          {isEmailView && <EmailSidebarComponent />}
         </FileExplorerComponent>
         <CurrentView key={activeTab as keyof typeof APP_VIEW_CONFIG} />
         <SidebarComponent isOpen={sidebarOpen}>
           {isWhiteboardView && <PropertySidebar />}
+          {isEmailView && <EmailViewerComponent />}
         </SidebarComponent>
       </div>
     </main>
