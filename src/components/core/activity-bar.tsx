@@ -44,7 +44,7 @@ function ActivityBarComponent() {
 
   return (
     <motion.div
-      className="shrink-0 flex-wrap h-screen bg-black/40 flex flex-col items-start justify-between overflow-hidden"
+      className="shrink-0 flex-wrap h-screen bg-black/60 flex flex-col items-start justify-between overflow-hidden"
       variants={ACTIVITY_BAR_CONTENT_ANIMATION.activityBarWrapper}
       initial="closed"
       animate={activityBarOpen ? "open" : "closed"}

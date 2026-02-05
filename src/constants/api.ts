@@ -5,4 +5,11 @@ export const GOOGLE_REDIRECT_URI = "http://localhost:8000";
 export const GMAIL_API_BASE = "https://gmail.googleapis.com/v1";
 export const GOOGLE_CALENDAR_API_BASE = "https://www.googleapis.com/calendar/v3";
 
-export const GOOGLE_AUTH_SCOPES = ["https://www.googleapis.com/auth/gmail", "https://www.googleapis.com/auth/calendar"];
+export const GOOGLE_AUTH_SCOPES = [
+  "https://www.googleapis.com/auth/gmail.readonly",
+  "https://www.googleapis.com/auth/gmail.send",
+  "https://www.googleapis.com/auth/userinfo.email",
+  "https://www.googleapis.com/auth/calendar.readonly",
+  "https://www.googleapis.com/auth/calendar.events",
+  "https://www.googleapis.com/auth/calendar.events.public.readonly",
+];

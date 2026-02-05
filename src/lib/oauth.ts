@@ -1,6 +1,7 @@
 import { openUrl } from "@tauri-apps/plugin-opener";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import { GOOGLE_AUTH_SCOPES } from "@/constants/api";
 
 // Get from environment variables
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "";
@@ -30,17 +31,12 @@ function generateState(): string {
 async function initiateGoogleOAuthFallback(state: string): Promise<string> {
   const GOOGLE_OAUTH_AUTH_URL = "https://accounts.google.com/o/oauth2/v2/auth";
   const GOOGLE_REDIRECT_URI = "http://localhost:8000";
-  const GOOGLE_SCOPES = [
-    "https://www.googleapis.com/auth/gmail.readonly",
-    "https://www.googleapis.com/auth/gmail.send",
-    "https://www.googleapis.com/auth/userinfo.email",
-  ].join(" ");
 
   const params = new URLSearchParams({
     client_id: GOOGLE_CLIENT_ID,
     redirect_uri: GOOGLE_REDIRECT_URI,
     response_type: "code",
-    scope: GOOGLE_SCOPES,
+    scope: GOOGLE_AUTH_SCOPES.join(" "),
     state,
     access_type: "offline",
     prompt: "consent",
@@ -111,17 +107,12 @@ export async function initiateGoogleOAuth(): Promise<string> {
   });
 
   const state = generateState();
-  const GOOGLE_SCOPES = [
-    "https://www.googleapis.com/auth/gmail.readonly",
-    "https://www.googleapis.com/auth/gmail.send",
-    "https://www.googleapis.com/auth/userinfo.email",
-  ].join(" ");
 
   const params = new URLSearchParams({
     client_id: GOOGLE_CLIENT_ID,
     redirect_uri: "http://localhost:8000",
     response_type: "code",
-    scope: GOOGLE_SCOPES,
+    scope: GOOGLE_AUTH_SCOPES.join(" "),
     state,
     access_type: "offline",
     prompt: "consent",

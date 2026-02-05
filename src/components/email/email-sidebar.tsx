@@ -5,6 +5,7 @@ import { Mail, Inbox, Send, FileText, Star, Trash2, RefreshCw } from "lucide-rea
 import { motion } from "motion/react";
 import { useQueryClient } from "@tanstack/react-query";
 import type { EmailFolder } from "@/types/email";
+import { useAuthSession } from "@/hooks/useAuthSession";
 
 const FOLDER_CONFIG: Array<{ id: EmailFolder; label: string; icon: React.ComponentType<{ className?: string }> }> = [
   { id: "inbox", label: "Inbox", icon: Inbox },
@@ -54,6 +55,10 @@ function FolderItem({
 export default function EmailSidebarComponent() {
   const queryClient = useQueryClient();
   const { connectedAccount, currentFolder, setCurrentFolder } = useEmailStore();
+
+  // Use the auth session hook to automatically manage authentication
+  // Checks on mount and every 5 minutes, auto-refreshes tokens
+  useAuthSession(5 * 60 * 1000);
 
   const handleFolderClick = (folder: EmailFolder) => {
     // Only switch if it's a different folder
