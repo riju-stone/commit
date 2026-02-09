@@ -1,0 +1,115 @@
+use std::sync::{Arc, Mutex};
+use tauri::State;
+
+use crate::db::Database;
+use crate::db::{notes, whiteboard};
+use crate::model::db::{Note, WhiteboardSnapshot};
+
+pub struct DbState {
+    pub db: Arc<Mutex<Database>>,
+}
+
+// Notes Commands
+#[tauri::command]
+pub fn db_create_note(state: State<DbState>, note: Note) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    notes::create_note(&conn, note).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_update_note(state: State<DbState>, note: Note) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    notes::update_note(&conn, note).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_upsert_note(state: State<DbState>, note: Note) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    notes::upsert_note(&conn, note).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_get_note(state: State<DbState>, id: String) -> Result<Option<Note>, String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    notes::get_note(&conn, &id).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_get_all_notes(state: State<DbState>) -> Result<Vec<Note>, String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    notes::get_all_notes(&conn).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_delete_note(state: State<DbState>, id: String) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    notes::delete_note(&conn, &id).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_batch_upsert_notes(state: State<DbState>, notes_list: Vec<Note>) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    notes::batch_upsert_notes(&conn, notes_list).map_err(|e| e.to_string())
+}
+
+// Whiteboard Snapshots Commands
+#[tauri::command]
+pub fn db_create_snapshot(
+    state: State<DbState>,
+    snapshot: WhiteboardSnapshot,
+) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    whiteboard::create_snapshot(&conn, snapshot).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_update_snapshot(
+    state: State<DbState>,
+    snapshot: WhiteboardSnapshot,
+) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    whiteboard::update_snapshot(&conn, snapshot).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_upsert_snapshot(
+    state: State<DbState>,
+    snapshot: WhiteboardSnapshot,
+) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    whiteboard::upsert_snapshot(&conn, snapshot).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_get_snapshot(
+    state: State<DbState>,
+    id: String,
+) -> Result<Option<WhiteboardSnapshot>, String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    whiteboard::get_snapshot(&conn, &id).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_get_all_snapshots(state: State<DbState>) -> Result<Vec<WhiteboardSnapshot>, String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    whiteboard::get_all_snapshots(&conn).map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+pub fn db_delete_snapshot(state: State<DbState>, id: String) -> Result<(), String> {
+    let db = state.db.lock().unwrap();
+    let conn = db.get_connection();
+    whiteboard::delete_snapshot(&conn, &id).map_err(|e| e.to_string())
+}

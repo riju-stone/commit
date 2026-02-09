@@ -32,6 +32,10 @@ url = "2.5"
 tokio = { version = "1", features = ["full"] }
 anyhow = "1.0"
 thiserror = "1.0"
+rusqlite = { version = "0.32", features = ["bundled", "time"] }
+refinery = { version = "0.8", features = ["rusqlite"] }
+chrono = "0.4"
+uuid = { version = "1.0", features = ["v4", "serde"] }
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-autostart = "2"
