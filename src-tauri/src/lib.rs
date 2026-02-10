@@ -3,19 +3,22 @@ use tauri::{Manager, WebviewWindowBuilder};
 mod commands;
 mod core;
 mod db;
+mod helper;
 mod model;
 
-use core::auth::{
+use crate::core::db::LocalDB;
+
+use crate::commands::auth::{
     clear_tokens, exchange_code, get_stored_tokens, get_valid_access_token, init_oauth_config,
     is_token_expired_cmd, refresh_access_token, revoke_tokens, start_oauth_server, store_tokens,
-    AuthState,
 };
-
-use commands::db::{
+use crate::commands::db::{
     db_batch_upsert_notes, db_create_note, db_create_snapshot, db_delete_note, db_delete_snapshot,
     db_get_all_notes, db_get_all_snapshots, db_get_note, db_get_snapshot, db_update_note,
-    db_update_snapshot, db_upsert_note, db_upsert_snapshot, DbState,
+    db_update_snapshot, db_upsert_note, db_upsert_snapshot,
 };
+use crate::model::auth::AuthState;
+use crate::model::db::DbState;
 
 use std::sync::{Arc, Mutex};
 
@@ -66,7 +69,7 @@ pub fn run() {
             std::fs::create_dir_all(&app_dir).expect("Failed to create app data directory");
             let db_path = app_dir.join("commit.db");
 
-            let database = db::Database::new(db_path).expect("Failed to initialize database");
+            let database = LocalDB::new_conn(db_path).expect("Failed to initialize database");
 
             let db_state = DbState {
                 db: Arc::new(Mutex::new(database)),

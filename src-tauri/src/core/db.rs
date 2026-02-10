@@ -1,5 +1,5 @@
 use crate::db::migrations::run_migrations;
-use anyhow::Result;
+use anyhow::{Context, Result};
 use rusqlite::Connection;
 use std::path::PathBuf;
 use std::sync::{Arc, Mutex};
@@ -17,7 +17,8 @@ impl LocalDB {
         let conn = Connection::open(&db_path)?;
 
         // Enable foreign keys
-        conn.execute("PRAGMA foreign_keys = ON", [])?;
+        conn.execute("PRAGMA foreign_keys = ON", [])
+            .context("Failed to enable foreign keys")?;
 
         let db = Self {
             conn: Arc::new(Mutex::new(conn)),

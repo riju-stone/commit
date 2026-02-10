@@ -1,4 +1,4 @@
-use super::now;
+use crate::helper::format::now;
 use crate::model::db::WhiteboardSnapshot;
 use anyhow::{Context, Result};
 use rusqlite::{params, Connection, OptionalExtension};

@@ -1,6 +1,12 @@
+use crate::core::db::LocalDB;
 use serde::{Deserialize, Serialize};
 use std::clone::Clone;
 use std::fmt::Debug;
+use std::sync::{Arc, Mutex};
+
+pub struct DbState {
+    pub db: Arc<Mutex<LocalDB>>,
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct Note {
