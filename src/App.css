@@ -324,10 +324,16 @@ body {
   }
 }
 
-.ProseMirror {
-  /* @apply flex justify-center items-center border-0 outline-none overflow-x-hidden overflow-y-auto mt-[50px] p-5 no-scrollbar; */
-  /* mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%); */
-  white-space: pre-wrap;
+.note-editor {
+  .ProseMirror {
+    @apply no-scrollbar;
+    position: relative;
+    top: 1rem;
+    padding: 2rem 0;
+    height: 95vh;
+    overflow: auto;
+    mask-image: linear-gradient(to bottom, transparent 0%, black 5%, black 95%, transparent 100%);
+  }
 }
 
 /* TipTap Image Resize Styles (uses data attributes in TipTap 3.x) */
