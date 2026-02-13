@@ -15,6 +15,12 @@
     "opener:default",
     "fs:default",
     "core:window:allow-start-dragging",
+    "core:path:default",
+     "fs:default",
+    {
+      "identifier": "fs:allow-exists",
+      "allow": [{ "path": "$APPDATA/*" }]
+    },
     "store:default",
     "store:allow-load",
     "store:allow-save",

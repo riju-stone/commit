@@ -18,8 +18,9 @@ use crate::commands::db::{
     db_update_snapshot, db_upsert_note, db_upsert_snapshot,
 };
 use crate::commands::file::{
-    create_file, create_folder, delete_file, delete_folder, file_exists, folder_exists,
-    get_folder_structure, read_folder,
+    copy_file, create_file, create_folder, delete_file, delete_folder, file_exists, folder_exists,
+    get_directory_children, get_folder_structure, read_file_bytes, read_file_text, read_folder,
+    rename_path, write_file_bytes, write_file_text,
 };
 use crate::model::auth::AuthState;
 use crate::model::db::DbState;
@@ -71,7 +72,14 @@ pub fn run() {
             create_file,
             delete_file,
             file_exists,
-            get_folder_structure
+            get_folder_structure,
+            get_directory_children,
+            rename_path,
+            copy_file,
+            read_file_text,
+            read_file_bytes,
+            write_file_text,
+            write_file_bytes
         ])
         .setup(|app| {
             // Initialize database
