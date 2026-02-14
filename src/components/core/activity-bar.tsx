@@ -1,6 +1,7 @@
-import { Bolt, Brain, Calendar, CircleCheckBig, Home, LineSquiggle, Mail, Newspaper, NotepadText } from "lucide-react";
+import { Bolt, LineSquiggle, Mail } from "lucide-react";
 import useAppStore from "@/store/appStore";
 import { motion } from "motion/react";
+import { CalendarIcon, FeedIcon, HomeIcon, JournalIcon, NoteIcon, TasksIcon } from "@/assets/icons/ui";
 
 const ACTIVITY_BAR_OPEN_WIDTH = "50px";
 const ACTIVITY_BAR_CLOSED_WIDTH = "0px";
@@ -59,7 +60,7 @@ function ActivityBarComponent() {
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "home" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
           onClick={() => setActiveTab("home")}
         >
-          <Home />
+          <HomeIcon strokeWidth={2} color="#fff" />
         </button>
         <button
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "email" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
@@ -71,31 +72,31 @@ function ActivityBarComponent() {
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "feed" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
           onClick={() => setActiveTab("feed")}
         >
-          <Newspaper />
+          <FeedIcon strokeWidth={2} color="#fff" />
         </button>
         <button
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "tasks" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
           onClick={() => setActiveTab("tasks")}
         >
-          <CircleCheckBig />
+          <TasksIcon strokeWidth={2} color="#fff" />
         </button>
         <button
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "calendar" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
           onClick={() => setActiveTab("calendar")}
         >
-          <Calendar />
+          <CalendarIcon strokeWidth={2} color="#fff" />
         </button>
         <button
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "notes" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
           onClick={() => setActiveTab("notes")}
         >
-          <NotepadText />
+          <NoteIcon strokeWidth={2} color="#fff" />
         </button>
         <button
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "journal" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}
           onClick={() => setActiveTab("journal")}
         >
-          <Brain />
+          <JournalIcon strokeWidth={2} color="#fff" />
         </button>
         <button
           className={`border-none cursor-pointer h-[30px] w-[30px] flex items-center justify-center text-white rounded-[5px] p-[5px] transition-all duration-200 ease-in-out hover:bg-[rgba(151,151,151,0.8)] ${activeTab === "whiteboard" ? "bg-[rgba(151,151,151,0.4)]" : "bg-transparent"}`}

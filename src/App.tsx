@@ -1,37 +1,40 @@
 import "./App.css";
 import ActivityBarComponent from "./components/core/activity-bar";
 import StatusBarComponent from "./components/core/status-bar";
-import FileExplorerComponent from "./components/core/file-explorer";
-import SidebarComponent from "./components/core/sidebar";
 import { PropertySidebar } from "./components/whiteboard/properties";
 import { APP_VIEW_CONFIG } from "@/constants/views";
 import useAppStore from "./store/appStore";
 import CalendarSidebarComponent from "./components/journal/calendar-sidebar";
 import EmailSidebarComponent from "./components/email/email-sidebar";
 import EmailViewerComponent from "./components/email/email-viewer";
+import RightSidebarComponent from "./components/core/right-sidebar";
+import LeftSidebarComponent from "./components/core/left-sidebar";
+import FileExplorerComponent from "./components/core/file-explorer";
 
 function App() {
-  const { activeTab, sidebarOpen } = useAppStore()
-  const CurrentView = APP_VIEW_CONFIG[activeTab as keyof typeof APP_VIEW_CONFIG].view
+  const { activeTab, sidebarOpen } = useAppStore();
+  const CurrentView = APP_VIEW_CONFIG[activeTab as keyof typeof APP_VIEW_CONFIG].view;
 
-  const isWhiteboardView = activeTab === 'whiteboard'
-  const isJournalView = activeTab === 'journal'
-  const isEmailView = activeTab === 'email'
+  const isWhiteboardView = activeTab === "whiteboard";
+  const isJournalView = activeTab === "journal";
+  const isEmailView = activeTab === "email";
+  const isNoteView = activeTab === "notes";
 
   return (
     <main className="h-screen w-screen flex flex-col justify-center items-center">
       <StatusBarComponent />
       <div className="editorWrapper">
         <ActivityBarComponent />
-        <FileExplorerComponent>
+        <LeftSidebarComponent>
           {isJournalView && <CalendarSidebarComponent />}
           {isEmailView && <EmailSidebarComponent />}
-        </FileExplorerComponent>
+          {isNoteView && <FileExplorerComponent path="/Users/rijustone/Documents" />}
+        </LeftSidebarComponent>
         <CurrentView key={activeTab as keyof typeof APP_VIEW_CONFIG} />
-        <SidebarComponent isOpen={sidebarOpen}>
+        <RightSidebarComponent isOpen={sidebarOpen}>
           {isWhiteboardView && <PropertySidebar />}
           {isEmailView && <EmailViewerComponent />}
-        </SidebarComponent>
+        </RightSidebarComponent>
       </div>
     </main>
   );

@@ -26,7 +26,7 @@ interface SidebarComponentProps {
   children?: ReactNode;
 }
 
-function SidebarComponent({ isOpen, children }: SidebarComponentProps) {
+function RightSidebarComponent({ isOpen, children }: SidebarComponentProps) {
   return (
     <motion.div
       layout
@@ -41,4 +41,4 @@ function SidebarComponent({ isOpen, children }: SidebarComponentProps) {
   );
 }
 
-export default SidebarComponent;
+export default RightSidebarComponent;
