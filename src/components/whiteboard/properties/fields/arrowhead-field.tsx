@@ -22,28 +22,14 @@ import {
   LineEndCrowfootOneManyIcon,
   LineEndBarIcon,
   LineEndSquareIcon,
-} from "@/assets/icons";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+} from "@/assets/icons/editor";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { toPascalCaseWithSpace } from "@/utils/whiteboard";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
-function ArrowheadIcon({
-  value,
-  className,
-}: {
-  value: string;
-  className?: string;
-}) {
+function ArrowheadIcon({ value, className }: { value: string; className?: string }) {
   switch (value) {
     case LineEndType.FLAT:
       return <LineEndFlatIcon size={16} className={className} />;
@@ -112,15 +98,8 @@ export const SelectArrowheadComponent: React.FC<SelectArrowheadProps> = ({
   return (
     <Popover open={open} onOpenChange={(open) => setOpen(open)}>
       <PopoverTrigger asChild>
-        <Button
-          variant="ghost"
-          size="icon"
-          className={cn("rounded-sm w-7 h-7 px-1 dark text-white", className)}
-        >
-          <ArrowheadIcon
-            value={value ?? LineEndType.FLAT}
-            className={cn(rotate && "transform rotate-180")}
-          />
+        <Button variant="ghost" size="icon" className={cn("rounded-sm w-7 h-7 px-1 dark text-white", className)}>
+          <ArrowheadIcon value={value ?? LineEndType.FLAT} className={cn(rotate && "transform rotate-180")} />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-fit p-2 dark">
@@ -137,10 +116,7 @@ export const SelectArrowheadComponent: React.FC<SelectArrowheadProps> = ({
                     if (onValueChange) onValueChange(value);
                   }}
                 >
-                  <ArrowheadIcon
-                    value={value}
-                    className={cn(rotate && "transform rotate-180")}
-                  />
+                  <ArrowheadIcon value={value} className={cn(rotate && "transform rotate-180")} />
                 </Button>
               </TooltipTrigger>
               <TooltipContent className="dark">

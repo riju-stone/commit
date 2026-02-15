@@ -233,24 +233,6 @@ function ToolbarComponent() {
             <p>Add Image</p>
           </TooltipContent>
         </Tooltip>
-
-        <Tooltip delayDuration={500}>
-          <TooltipTrigger asChild>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white"
-              onClick={() => {
-                editor?.chain().focus().toggleTaskList().run();
-              }}
-            >
-              <ListChecks />
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Task List</p>
-          </TooltipContent>
-        </Tooltip>
       </div>
     </div>
   );

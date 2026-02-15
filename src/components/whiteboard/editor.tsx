@@ -1,9 +1,9 @@
-import { useWhiteboardStore } from '@/store/whiteboardStore';
-import type { Transaction } from '@dgmjs/core';
-import { AssignMutation, Box, Editor, FillStyle, HorzAlign, macro, Shape, Text as TextShape, VertAlign } from '@dgmjs/core';
-import { DGMEditor } from '@dgmjs/react';
-import { useCallback, useEffect } from 'react';
-import { ensureTextAlignInDoc } from '@/utils/whiteboard';
+import { useWhiteboardStore } from "@/store/whiteboardStore";
+import type { Transaction } from "@dgmjs/core";
+import { AssignMutation, Box, Editor, FillStyle, HorzAlign, macro, Shape, Text as TextShape } from "@dgmjs/core";
+import { DGMEditor } from "@dgmjs/react";
+import { useCallback, useEffect } from "react";
+import { ensureTextAlignInDoc } from "@/utils/whiteboard";
 
 let isApplyingTextAlignFixup = false;
 
@@ -23,11 +23,11 @@ function WhiteBoardEditorComponent() {
       if (isApplyingTextAlignFixup) return;
       const fixups: { shape: InstanceType<typeof Box>; patched: unknown }[] = [];
       for (const mut of tx.mutations) {
-        if (!(mut instanceof AssignMutation) || mut.field !== 'text') continue;
+        if (!(mut instanceof AssignMutation) || mut.field !== "text") continue;
         const obj = mut.obj;
         if (!(obj instanceof Box)) continue;
         const raw = obj.text;
-        if (typeof raw !== 'object' || raw?.type !== 'doc') continue;
+        if (typeof raw !== "object" || raw?.type !== "doc") continue;
         const horzAlign = obj.horzAlign ?? HorzAlign.CENTER;
         const patched = ensureTextAlignInDoc(raw, horzAlign);
         if (JSON.stringify(patched) === JSON.stringify(raw)) continue;
@@ -40,7 +40,7 @@ function WhiteBoardEditorComponent() {
         if (page && editor.canvas) {
           editor.transform.transact((t) => {
             for (const { shape, patched } of fixups) {
-              t.assign(shape, 'text', patched);
+              t.assign(shape, "text", patched);
             }
             macro.resolveAllConstraints(t, page, editor.canvas);
           });
@@ -54,23 +54,22 @@ function WhiteBoardEditorComponent() {
   }, [editor]);
 
   const handleEditorMount = async (editorInstance: Editor) => {
-    editorInstance.newDoc()
-    setEditor(editorInstance)
-    editorInstance.fitToScreen()
+    editorInstance.newDoc();
+    setEditor(editorInstance);
+    editorInstance.fitToScreen();
 
     // Initialize grid state from editor
     if (editorInstance.canvas) {
       setGridOrigin(editorInstance.canvas.origin);
       setGridScale(editorInstance.canvas.scale);
     }
-  }
+  };
 
   const handleShapeInitialize = (shape: Shape) => {
-    shape.fillStyle =
-      shape instanceof TextShape ? FillStyle.NONE : FillStyle.HACHURE;
+    shape.fillStyle = shape instanceof TextShape ? FillStyle.NONE : FillStyle.HACHURE;
 
-    shape.fillColor = '$gray10';
-    shape.fontFamily = 'Gloria Hallelujah';
+    shape.fillColor = "$gray10";
+    shape.fontFamily = "Gloria Hallelujah";
     shape.strokeColor = "rgba(255, 255, 255, 1)";
     shape.fontSize = 20;
     shape.fontColor = "#fff";
@@ -81,20 +80,25 @@ function WhiteBoardEditorComponent() {
     setCurrentSelection(selection);
   };
 
-  const handleScroll = useCallback((origin: number[]) => {
-    setGridOrigin(origin);
-  }, [setGridOrigin]);
+  const handleScroll = useCallback(
+    (origin: number[]) => {
+      setGridOrigin(origin);
+    },
+    [setGridOrigin],
+  );
 
-  const handleZoom = useCallback((scale: number) => {
-    // Also get the current origin when zooming
-    if (editor?.canvas) {
-      setGridOrigin(editor.canvas.origin);
-      setGridScale(scale);
-    }
-  }, [editor, setGridOrigin, setGridScale]);
+  const handleZoom = useCallback(
+    (scale: number) => {
+      // Also get the current origin when zooming
+      if (editor?.canvas) {
+        setGridOrigin(editor.canvas.origin);
+        setGridScale(scale);
+      }
+    },
+    [editor, setGridOrigin, setGridScale],
+  );
 
   return (
-
     <DGMEditor
       darkMode={darkMode}
       className="w-full h-screen [&_canvas]:w-screen [&_canvas]:h-full"
@@ -116,7 +120,7 @@ function WhiteBoardEditorComponent() {
       onZoom={handleZoom}
       onSelectionChange={handleSelectionChange}
     />
-  )
+  );
 }
 
-export default WhiteBoardEditorComponent
+export default WhiteBoardEditorComponent;

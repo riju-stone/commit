@@ -1,6 +1,6 @@
 import React from "react";
 import TextFieldComponent from "../fields/text-field";
-import { StrokeDottedIcon, StrokeSolidIcon } from "@/assets/icons";
+import { StrokeDottedIcon, StrokeSolidIcon } from "@/assets/icons/editor";
 import NumberFieldComponent from "../fields/number-field";
 import { Slider } from "@/components/ui/slider";
 import { Label } from "@/components/ui/label";
@@ -8,11 +8,7 @@ import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import { Shape } from "@dgmjs/core";
 import ColorFieldComponent from "../fields/color-field";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const StrokeColorBlock: React.FC = () => {
   const editor = useWhiteboardStore((state) => state.editor);
@@ -70,11 +66,7 @@ export const StrokeColorBlock: React.FC = () => {
             id="stroke-pattern-field"
             className="grow text-xs h-7 dark text-white"
             value={
-              Array.isArray(strokePattern)
-                ? strokePattern.length > 0
-                  ? strokePattern.join(",")
-                  : "0"
-                : undefined
+              Array.isArray(strokePattern) ? (strokePattern.length > 0 ? strokePattern.join(",") : "0") : undefined
             }
             onChange={(value: string) => {
               const pattern = JSON.parse(`[${value}]`);

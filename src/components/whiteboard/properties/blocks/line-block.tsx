@@ -1,30 +1,18 @@
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import {
-  Connector,
-  Line,
-  LineEndTypeEnum,
-  LineType,
-  LineTypeEnum,
-  Shape,
-} from "@dgmjs/core";
-import { LineCurveIcon, LineStraightIcon } from "@/assets/icons";
+import { Connector, Line, LineEndTypeEnum, LineType, LineTypeEnum, Shape } from "@dgmjs/core";
+import { LineCurveIcon, LineStraightIcon } from "@/assets/icons/editor";
 import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import { SelectArrowheadComponent } from "../fields/arrowhead-field";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const LineBlock: React.FC = () => {
   const editor = useWhiteboardStore((state) => state.editor);
   const currentSelection = useWhiteboardStore((state) => state.currentSelection);
   const setCurrentSelection = useWhiteboardStore((state) => state.setCurrentSelection);
-
 
   const lineType = merge(currentSelection.map((s) => (s as Line).lineType));
   const headEndType = merge(currentSelection.map((s) => (s as Line).headEndType));
@@ -48,7 +36,9 @@ export const LineBlock: React.FC = () => {
                   value={tailEndType}
                   title="Tail arrowhead"
                   onValueChange={(value) => {
-                    const updated = batchUpdateShapes(editor, currentSelection, { tailEndType: value as LineEndTypeEnum });
+                    const updated = batchUpdateShapes(editor, currentSelection, {
+                      tailEndType: value as LineEndTypeEnum,
+                    });
                     setCurrentSelection(updated);
                   }}
                 />
@@ -67,7 +57,9 @@ export const LineBlock: React.FC = () => {
                   value={headEndType}
                   title="Head arrowhead"
                   onValueChange={(value) => {
-                    const updated = batchUpdateShapes(editor, currentSelection, { headEndType: value as LineEndTypeEnum });
+                    const updated = batchUpdateShapes(editor, currentSelection, {
+                      headEndType: value as LineEndTypeEnum,
+                    });
                     setCurrentSelection(updated);
                   }}
                 />
@@ -90,11 +82,7 @@ export const LineBlock: React.FC = () => {
           >
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  className="w-7 h-7 p-1 dark text-white"
-                  size="sm"
-                  value={LineType.STRAIGHT}
-                >
+                <ToggleGroupItem className="w-7 h-7 p-1 dark text-white" size="sm" value={LineType.STRAIGHT}>
                   <LineStraightIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
@@ -104,11 +92,7 @@ export const LineBlock: React.FC = () => {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  size="sm"
-                  className="w-7 h-7 p-1 dark text-white"
-                  value={LineType.CURVE}
-                >
+                <ToggleGroupItem size="sm" className="w-7 h-7 p-1 dark text-white" value={LineType.CURVE}>
                   <LineCurveIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
@@ -129,7 +113,10 @@ export const LineBlock: React.FC = () => {
               min={0}
               value={[margin]}
               onValueChange={(value) => {
-                const updated = batchUpdateShapes(editor, currentSelection, { headMargin: value[0], tailMargin: value[0] });
+                const updated = batchUpdateShapes(editor, currentSelection, {
+                  headMargin: value[0],
+                  tailMargin: value[0],
+                });
                 setCurrentSelection(updated);
               }}
             />

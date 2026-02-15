@@ -1,20 +1,11 @@
 import React from "react";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { FillStyle, FillStyleEnum, Shape } from "@dgmjs/core";
-import {
-  FillCrossHatchIcon,
-  FillHachureIcon,
-  FillNoneIcon,
-  FillSolidIcon,
-} from "@/assets/icons";
+import { FillCrossHatchIcon, FillHachureIcon, FillNoneIcon, FillSolidIcon } from "@/assets/icons/editor";
 import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import ColorFieldComponent from "../fields/color-field";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const FillColorBlock: React.FC = () => {
   const editor = useWhiteboardStore((state) => state.editor);

@@ -13,14 +13,10 @@ import {
   AlignBringToFrontIcon,
   AlignSendBackwardIcon,
   AlignSendToBackIcon,
-} from "@/assets/icons";
+} from "@/assets/icons/editor";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import { HorzAlign, Shape, VertAlign } from "@dgmjs/core";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 export const AlignmentBlock: React.FC = () => {
   const editor = useWhiteboardStore((state) => state.editor);
@@ -66,9 +62,12 @@ export const AlignmentBlock: React.FC = () => {
     const shapes = getSelectedShapes();
     if (shapes.length === 0) return;
     // editor.actions.alignLeft(shapes);
-    editor.actions.update({
-      horzAlign: HorzAlign.LEFT,
-    }, shapes);
+    editor.actions.update(
+      {
+        horzAlign: HorzAlign.LEFT,
+      },
+      shapes,
+    );
     setCurrentSelection(editor.selection.getShapes() as Shape[]);
   };
 
@@ -77,9 +76,12 @@ export const AlignmentBlock: React.FC = () => {
     const shapes = getSelectedShapes();
     if (shapes.length === 0) return;
     // editor.actions.alignCenter(shapes);
-    editor.actions.update({
-      horzAlign: HorzAlign.CENTER,
-    }, shapes);
+    editor.actions.update(
+      {
+        horzAlign: HorzAlign.CENTER,
+      },
+      shapes,
+    );
     setCurrentSelection(editor.selection.getShapes() as Shape[]);
   };
 
@@ -88,9 +90,12 @@ export const AlignmentBlock: React.FC = () => {
     const shapes = getSelectedShapes();
     if (shapes.length === 0) return;
     // editor.actions.alignRight(shapes);
-    editor.actions.update({
-      horzAlign: HorzAlign.RIGHT,
-    }, shapes);
+    editor.actions.update(
+      {
+        horzAlign: HorzAlign.RIGHT,
+      },
+      shapes,
+    );
     setCurrentSelection(editor.selection.getShapes() as Shape[]);
   };
 
@@ -99,9 +104,12 @@ export const AlignmentBlock: React.FC = () => {
     const shapes = getSelectedShapes();
     if (shapes.length === 0) return;
     // editor.actions.alignTop(shapes);
-    editor.actions.update({
-      vertAlign: VertAlign.TOP,
-    }, shapes);
+    editor.actions.update(
+      {
+        vertAlign: VertAlign.TOP,
+      },
+      shapes,
+    );
     setCurrentSelection(editor.selection.getShapes() as Shape[]);
   };
 
@@ -110,9 +118,12 @@ export const AlignmentBlock: React.FC = () => {
     const shapes = getSelectedShapes();
     if (shapes.length === 0) return;
     // editor.actions.alignMiddle(shapes);
-    editor.actions.update({
-      vertAlign: VertAlign.MIDDLE,
-    }, shapes);
+    editor.actions.update(
+      {
+        vertAlign: VertAlign.MIDDLE,
+      },
+      shapes,
+    );
     setCurrentSelection(editor.selection.getShapes() as Shape[]);
   };
 
@@ -121,9 +132,12 @@ export const AlignmentBlock: React.FC = () => {
     const shapes = getSelectedShapes();
     if (shapes.length === 0) return;
     // editor.actions.alignBottom(shapes);
-    editor.actions.update({
-      vertAlign: VertAlign.BOTTOM,
-    }, shapes);
+    editor.actions.update(
+      {
+        vertAlign: VertAlign.BOTTOM,
+      },
+      shapes,
+    );
     setCurrentSelection(editor.selection.getShapes() as Shape[]);
   };
 
@@ -133,11 +147,7 @@ export const AlignmentBlock: React.FC = () => {
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleBringToFront}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleBringToFront}>
                 <AlignBringToFrontIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -147,11 +157,7 @@ export const AlignmentBlock: React.FC = () => {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleBringForward}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleBringForward}>
                 <AlignBringForwardIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -163,11 +169,7 @@ export const AlignmentBlock: React.FC = () => {
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleAlignLeft}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleAlignLeft}>
                 <AlignStartVerticalIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -177,11 +179,7 @@ export const AlignmentBlock: React.FC = () => {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleAlignCenter}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleAlignCenter}>
                 <AlignCenterVerticalIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -191,12 +189,7 @@ export const AlignmentBlock: React.FC = () => {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="w-7 h-7 text-white"
-                onClick={handleAlignRight}
-              >
+              <Button variant="ghost" size="icon" className="w-7 h-7 text-white" onClick={handleAlignRight}>
                 <AlignEndVerticalIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -210,11 +203,7 @@ export const AlignmentBlock: React.FC = () => {
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleSendToBack}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleSendToBack}>
                 <AlignSendToBackIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -224,11 +213,7 @@ export const AlignmentBlock: React.FC = () => {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleSendBackward}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleSendBackward}>
                 <AlignSendBackwardIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -240,11 +225,7 @@ export const AlignmentBlock: React.FC = () => {
         <div className="flex items-center gap-1">
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleAlignTop}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleAlignTop}>
                 <AlignStartHorizontalIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -254,11 +235,7 @@ export const AlignmentBlock: React.FC = () => {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleAlignMiddle}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleAlignMiddle}>
                 <AlignCenterHorizontalIcon size={16} />
               </Button>
             </TooltipTrigger>
@@ -268,11 +245,7 @@ export const AlignmentBlock: React.FC = () => {
           </Tooltip>
           <Tooltip>
             <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                className="w-7 h-7 text-white"
-                onClick={handleAlignBottom}
-              >
+              <Button variant="ghost" className="w-7 h-7 text-white" onClick={handleAlignBottom}>
                 <AlignEndHorizontalIcon size={16} />
               </Button>
             </TooltipTrigger>

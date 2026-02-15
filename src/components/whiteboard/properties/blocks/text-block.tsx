@@ -1,28 +1,8 @@
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Toggle } from "@/components/ui/toggle";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import {
-  Box,
-  HorzAlign,
-  HorzAlignEnum,
-  Shape,
-  Text as TextShape,
-  VertAlign,
-  VertAlignEnum,
-} from "@dgmjs/core";
-import {
-  AlignCenterIcon,
-  AlignLeftIcon,
-  AlignRightIcon,
-  ChevronsUpDownIcon,
-  WrapTextIcon,
-} from "lucide-react";
+import { Box, HorzAlign, HorzAlignEnum, Shape, Text as TextShape, VertAlign, VertAlignEnum } from "@dgmjs/core";
+import { AlignCenterIcon, AlignLeftIcon, AlignRightIcon, ChevronsUpDownIcon, WrapTextIcon } from "lucide-react";
 import React from "react";
 import ColorFieldComponent from "../fields/color-field";
 import {
@@ -31,7 +11,7 @@ import {
   VerticalBottomIcon,
   VerticalMiddleIcon,
   VerticalTopIcon,
-} from "@/assets/icons";
+} from "@/assets/icons/editor";
 import { Label } from "@/components/ui/label";
 import {
   DropdownMenu,
@@ -43,11 +23,7 @@ import { Button } from "@/components/ui/button";
 import { merge, batchUpdateShapes } from "@/utils/whiteboard";
 import { useWhiteboardStore } from "@/store/whiteboardStore";
 import NumberFieldComponent from "../fields/number-field";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 
 const fontFamilies = [
   "Arial",
@@ -62,7 +38,8 @@ const fontFamilies = [
 ];
 
 const FONT_SIZES = [
-  8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100,
+  8, 9, 10, 11, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62,
+  64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100,
 ];
 
 export const TextBlock: React.FC = () => {
@@ -79,9 +56,7 @@ export const TextBlock: React.FC = () => {
   const horzAlign = merge(currentSelection.map((s: Shape) => (s as TextShape).horzAlign));
   const wordWrap = merge(currentSelection.map((s: Shape) => (s as TextShape).wordWrap));
   const lineHeight = merge(currentSelection.map((s: Shape) => (s as TextShape).lineHeight));
-  const paragraphSpacing = merge(
-    currentSelection.map((s: Shape) => (s as TextShape).paragraphSpacing)
-  );
+  const paragraphSpacing = merge(currentSelection.map((s: Shape) => (s as TextShape).paragraphSpacing));
 
   return (
     <>
@@ -169,10 +144,7 @@ export const TextBlock: React.FC = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <div className="flex h-7 text-xs min-w-6 relative -left-7 items-center">
-                <Button
-                  variant="ghost"
-                  className="h-6 min-w-6 px-0 dark text-white"
-                >
+                <Button variant="ghost" className="h-6 min-w-6 px-0 dark text-white">
                   <ChevronsUpDownIcon size={12} />
                 </Button>
               </div>
@@ -209,10 +181,7 @@ export const TextBlock: React.FC = () => {
           >
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  value={HorzAlign.LEFT}
-                  className="h-7 w-7 p-0 dark text-white"
-                >
+                <ToggleGroupItem value={HorzAlign.LEFT} className="h-7 w-7 p-0 dark text-white">
                   <AlignLeftIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
@@ -222,10 +191,7 @@ export const TextBlock: React.FC = () => {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  value={HorzAlign.CENTER}
-                  className="h-7 w-7 p-0 dark text-white"
-                >
+                <ToggleGroupItem value={HorzAlign.CENTER} className="h-7 w-7 p-0 dark text-white">
                   <AlignCenterIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
@@ -235,10 +201,7 @@ export const TextBlock: React.FC = () => {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  value={HorzAlign.RIGHT}
-                  className="h-7 w-7 p-0 dark text-white"
-                >
+                <ToggleGroupItem value={HorzAlign.RIGHT} className="h-7 w-7 p-0 dark text-white">
                   <AlignRightIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
@@ -259,10 +222,7 @@ export const TextBlock: React.FC = () => {
           >
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  value={VertAlign.TOP}
-                  className="h-7 w-7 p-0 dark text-white"
-                >
+                <ToggleGroupItem value={VertAlign.TOP} className="h-7 w-7 p-0 dark text-white">
                   <VerticalTopIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
@@ -272,10 +232,7 @@ export const TextBlock: React.FC = () => {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  value={VertAlign.MIDDLE}
-                  className="h-7 w-7 p-0 dark text-white"
-                >
+                <ToggleGroupItem value={VertAlign.MIDDLE} className="h-7 w-7 p-0 dark text-white">
                   <VerticalMiddleIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>
@@ -285,10 +242,7 @@ export const TextBlock: React.FC = () => {
             </Tooltip>
             <Tooltip>
               <TooltipTrigger asChild>
-                <ToggleGroupItem
-                  value={VertAlign.BOTTOM}
-                  className="h-7 w-7 p-0 dark text-white"
-                >
+                <ToggleGroupItem value={VertAlign.BOTTOM} className="h-7 w-7 p-0 dark text-white">
                   <VerticalBottomIcon size={16} />
                 </ToggleGroupItem>
               </TooltipTrigger>

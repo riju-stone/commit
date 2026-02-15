@@ -11,12 +11,7 @@ import { useEffect, useRef } from "react";
 import ToolbarComponent from "./menus/toolbar";
 import { handleImageUpload } from "@/lib/tiptap-utils";
 import { useNoteStore } from "@/store/noteStore";
-import { TaskItem, TaskList } from "@tiptap/extension-list";
 import { StarterKit } from "@tiptap/starter-kit";
-
-const CustomTaskItem = TaskItem.extend({
-  content: "inline*",
-});
 
 function NotesEditorComponent() {
   const setEditor = useNoteStore((state) => state.setEditor);
@@ -49,8 +44,6 @@ function NotesEditorComponent() {
         onError: (error) => console.error("Upload failed:", error),
       }),
       Math,
-      TaskList,
-      CustomTaskItem,
       TextAlign.configure({
         types: ["heading", "paragraph"],
         alignments: ["left", "center", "right", "justify"],
@@ -62,7 +55,7 @@ function NotesEditorComponent() {
     editorProps: {
       attributes: {
         class: "text-white",
-        spellcheck: "false",
+        spellcheck: "true",
         autocapitalize: "off",
         autocorrect: "off",
       },

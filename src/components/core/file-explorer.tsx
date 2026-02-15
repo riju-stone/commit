@@ -175,18 +175,6 @@ function FileExplorerComponent({ path = "/Users/rijustone/Documents/" }: FileExp
 
   return (
     <div className="flex flex-col h-full">
-      {/* Header */}
-      {/* <div className="flex items-center justify-between p-2 border-b mt-5">
-        <div className="flex justify-end gap-1 flex-1">
-          <Button size="sm" variant="ghost" className="dark">
-            <FolderPlus className="w-4 h-4 text-white" />
-          </Button>
-          <Button size="sm" variant="ghost" className="dark" onClick={fetchFileTree}>
-            <FilePlus className="w-4 h-4 text-white" />
-          </Button>
-        </div>
-      </div> */}
-
       {/* File Tree */}
       <div className="flex-1 overflow-y-auto overflow-x-clip mt-8 px-2">
         {fileTree && (
