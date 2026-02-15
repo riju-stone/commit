@@ -37,14 +37,14 @@ const FILE_EXPLORER_CONTENT_ANIMATION = {
 };
 
 function LeftSidebarComponent({ children }: { children?: ReactNode }) {
-  const { fileExplorerOpen } = useAppStore();
+  const { leftSidebarOpen } = useAppStore();
   return (
     <motion.div
       layout
       className={`shrink-0 flex-wrap h-screen bg-black/50 flex flex-col items-start justify-between`}
       variants={FILE_EXPLORER_CONTENT_ANIMATION.fileExplorerWrapper}
       initial="closed"
-      animate={fileExplorerOpen ? "open" : "closed"}
+      animate={leftSidebarOpen ? "open" : "closed"}
     >
       {children && <div className="w-full h-full text-nowrap overflow-x-hidden">{children}</div>}
     </motion.div>

@@ -12,7 +12,7 @@ import LeftSidebarComponent from "./components/core/left-sidebar";
 import FileExplorerComponent from "./components/core/file-explorer";
 
 function App() {
-  const { activeTab, sidebarOpen } = useAppStore();
+  const { activeTab, rightSidebarOpen } = useAppStore();
   const CurrentView = APP_VIEW_CONFIG[activeTab as keyof typeof APP_VIEW_CONFIG].view;
 
   const isWhiteboardView = activeTab === "whiteboard";
@@ -28,10 +28,11 @@ function App() {
         <LeftSidebarComponent>
           {isJournalView && <CalendarSidebarComponent />}
           {isEmailView && <EmailSidebarComponent />}
-          {isNoteView && <FileExplorerComponent path="/Users/rijustone/Documents" />}
+          {isNoteView && <FileExplorerComponent path="/Users/rijustone/Documents/Commit-Vault/notes" />}
+          {isWhiteboardView && <FileExplorerComponent path="/Users/rijustone/Documents/Commit-Vault/whiteboards" />}
         </LeftSidebarComponent>
         <CurrentView key={activeTab as keyof typeof APP_VIEW_CONFIG} />
-        <RightSidebarComponent isOpen={sidebarOpen}>
+        <RightSidebarComponent isOpen={rightSidebarOpen}>
           {isWhiteboardView && <PropertySidebar />}
           {isEmailView && <EmailViewerComponent />}
         </RightSidebarComponent>

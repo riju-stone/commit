@@ -15,14 +15,17 @@ import {
   FileMusic,
   FileVideoCamera,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { AnimatePresence, motion } from "motion/react";
 
 interface FileTreeItemProps {
   item: FileMetadata;
   level: number;
 }
+
+const FileItemAnim = {
+  hide: { opacity: 0 },
+  show: { opacity: 1, transition: { duration: 0.2, delay: 0.1 } },
+};
 
 function FileIcon(extension: string | null): JSX.Element {
   const iconType = getFileIcon(extension);
@@ -72,38 +75,55 @@ function FileTreeItem({ item, level }: FileTreeItemProps) {
 
   return (
     <div className="select-none">
-      <button
-        className="flex w-full items-center gap-1 px-2 py-1 hover:bg-accent/50 cursor-pointer"
-        style={{ paddingLeft: `${level * 8}px` }}
+      <motion.div
+        className="relative flex w-full items-center justify-between gap-1 py-1 px-2 rounded-md hover:bg-accent/10 overflow-x-clip text-ellipsis"
+        initial="hide"
+        whileHover="show"
+        style={{ paddingLeft: `${level * 16}px` }}
         onClick={(e) => {
           e.stopPropagation();
           handleToggle();
         }}
       >
-        {item.is_dir && (
-          <div className="p-0.5 rounded">
-            {isExpanded ? (
-              <ChevronDown className="w-4 h-4 text-white" />
+        <div className="flex justify-start items-center gap-1 p-0 m-0">
+          {item.is_dir && (
+            <div className="p-0.5 rounded">
+              {isExpanded ? (
+                <ChevronDown className="w-4 h-4 text-white" />
+              ) : (
+                <ChevronRight className="w-4 h-4 text-white" />
+              )}
+            </div>
+          )}
+
+          {!item.is_dir && <div className="w-4" />}
+          <div>
+            {item.is_dir ? (
+              isExpanded ? (
+                <FolderOpen className="w-4 h-4 text-white" />
+              ) : (
+                <Folder className="w-4 h-4 text-white" />
+              )
             ) : (
-              <ChevronRight className="w-4 h-4 text-white" />
+              <span className="text-sm">{FileIcon(item.extension)}</span>
             )}
           </div>
+
+          <span className="w-[75%] text-sm text-white text-ellipsis overflow-clip">{item.name}</span>
+        </div>
+
+        {/* Only show the icons when user hovers on the parent button */}
+        {item.is_dir && (
+          <motion.div className="absolute right-2 flex items-center justify-end gap-2" variants={FileItemAnim}>
+            <button className="p-0 m-0 cursor-pointer ">
+              <FolderPlus className="w-4 h-4 text-white" />
+            </button>
+            <button className="p-0 m-0 cursor-pointer">
+              <FilePlus className="w-4 h-4 text-white" />
+            </button>
+          </motion.div>
         )}
-
-        {!item.is_dir && <div className="w-4" />}
-
-        {item.is_dir ? (
-          isExpanded ? (
-            <FolderOpen className="w-4 h-4 text-white" />
-          ) : (
-            <Folder className="w-4 h-4 text-white" />
-          )
-        ) : (
-          <span className="text-sm">{FileIcon(item.extension)}</span>
-        )}
-
-        <span className="text-sm text-white">{item.name}</span>
-      </button>
+      </motion.div>
 
       <AnimatePresence>
         {item.is_dir && isExpanded && children && (
@@ -156,7 +176,7 @@ function FileExplorerComponent({ path = "/Users/rijustone/Documents/" }: FileExp
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
-      <div className="flex items-center justify-between p-2 border-b mt-5">
+      {/* <div className="flex items-center justify-between p-2 border-b mt-5">
         <div className="flex justify-end gap-1 flex-1">
           <Button size="sm" variant="ghost" className="dark">
             <FolderPlus className="w-4 h-4 text-white" />
@@ -165,16 +185,16 @@ function FileExplorerComponent({ path = "/Users/rijustone/Documents/" }: FileExp
             <FilePlus className="w-4 h-4 text-white" />
           </Button>
         </div>
-      </div>
+      </div> */}
 
       {/* File Tree */}
-      <ScrollArea className="flex-1">
+      <div className="flex-1 overflow-y-auto overflow-x-clip mt-8 px-2">
         {fileTree && (
           <div className="py-2">
             <FileTreeItem item={fileTree} level={0} />
           </div>
         )}
-      </ScrollArea>
+      </div>
     </div>
   );
 }

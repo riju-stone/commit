@@ -6,28 +6,28 @@ type AppViewType = keyof typeof APP_VIEW_CONFIG;
 interface AppStore {
   activeTab: AppViewType;
   activityBarOpen: boolean;
-  fileExplorerOpen: boolean;
-  sidebarOpen: boolean;
+  leftSidebarOpen: boolean;
+  rightSidebarOpen: boolean;
   fileExplorerPath: string;
 }
 
 interface AppActions {
   setActiveTab: (tab: AppViewType) => void;
   toggleActivityBar: () => void;
-  toggleFileExplorer: () => void;
-  toggleSidebar: () => void;
+  toggleLeftSidebar: () => void;
+  toggleRightSidebar: () => void;
   setFileExplorerPath: (path: string) => void;
 }
 
 const useAppStore = create<AppStore & AppActions>((set) => ({
-  activeTab: "home",
+  activeTab: "home" as const,
   activityBarOpen: true,
-  fileExplorerOpen: false,
-  sidebarOpen: false,
-  fileExplorerPath: "/",
+  leftSidebarOpen: false,
+  rightSidebarOpen: false,
+  fileExplorerPath: "/Users/rijustone/Documents/commit/",
   toggleActivityBar: () => set((state) => ({ activityBarOpen: !state.activityBarOpen })),
-  toggleFileExplorer: () => set((state) => ({ fileExplorerOpen: !state.fileExplorerOpen })),
-  toggleSidebar: () => set((state) => ({ sidebarOpen: !state.sidebarOpen })),
+  toggleLeftSidebar: () => set((state) => ({ leftSidebarOpen: !state.leftSidebarOpen })),
+  toggleRightSidebar: () => set((state) => ({ rightSidebarOpen: !state.rightSidebarOpen })),
   setFileExplorerPath: (path: string) => set(() => ({ fileExplorerPath: path })),
   setActiveTab: (tab: AppViewType) =>
     set((state) => {
@@ -35,8 +35,8 @@ const useAppStore = create<AppStore & AppActions>((set) => ({
       // Close sidebars if they're not allowed in the new view, but don't auto-open them
       return {
         activeTab: tab,
-        fileExplorerOpen: viewConfig.fileExplorer ? state.fileExplorerOpen : false,
-        sidebarOpen: viewConfig.sidebar ? state.sidebarOpen : false,
+        leftSidebarOpen: viewConfig.fileExplorer ? state.leftSidebarOpen : false,
+        rightSidebarOpen: viewConfig.sidebar ? state.rightSidebarOpen : false,
       };
     }),
 }));
