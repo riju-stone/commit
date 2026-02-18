@@ -41,6 +41,19 @@
         { "path": "$APPLOG/**" }
       ]
     },
+    {
+      "identifier": "opener:allow-open-path",
+      "allow": [
+        {
+          "path": "/Users/rijustone/Documents/"
+        },
+        {
+          "path": "$APPDATA/file"
+        }
+      ]
+    },
+    "dialog:allow-open",
+    "dialog:default",
     "store:default",
     "store:allow-load",
     "store:allow-save",
