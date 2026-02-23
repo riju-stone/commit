@@ -3,9 +3,10 @@ import AppLogo from "../assets/images/commit.png";
 import useAppStore from "@/store/appStore";
 import { open } from "@tauri-apps/plugin-dialog";
 import { Trash } from "lucide-react";
+import type { VaultConfig } from "@/types/config";
 
 function OnboardingView() {
-  const { vaults, addVault, setActiveVault, setOnboardingCompleted } = useAppStore();
+  const { vaults, addVault, setActiveVault, setOnboardingCompleted, removeVault } = useAppStore();
 
   const handleVaultCreation = async () => {
     const dirPath = await open({
@@ -18,9 +19,25 @@ function OnboardingView() {
 
     const dirName = dirPath.split("/").pop() || "New Vault";
     const vaultId = crypto.randomUUID();
-    addVault({ id: vaultId, name: dirName, path: dirPath });
-    setActiveVault(vaultId);
+    const newVault: VaultConfig = {
+      id: vaultId,
+      name: dirName,
+      path: dirPath,
+      createdAt: new Date().toISOString(),
+    };
+
+    addVault(newVault);
+    setActiveVault(newVault);
     setOnboardingCompleted(true);
+  };
+
+  const handleOpenVault = (vault: VaultConfig) => {
+    setActiveVault(vault);
+    setOnboardingCompleted(true);
+  };
+
+  const handleRemoveVault = (vaultId: string) => {
+    removeVault(vaultId);
   };
 
   return (
@@ -46,10 +63,15 @@ function OnboardingView() {
                   <span className="text-sm text-gray-400">{vault.path}</span>
                 </div>
                 <div className="flex justify-end items-center gap-2">
-                  <Button className="dark text-white text-sm" variant="outline" onClick={() => {}}>
+                  <Button className="dark text-white text-sm" variant="outline" onClick={() => handleOpenVault(vault)}>
                     Open
                   </Button>
-                  <Button className="dark text-white text-sm" size="icon" variant="destructive" onClick={() => {}}>
+                  <Button
+                    className="dark text-white text-sm"
+                    size="icon"
+                    variant="destructive"
+                    onClick={() => handleRemoveVault(vault.id)}
+                  >
                     <Trash />
                   </Button>
                 </div>
